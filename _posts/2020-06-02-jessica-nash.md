@@ -34,7 +34,7 @@ $$ \vec{F} = m \cdot \vec{a} = m \cdot \frac{d\vec{v}}{dt} = m \cdot \frac{d^{2}
 
 And include images:
 
-![NSF Logo](/assets/images/sample-poster/nsf.png)  
+![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)  
 ***Figure 1**: The logo of the National Science Foundation.*
 
 ## Methods 
