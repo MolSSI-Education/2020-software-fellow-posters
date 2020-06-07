@@ -1,8 +1,11 @@
 ---
-layout: poster
 name: sample-poster
 title: How to add your Poster
 author: "Jessica Nash"
+toc: true
+toc_sticky: true
+toc_label: "Poster Contents"
+layout: poster
 full-author-list:
     - name: "Jessica A. Nash"
       affiliation: 1
