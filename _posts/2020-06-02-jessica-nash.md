@@ -1,9 +1,20 @@
 ---
-layout: posts
+layout: poster
 name: jessica-nash-poster
 title: How to add your Poster
 author: "Jessica Nash"
-comments: true
+full-author-list:
+    - name: "Jessica A. Nash"
+      affiliation: 1
+    - name: "Second Author"
+      affiliation: 2
+affiliations:
+    - name: "The Molecular Sciences Software Institute"
+      address: "Blacksburg, VA"
+      index: 1
+    - name: "Department of Chemistry, Virginia Tech University"
+      index: 2
+      address: "Blacksburg, VA"
 ---
 
 ## Introduction
