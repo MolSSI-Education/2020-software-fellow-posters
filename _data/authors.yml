@@ -1,5 +1,5 @@
 Jessica Nash:
-    name    : "Jessica Nash"
+    name    : "Jessica A. Nash"
     bio     : "Software Scientist, Education Lead at The Molecular Sciences Software Institute"
     avatar  : "/assets/images/avatars/jessica_nash.jpg"
     links   :
@@ -15,3 +15,6 @@ Jessica Nash:
       - label: "GitHub"
         icon: "fab fa-fw fa-github"
         url: "https://github.com/janash"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/jessicanash2/"
