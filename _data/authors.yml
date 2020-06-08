@@ -18,3 +18,21 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+
+Sina Mostafanejad:
+    name    : "Sina Mostafanejad"
+    bio     : "Postdoctoral Fellow, Florida State University"
+    avatar  : "/assets/images/avatars/sina_mostafanejad.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:smostafanejad@fsu.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://github.com/SinaMostafanejad/OpenRDM"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/M_Mostafanejad"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/SinaMostafanejad/OpenRDM"
