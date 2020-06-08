@@ -14,7 +14,7 @@ $indent-var: 1.3em !default;
 
 /* system typefaces */
 $serif: Georgia, Times, serif !default;
-$sans-serif: "din-condensed", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+$sans-serif: "din-2014", "din-condensed", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
   "Helvetica Neue", "Lucida Grande", Arial, sans-serif !default;
 $monospace: Monaco, Consolas, "Lucida Console", monospace !default;
 
@@ -30,7 +30,7 @@ $calisto: "Calisto MT", serif !default;
 $garamond: Garamond, serif !default;
 
 $global-font-family: $sans-serif !default;
-$header-font-family: $sans-serif !default;
+$header-font-family: "din-condensed" !default;
 $caption-font-family: $serif !default;
 
 /* type scale */
@@ -119,11 +119,11 @@ $masthead-link-color-hover: mix(#000, $primary-color, 25%) !default;
 $navicon-link-color-hover: mix(#fff, $primary-color, 75%) !default;
 
 /* syntax highlighting (base16) */
-$base00: #263238 !default;
+$base00: #263238 !default; //background
 $base01: #2e3c43 !default;
 $base02: #314549 !default;
 $base03: #546e7a !default;
-$base04: #b2ccd6 !default;
+$base04: #b2ccd6 !default; //line numbers, comments
 $base05: #eeffff !default;
 $base06: #eeffff !default;
 $base07: #ffffff !default;
