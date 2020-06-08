@@ -186,7 +186,7 @@ $ bundle install
 $ bundle exec jekyll serve
 ```
 
-in the top level of this repository. A preview of the site will be lon `localhost:4000`
+in the top level of this repository. A preview of the site will be lon `localhost:4000/2020-fellow-posters/`
 
 ## References
 1. 
