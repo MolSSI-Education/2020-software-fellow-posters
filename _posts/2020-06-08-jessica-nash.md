@@ -182,6 +182,7 @@ And you can see more documentation [here](http://docs.mathjax.org/en/latest/basi
 You can preview this site locally by installing [jekyll](https://jekyllrb.com). Once you have jekyll installed, you can preview the site by doing
 
 ```bash
+$ bundle install
 $ bundle exec jekyll serve
 ```
 
