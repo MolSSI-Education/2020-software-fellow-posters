@@ -61,7 +61,7 @@ def hello_world():
 
 ### Fork the repository
 
-This website uses a Jekyll template on GitHub pages. You will add your poster by adding a markdown file and editing a yaml (directions below). You will need to Fork the Repository and submit a pull request to have your poster added.
+This website uses a Jekyll template on GitHub pages. You will add your poster by adding a markdown file and editing a yaml (directions below). You will need to Fork [the Repository](https://github.com/MolSSI-Education/2020-software-fellow-posters) and submit a pull request to have your poster added.
 
 ### Create a branch on your fork
 
