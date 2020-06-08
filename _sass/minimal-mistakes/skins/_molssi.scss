@@ -13,23 +13,23 @@ $masthead-link-color: $text-color !default;
 $masthead-link-color-hover: $text-color !default;
 $navicon-link-color-hover: mix(#fff, $text-color, 80%) !default;
 
-/* contrast syntax highlighting (base16) */
-$base00: #000000 !default;
-$base01: #242422 !default;
-$base02: #484844 !default;
-$base03: #6c6c66 !default;
-$base04: #918f88 !default;
-$base05: #b5b3aa !default;
-$base06: #d9d7cc !default;
-$base07: #fdfbee !default;
-$base08: #ff6c60 !default;
-$base09: #e9c062 !default;
-$base0a: #ffffb6 !default;
-$base0b: #a8ff60 !default;
-$base0c: #c6c5fe !default;
-$base0d: #96cbfe !default;
-$base0e: #ff73fd !default;
-$base0f: #b18a3d !default;
+/* syntax highlighting based on GH color scheme */
+$base00: #ffffff !default; //background
+$base01: #2e3c43 !default;
+$base02: #314549 !default;
+$base03: #546e7a !default;
+$base04: #263238 !default; //line numbers, comments
+$base05: #393536 !default;
+$base06: #393536 !default;
+$base07: #393536 !default;
+$base08: #d73a49 !default;
+$base09: #d73a49 !default;
+$base0a: #000000 !default;
+$base0b: #032f62 !default;
+$base0c: #d73a49 !default;
+$base0d: #6f42c1 !default;
+$base0e: #d73a49 !default;
+$base0f: #ff5370 !default;
 
 .page__content {
   .notice,
@@ -49,4 +49,3 @@ $base0f: #b18a3d !default;
 .page__footer-follow .social-icons .svg-inline--fa {
   color: inherit;
 }
-
