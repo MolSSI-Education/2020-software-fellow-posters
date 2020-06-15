@@ -1,6 +1,6 @@
 ---
 name: 2020-06-08-sina-mostafanejad-poster
-title: OpenRDM: An open-source library for reduced-density matrix-based analysis and computation
+title: "OpenRDM: An open-source library for reduced density matrix-based analysis and computation"
 author: "Sina Mostafanejad"
 mentor-names: "Matthew Welborn, Samuel Ellis"
 full-author-list:
@@ -18,9 +18,11 @@ layout: poster
 
 ## Introduction
 
-This is a template to create an online poster for your software project.
-
-You can include equations:
+The development of an accurate and efficient model for the description of electron correlation
+effects is an active area of research in modern electronic structure theory.
+Although single-determinant-based models such as Kohn-Sham density functional theory (DFT)
+have been successfully applied to a wide variety of molecular systems, they exhibit significant
+failures towards strongly correlated systems of dominant multiconfigurational character.
 
 $$ \vec{F} = - \nabla U $$
 
