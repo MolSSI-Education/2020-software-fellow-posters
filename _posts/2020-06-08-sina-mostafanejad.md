@@ -24,27 +24,48 @@ Although single-determinant-based models such as Kohn-Sham density functional th
 successfully applied to a wide variety of molecular systems, they often exhibit dramatic 
 failures towards strongly correlated systems with dominant multireference character. In such
 cases, multiconfiguration pair-density functional theory (MC-PDFT) offers a possible remedy 
-towards a robust and economic deliniation of strong and weak correlation effects. The efficacy
+towards a robust and economic deliniation of strong and weak correlation effects. As such, the efficacy
 of MC-PDFT stems from highlighting the complimentary strengths of multireference methods and DFT
 to account for static and dynamical correlation effects, respectively.
 
+
+
 ## Theory
 
-### Reduced Density Matrix-Driven CASSCF Method
+### Reduced density matrix-driven CASSCF method
 
-### Multiconfiguration Pair-Density Functional Theory
+### Multiconfiguration pair-density functional theory
 
 ## Software Infrastructure
 
+![OpenRDM]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/openrdm.png)
+***Figure 1**: OpenRDM package*
+
 ## Applications
 
-### Singlet-Triplet Energy Gaps of Graphene Nanoribbons
+### Singlet-triplet energy gaps of graphene nanoribbons
 
-### Reaction Energies
+![STgaps]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/st-gaps.png)
+***Figure 2**: Singlet-triplet energy gap of oligocenes*
 
-### Dissociation of Di- and Polyatomic Molecules
+### Reaction energies
 
-### Effectively Unpaired Electrons
+![Reaction]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/o3add6.png)
+***Figure 3**: 1,3-dipolar cycloaddition reaction of ozone to olefins*
+
+### Dissociation of di- and polyatomic molecules
+
+![N2pec]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/n2-pec.png)
+***Figure 4**: Dissociation potential energy curve of $$N_2$$ molecule*
+
+![N2polar]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/n2-polar.png)
+***Figure 5**: MC-PDFT and $$\lambda$$-MC-PDFT non-parallelity errors 
+($$kcal\ mol^{-1}$$) associated with the dissociation of $$N_2$$ molecule*
+
+### Effectively unpaired electrons
+
+![Nanoribbons]({{ site.url }}{{ site.baseurl }}/assets/images/sina_mostafanejad/nanoribbons.png)
+***Figure 6**: Spatial distribution of effectively unpaired electrons on graphene nanoribbons*
 
 ## Conclusions
 
@@ -52,6 +73,6 @@ to account for static and dynamical correlation effects, respectively.
 1. 
 2. 
 
-### Acknowledgements
+## Acknowledgements
 
 Mohammad Mostafanejad was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580.
