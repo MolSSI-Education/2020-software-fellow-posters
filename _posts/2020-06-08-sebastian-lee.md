@@ -18,68 +18,80 @@ toc_label: "Poster Contents"
 layout: poster
 ---
 
-## Introduction
+## Background and Motivation
+- The barrier to entry for preparing a new tool for use by the broader CMS community can be prohibitively high
 
-images:
+- Typically developers choose to restrict the implementation of their new tool into an established software package or construct an entirely new package from scratch 
+
+- In recent years, there has been a trend of developing open-source standalone libraries or packages that serve a specific focus 
+    - e.g. Libxc$$^XX$$, GeomeTRIC$$^XX$$, and projects at MolSSI
+
+- In particular MolSSI has embraced the goal of connecting the CMS community through projects like the QCArchive$$^XX$$, the MolSSI driver interface$$^XX$$ (MDI), and the revamped basis set exchange$$^XX$$. 
+
+- **Goal:** Create a general wavefunction representation of a molecule to provide the CMS community a simple way to pass information between different software packages to combine available methodologies and facilitate analysis
+
+- Show Figure from proposal as an example workflow. Emphasize QCProgram to QCArchive to (Visualization, Machine-learning, post-HF calculations).
 
 ![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)  
 ***Figure 1**: The logo of the National Science Foundation.*
 
+## Representing a Molecular Wavefunctions
+- Ties into QCSchema and QCElemental.
+- Show QCSchema and QCElemental code
 
-### Images
+- Needs a basis set definition
 
-If you include images on your poster, please make a directory for your poster under `assets/images`. Please make the directory name your name so that the path to your images will be `assets/images/FIRSTNAME_LASTNAME/`.
+### Basis Set Definition
+- Ties in nicely with previous work of MolSSI on the Basis Set Exchange
 
-For images to show up on your poster, you must use this syntax. You can use the example in the Introduction (NSF logo).
+## Integration into QCEngine
+- Gather wavefunction information from quantum chemistry software packages
 
-```markdown
-![Figure Label]({{ "{{ site.url" }} }}{{ "{{ site.baseurl" }} }}/assets/images/FIRSTNAME_LASTNAME/your_image.png)  
-***Figure 1**: The logo of the National Science Foundation.*
+- For example the Entos Program Harness retrieves properties for both restricted and unrestricted wavefunctions
+```python
+entos_wavefunction_map = {
+       "restricted": {
+           "orbitals": "scf_orbitals_a",
+           "density": "scf_density_a",
+           "fock": "scf_fock_a",
+           "eigenvalues": "scf_eigenvalues_a",
+           "occupations": "scf_occupations_a",
+       },
+       "unrestricted": {
+           "orbitals_alpha": "scf_orbitals_a",
+           "orbitals_beta": "scf_orbitals_b",
+           "density_alpha": "scf_density_a",
+           "density_beta": "scf_density_b",
+           "fock_alpha": "scf_fock_a",
+           "fock_beta": "scf_fock_b",
+           "eigenvalues_alpha": "scf_eigenvalues_a",
+           "eigenvalues_beta": "scf_eigenvalues_b",
+           "occupations_alpha": "scf_occupations_a",
+           "occupations_beta": "scf_occupations_b",
+       },
+     }
 ```
 
-### Code
+## Enabling Interoperability
 
-There are a few ways you might include code snippets in this template. For the first two (markdown highlight tag and using back tick characters) you will include your code on the page. For the GitHub gist, you create a gist on GitHub and embed the script.
+- Visualization
 
-#### Highlight tag
+- Machine-learning
 
-Surround your code with a special tag. This example will highlight a code and add line numbers.
+- Easily pass quantum chemistry calculations between codes
+    - post-HF calculations
 
-{% highlight python wl linenos %}
-import numpy as np
-
-for atom1 in atoms:
-    for atom2 in atoms:
-        a1 = atoms.index(atom1)
-        a2 = atoms.index(atom2)
-        coor1 = coordinates[a1]
-        coor2 = coordinates[a2]
-        distance = np.sqrt(np.sum((coor1-coor2)**2))
-        if 0 < distance <= 1.5:
-            print(F'{atom1:2} to {atom2:2} : {distance:.3f}')
-
-def hello_world():
-    print("hello world")
-
-{% endhighlight %}
-
-#### Backticks
-
-If you don't want line numbers you can use three backticks to start a code block, and three backticks to end the code block. The language should follow the first three backticks.
-
-````markdown
-
-```LANGUAGE
-
-  YOUR CODE HERE
-
- ``` 
-
-````
 
 ## References
-1. 
-2. 
+1. S. Lehtola, C. Steigemann, M. J. Oliveira, and M. A. Marques, SoftwareX 7, 1 (2018).
+2. L.-P. Wang and C. Song, The Journal of Chemical Physics 144, 214108 (2016).
+3. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCArchive, https://qcarchive.molssi.org/, 2019.
+4. T. A. Barnes, MolSSI Driver Interface, https://github.com/MolSSI/MDI Library, 2019. (MDI)
+5. B. P. Pritchard, D. Altarawy, and T. L. Windus, A new basis set exchange: An open, up-to-date resource for the molecular sciences community, Manuscript in Preparation. (BSE)
+6. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019. (QCSchema)
+7. F. Manby, T. F. Miller III et al., ChemRxiv , DOI: 10.26434/chemrxiv.7762646.v2 (2019), Preprint. (Entos)
+8. R. M. Parrish et al., Journal of Chemical Theory and Computation 13, 3185 (2017)
+9. H.-J. Werner et al., Molpro, version 2018.1, a package of ab initio programs, 2018, see http://www.molpro.net.
 
 ### Acknowledgements
 
