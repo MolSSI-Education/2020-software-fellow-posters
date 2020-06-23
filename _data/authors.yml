@@ -18,3 +18,15 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+
+Nick Stair:
+    name    : "Nicholas H. Stair"
+    bio     : "Chemistry Graduate Student, Developing Quantum-Computational Algorithms for Strong Correlation"
+    avatar  : "/assets/images/avatars/nick_stair.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:nstair@emory.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/nstair"
