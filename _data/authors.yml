@@ -18,3 +18,17 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+Zhi Wang:
+    name    : "Zhi Wang"
+    bio     : "Postdoctoral Fellow, Washington University in St. Louis"
+    avatar  : "/assets/images/avatars/zhi_wang.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:wangzhi@wustl.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/zhi-wang"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/zhi-wang-a87bbaa2"
