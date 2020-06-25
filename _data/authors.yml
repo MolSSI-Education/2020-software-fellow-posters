@@ -18,3 +18,21 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+
+Pascal Merz:
+    name    : "Pascal T. Merz"
+    bio     : "Postdoctoral Researcher, Shirts Group, CU Boulder"
+    avatar  : "/assets/images/avatars/pascal_merz.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:pascal.merz@colorado.edu"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/pascalmerz"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/ptmerz"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/pascal-t-merz"
