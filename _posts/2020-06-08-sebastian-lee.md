@@ -1,6 +1,6 @@
 ---
 name: sample-poster
-title: Establishing a general framework to represent molecular wavefunctions to provide simple interoperability
+title: Simple interoperability via a general representation of molecular wavefunctions
 author: "Sebastian Lee"
 mentor-names: "Taylor Barnes"
 full-author-list:
@@ -30,66 +30,79 @@ Typically developers choose to restrict the implementation of their new tool int
 
 - **Goal:** Therefore, in collaboration with MolSSI, we propose to create a general wavefunction representation of a molecule to provide the CMS community a simple way to pass information between different software packages to combine available methodologies and facilitate analysis
 
-## Representing a Molecular Wavefunctions
+## Enabling Interoperability
+
+- This new framework allows simple access to wavefunction properties that can used in more complex workflows such as
+    - Orbital and density visualization
+    - Integration into MolSSI Driver Interface
+    - Post processing in other quantum chemistry programs (e.g. correlated calculations)
+
+![Figure]({{ site.url }}{{ site.baseurl }}/assets/images/sebastian_lee/Figure_V8.png)
+**Figure 1**: A schematic representation of the types of workflow enabled by the wavefunction representation framework
+
+## Representing Molecular Wavefunctions
+- XXX General overview of QCArchive and how this work fits into it 
+### QCSchema Integration
+- The MolSSI QCSchema is XXX
 - Expand the MolSSI QCSchema to include wavefunction quantities
 - For example, here are some of the self-consistent field (SCF) quantities that have been added to QCSchema
 
 ```python
 # Orbitals
 scf_wavefunction["scf_orbitals_a"] = {
-    "type": "array",
-    "description": "SCF alpha-spin orbitals in the AO basis.",
-    "items": {"type": "number"},
-    "shape": {"nao", "nmo"}
+  "type": "array",
+  "description": "SCF alpha-spin orbitals in the AO basis.",
+  "items": {"type": "number"},
+  "shape": {"nao", "nmo"}
 }
 
 # Density
 scf_wavefunction["scf_density_a"] = {
-    "type": "array",
-    "description": "SCF alpha-spin density in the AO basis.",
-    "items": {"type": "number"},
-    "shape": {"nao", "nao"}
+  "type": "array",
+  "description": "SCF alpha-spin density in the AO basis.",
+  "items": {"type": "number"},
+  "shape": {"nao", "nao"}
 }
 
 # Fock matrix
 scf_wavefunction["scf_fock_a"] = {
-    "type": "array",
-    "description": "SCF alpha-spin Fock matrix in the AO basis.",
-    "items": {"type": "number"},
-    "shape": {"nao", "nao"}
+  "type": "array",
+  "description": "SCF alpha-spin Fock matrix in the AO basis.",
+  "items": {"type": "number"},
+  "shape": {"nao", "nao"}
 }
 ```
 
-- Next expand QCElemental to make these quantities available within QCEngine (code snippet shown below)
+### QCElemental Integration
+- QCElemental is XXX
+- Next expand QCElemental to make wavefunction quantities available within QCEngine and QCFractal (representative code snippet shown below)
 
 ```python
 class WavefunctionProperties(ProtoModel):
 
-    # The full basis set description of the quantities
-    basis: BasisSet = Field(..., description=str(BasisSet.__doc__))
+  # The full basis set description
+  basis: BasisSet = Field(..., description=str(BasisSet.__doc__))
 
-    # SCF Results
-    scf_orbitals_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin orbitals.")
-    scf_orbitals_b: Optional[Array[float]] = Field(None, description="SCF beta-spin orbitals.")
-    scf_density_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin density matrix.")
-    scf_density_b: Optional[Array[float]] = Field(None, description="SCF beta-spin density matrix.")
-    scf_fock_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin Fock matrix.")
-    scf_fock_b: Optional[Array[float]] = Field(None, description="SCF beta-spin Fock matrix.")
-    scf_eigenvalues_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin eigenvalues.")
-    scf_eigenvalues_b: Optional[Array[float]] = Field(None, description="SCF beta-spin eigenvalues.")
-    scf_occupations_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin occupations.")
-    scf_occupations_b: Optional[Array[float]] = Field(None, description="SCF beta-spin occupations.")
+  # SCF Results
+  scf_orbitals_a = Field(None, description="SCF alpha-spin orbitals.")
+  scf_orbitals_b = Field(None, description="SCF beta-spin orbitals.")
+  scf_density_a = Field(None, description="SCF alpha-spin density matrix.")
+  scf_density_b = Field(None, description="SCF beta-spin density matrix.")
+  scf_fock_a = Field(None, description="SCF alpha-spin Fock matrix.")
+  scf_fock_b = Field(None, description="SCF beta-spin Fock matrix.")
+  scf_eigenvalues_a = Field(None, description="SCF alpha-spin eigenvalues.")
+  scf_eigenvalues_b = Field(None, description="SCF beta-spin eigenvalues.")
+  scf_occupations_a = Field(None, description="SCF alpha-spin occupations.")
+  scf_occupations_b = Field(None, description="SCF beta-spin occupations.")
 ```
 
-- Needs a basis set definition
-
-### Basis Set Definition
-- Ties in nicely with previous work of MolSSI on the Basis Set Exchange
+- A major complication of storing and exporting wavefunction quantities is fully specifying the basis set used to construct these objects
+- This complication was overcome by utilizing the previous work of MolSSI on the Basis Set Exchange$$^XX$$, which provided a natural way to integrate a basis set definition in QCElemental
 
 ## Gathering Wavefunction Information
-- Integration into QCEngine to gather wavefunction information from quantum chemistry software packages
 
-- For example the Entos QCore Program Harness retrieves properties for both restricted and unrestricted wavefunctions
+- Next QCEngine is used to gather wavefunction information from quantum chemistry software packages
+- For example the Entos QCore Program Harness retrieves properties for both restricted and unrestricted wavefunctions (example code snippet)
 ```python
 entos_wavefunction_map = {
        "restricted": {
@@ -116,16 +129,7 @@ entos_wavefunction_map = {
 
 - Both Psi4$$^XX$$ and Entos QCore$$^X$$ have wavefunction support with more programs planned for the future
 
-## Enabling Interoperability
-
-- This framework allows simple access to wavefunction properties that can used in more complex workflows such as
-    - Orbital and density visualization
-    - Integration into MolSSI Driver Interface
-    - Post processing in other quantum chemistry programs (e.g. correlated calculations)
-
-![Figure]({{ site.url }}{{ site.baseurl }}/assets/images/sebastian_lee/Figure_V8.png)
-**Figure 1**: A schematic representation of the types of workflow enabled by the wavefunction representation framework
-
+## Conclusion
 - The outcome of this project will provide a powerful tool for new and existing members of the CMS community
 
 

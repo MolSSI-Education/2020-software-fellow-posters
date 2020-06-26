@@ -22,7 +22,7 @@ Jessica Nash:
 Sebastian Lee:
     name    : "Sebastian J. R. Lee"
     bio     : "PhD Graduate Student at Caltech"
-    avatar  : "/assets/images/avatars/jessica_nash.jpg"
+    avatar  : "/assets/images/avatars/sebastian_lee.png"
     links   :
       - label: "Email"
         icon: "fas fa-fw fa-envelope-square"
