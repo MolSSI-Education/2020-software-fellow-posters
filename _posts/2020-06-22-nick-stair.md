@@ -1,15 +1,18 @@
 ---
 name: QForte
-title: "QForte: A fast quantum computer simulator and algorithms library for molecular simulation."
+title: "QForte: A quantum computer simulator and algorithms library for molecular simulation"
 author: "Nick Stair"
 mentor-names: "Jonathan Moussa"
 full-author-list:
     - name: "Nicholas H. Stair"
       affiliation: 1
+    - name: "Francesco A. Evangelista"
+      affiliation: 1
 affiliations:
-    - name: "Emory University"
-      address: "Atlanta, GA"
+    - name: "Department of Chemistry and Cherry Emerson Center for Scientific Computation, Emory University"
+      address: "Atlanta, GA, 30322"
       index: 1
+
 toc: true
 toc_sticky: true
 toc_label: "Poster Contents"
@@ -24,11 +27,20 @@ Classical simulation of molecules and materials via solution of the Schr&ouml;od
 
 QForte is an open-source package with two main components. First, it is an open-source
 quantum computer simulator written in C++ and exposed in Python via pybind11.
+They key elements of a simulated quantum computation are building a quantum register, applying circuits
+to the register, and measuring expectaion values.
+![QC Register]({{ site.url }}{{ site.baseurl }}/assets/images/nick_stair/f2a.jpg)  
+![Apply Circ]({{ site.url }}{{ site.baseurl }}/assets/images/nick_stair/f2b.jpg)  
+![Measure Op]({{ site.url }}{{ site.baseurl }}/assets/images/nick_stair/f2c.jpg)  
+***Figure 1**: The three aspects of a simulated quantum computation.*
+
 Second, it is a library of quantum computational algorithms aimed at simulating
 molecular systems. This combination allows the user to calculate molecular properties
 (such as the energy) using a specified quantum algorithm with just a few lines of code,
 similar to what would be required to run a calculation using a classical quantum chemistry
-package. It utilizes simple interfaces to Psi4 and OpenFermion to generate molecular integrals.     
+package. It utilizes simple interfaces to Psi4 and OpenFermion to generate molecular integrals.
+![Measure Op]({{ site.url }}{{ site.baseurl }}/assets/images/nick_stair/f3.jpg)
+***Figure 2**: QForte algorithms library.*
 
 ## Why is QForte useful?
 
@@ -39,9 +51,6 @@ primarily due to lack of software availability. Moreover, many metrics are requi
 to adequately compare the utility of quantum algorithms. For example, the number of multi-qubit
 operations, the number of operator measurements, the number of variational classical parameters,
 and the error in the property of interest are all important considerations.
-
-![Algorithm Summary]({{ site.url }}{{ site.baseurl }}/assets/images/nick_stair/f1.jpg)  
-***Figure 1**: Important metrics for quantum algorithm utility.*
 
 ### Compare with existing algorithms
 
@@ -58,7 +67,7 @@ and unitary coupled cluster singles and doubles VQE (UCCSD-VQE).<sup>8</sup>
 ### Development toolbox for new algorithms
 
 QForte also serves as a powerful tool for the development of new algorithms using abstract
-bass classes to ensure uniformity. It contains fast C++ implementations of the Jordan-Wigner transform, circuit application, Trotterizatoin, state overlap, and operator measurement. These tools allow for rapid
+bass classes to ensure uniformity. It contains fast C++ implementations of the Jordan-Wigner transform, circuit application, Trotterization, state overlap, and operator measurement. These tools allow for rapid
 development of VQE and QK ansatz or even entirely new classes of algorithms.  
 
 ## Example usage
@@ -315,7 +324,7 @@ Total number of comutator measurements:       127
 
 5. Stair, Nicholas H., Renke Huang, and Francesco A. Evangelista. "A multireference quantum krylov algorithm for strongly correlated electrons." Journal of Chemical Theory and Computation 16.4 (2020): 2236-2245.
 
-6. Stair, Nicholas H., Renke Huang, and Francesco A. Evangelista. "A multireference quantum krylov algorithm for strongly correlated electrons." Journal of Chemical Theory and Computation 16.4 (2020): 2236-2245.
+6. Motta, Mario, et al. "Determining eigenstates and thermal states on a quantum computer using quantum imaginary time evolution." Nature Physics 16.2 (2020): 205-210.
 
 7. Grimsley, Harper R., et al. "An adaptive variational algorithm for exact molecular simulations on a quantum computer." Nature communications 10.1 (2019): 1-9.
 
