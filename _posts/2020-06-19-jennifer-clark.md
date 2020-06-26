@@ -25,7 +25,9 @@ layout: poster
 
 ## Introduction
 
-First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) EOS
+First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) EOS.
+
+Despite the power of SAFT coarse graining, its use has been limited by lack of availability of a freely accessible application.
 
 ![logo]({{ site.url }}{{ site.baseurl }}/assets/images/jennifer_clark/logo.png)
 ***Figure 1**: DESPASITO: **D**etermining **E**quilibrium **S**tate and **P**arametrization: **A**pplication for **S**AFT, **I**ntended for **T**hermodynamic **O**utput*
@@ -40,8 +42,8 @@ First open-source application of its kind for Statistical Associating Fluid Theo
 
 ### Available Alternatives:
  - Bottled SAFT [4] is a web application meant to remedy issue of parameterizing by applying corresponding states for homonuclear molecules, but represents a general correlation that relies on possessing critical properties.
- - PC-SAFT calculations are available in Aspen
- - gSAFT package from Process Systems Enterprise, PSE, is a more direct comparison supporting SAFT-γ-Mie
+ - PC-SAFT calculations are available in the commercial package, Aspen
+ - The commercial package gSAFT from Process Systems Enterprise, PSE, is a more direct comparison supporting SAFT-γ-Mie
 
 ## Statistical Associating Fluid Theory, SAFT
 
@@ -53,7 +55,7 @@ First open-source application of its kind for Statistical Associating Fluid Theo
 ***Figure 2**: SAFT-γ-Mie has been successfully applied to various larger scale systems, DESPASITO makes contributing more accessible.*
 
 - As of now, a new contributor to this emerging method of coarse-graining would need to write their code from scratch
-- Our application makes SAFT accessible
+- Our application makes SAFT accessible to the general public
 
 ## How it Works
 
@@ -91,7 +93,7 @@ $ python -m despasito -i input.json
 
 DESPASITO can also be imported as a library so that a user can use the EOS object's accessible attributes.
 
-For example, we can break-down the helmholtz energy components for hexane.
+For example, we can break-down the Helmholtz energy components for hexane.
 
 ````markdown
 beads  = ['CH3', 'CH2']
@@ -121,8 +123,8 @@ These parameters were taken from Dufal et al. [3]
 
 ![features]({{ site.url }}{{ site.baseurl }}/assets/images/jennifer_clark/features.png)
 
-- Although our intention was to create a platform to fit parameters for the SAFT EOS, we are equipped to handle other equations of state that can’t be solve explicitly.
-- We added the Peng-Robinson EOS as an example of a non-SAFT EOS, but Extended UNIQUAC would be an ideal addition.
+- Although our intention was to create a platform to fit parameters for the SAFT EOS, we are equipped to handle other equations of state that can’t be solved explicitly (e.g. Extended UNIQUAC).
+- We added the Peng-Robinson EOS as an example of a non-SAFT EOS.
 - Code Optimization: Implemented options to provide Numba, Cython, or Fortran modules.
 - Shared-Memory Parallelization: Numerous thermodynamic or parametrization calculations can be distributed to multiple nodes for HPC resources.
 
