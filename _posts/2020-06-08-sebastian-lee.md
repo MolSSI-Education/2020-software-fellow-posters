@@ -1,6 +1,6 @@
 ---
 name: sample-poster
-title: Establishing a general framework to represent molecular wavefunctions and provide simple interoperability
+title: Establishing a general framework to represent molecular wavefunctions to provide simple interoperability
 author: "Sebastian Lee"
 mentor-names: "Taylor Barnes"
 full-author-list:
@@ -19,35 +19,77 @@ layout: poster
 ---
 
 ## Background and Motivation
-- The barrier to entry for preparing a new tool for use by the broader CMS community can be prohibitively high
 
-- Typically developers choose to restrict the implementation of their new tool into an established software package or construct an entirely new package from scratch 
+- The barrier to entry for preparing a new tool for use by the broader computational molecular science (CMS) community can be prohibitively high.
+Typically developers choose to restrict the implementation of their new tool into an established software package or construct an entirely new package from scratch.
 
-- In recent years, there has been a trend of developing open-source standalone libraries or packages that serve a specific focus 
+- Recently, there has been a trend of developing open-source standalone libraries or packages that serve a specific focus
     - e.g. Libxc$$^XX$$, GeomeTRIC$$^XX$$, and projects at MolSSI
 
-- In particular MolSSI has embraced the goal of connecting the CMS community through projects like the QCArchive$$^XX$$, the MolSSI driver interface$$^XX$$ (MDI), and the revamped basis set exchange$$^XX$$. 
+- MolSSI has embraced the goal of connecting the CMS community through projects like the QCArchive$$^XX$$, the MolSSI driver interface$$^XX$$ (MDI), and the revamped basis set exchange$$^XX$$.
 
-- **Goal:** Create a general wavefunction representation of a molecule to provide the CMS community a simple way to pass information between different software packages to combine available methodologies and facilitate analysis
-
-- Show Figure from proposal as an example workflow. Emphasize QCProgram to QCArchive to (Visualization, Machine-learning, post-HF calculations).
-
-![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)  
-***Figure 1**: The logo of the National Science Foundation.*
+- **Goal:** Therefore, in collaboration with MolSSI, we propose to create a general wavefunction representation of a molecule to provide the CMS community a simple way to pass information between different software packages to combine available methodologies and facilitate analysis
 
 ## Representing a Molecular Wavefunctions
-- Ties into QCSchema and QCElemental.
-- Show QCSchema and QCElemental code
+- Expand the MolSSI QCSchema to include wavefunction quantities
+- For example, here are some of the self-consistent field (SCF) quantities that have been added to QCSchema
+
+```python
+# Orbitals
+scf_wavefunction["scf_orbitals_a"] = {
+    "type": "array",
+    "description": "SCF alpha-spin orbitals in the AO basis.",
+    "items": {"type": "number"},
+    "shape": {"nao", "nmo"}
+}
+
+# Density
+scf_wavefunction["scf_density_a"] = {
+    "type": "array",
+    "description": "SCF alpha-spin density in the AO basis.",
+    "items": {"type": "number"},
+    "shape": {"nao", "nao"}
+}
+
+# Fock matrix
+scf_wavefunction["scf_fock_a"] = {
+    "type": "array",
+    "description": "SCF alpha-spin Fock matrix in the AO basis.",
+    "items": {"type": "number"},
+    "shape": {"nao", "nao"}
+}
+```
+
+- Next expand QCElemental to make these quantities available within QCEngine (code snippet shown below)
+
+```python
+class WavefunctionProperties(ProtoModel):
+
+    # The full basis set description of the quantities
+    basis: BasisSet = Field(..., description=str(BasisSet.__doc__))
+
+    # SCF Results
+    scf_orbitals_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin orbitals.")
+    scf_orbitals_b: Optional[Array[float]] = Field(None, description="SCF beta-spin orbitals.")
+    scf_density_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin density matrix.")
+    scf_density_b: Optional[Array[float]] = Field(None, description="SCF beta-spin density matrix.")
+    scf_fock_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin Fock matrix.")
+    scf_fock_b: Optional[Array[float]] = Field(None, description="SCF beta-spin Fock matrix.")
+    scf_eigenvalues_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin eigenvalues.")
+    scf_eigenvalues_b: Optional[Array[float]] = Field(None, description="SCF beta-spin eigenvalues.")
+    scf_occupations_a: Optional[Array[float]] = Field(None, description="SCF alpha-spin occupations.")
+    scf_occupations_b: Optional[Array[float]] = Field(None, description="SCF beta-spin occupations.")
+```
 
 - Needs a basis set definition
 
 ### Basis Set Definition
 - Ties in nicely with previous work of MolSSI on the Basis Set Exchange
 
-## Integration into QCEngine
-- Gather wavefunction information from quantum chemistry software packages
+## Gathering Wavefunction Information
+- Integration into QCEngine to gather wavefunction information from quantum chemistry software packages
 
-- For example the Entos Program Harness retrieves properties for both restricted and unrestricted wavefunctions
+- For example the Entos QCore Program Harness retrieves properties for both restricted and unrestricted wavefunctions
 ```python
 entos_wavefunction_map = {
        "restricted": {
@@ -72,14 +114,19 @@ entos_wavefunction_map = {
      }
 ```
 
+- Both Psi4$$^XX$$ and Entos QCore$$^X$$ have wavefunction support with more programs planned for the future
+
 ## Enabling Interoperability
 
-- Visualization
+- This framework allows simple access to wavefunction properties that can used in more complex workflows such as
+    - Orbital and density visualization
+    - Integration into MolSSI Driver Interface
+    - Post processing in other quantum chemistry programs (e.g. correlated calculations)
 
-- Machine-learning
+![Figure]({{ site.url }}{{ site.baseurl }}/assets/images/sebastian_lee/Figure_V8.png)
+**Figure 1**: A schematic representation of the types of workflow enabled by the wavefunction representation framework
 
-- Easily pass quantum chemistry calculations between codes
-    - post-HF calculations
+- The outcome of this project will provide a powerful tool for new and existing members of the CMS community
 
 
 ## References
