@@ -93,7 +93,9 @@ We plan to implement the calculation of nonadiabatic couplings for multireferenc
 1. [Q. Sun, _et al_ “Recent developments in the PySCF program package”. In Review (2020).](https://arxiv.org/abs/2002.12531)
 
 
-## Funding
+## Funding and Acknowledgements
+
+James E. T. Smith was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580
 
 ![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)  
 ![MolSSI]({{ site.url }}{{ site.baseurl }}/assets/images/molssi_avatar.png)  
