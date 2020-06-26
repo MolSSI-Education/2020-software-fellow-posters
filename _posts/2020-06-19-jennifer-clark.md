@@ -38,7 +38,7 @@ First open-source application of its kind for Statistical Associating Fluid Theo
  - Historically complex equations of state are desired by the oil and gas industry
  - Academically the SAFT EOS has been developed into a coarse-graining formalism [1-3] that provides chemical specificity to larger scale molecular dynamics simulations
 
-### Available Alternatives
+### Available Alternatives:
  - Bottled SAFT [4] is a web application meant to remedy issue of parameterizing by applying corresponding states for homonuclear molecules, but represents a general correlation that relies on possessing critical properties.
  - PC-SAFT calculations are available in Aspen
  - gSAFT package from Process Systems Enterprise, PSE, is a more direct comparison supporting SAFT-$$ \gamma $$-Mie
@@ -46,7 +46,7 @@ First open-source application of its kind for Statistical Associating Fluid Theo
 ## Statistical Associating Fluid Theory, SAFT
 
 - Explicitly links the intermolecular potential with thermodynamic properties 
-- Parameters are fit to experimental vapor-liquid equilibria data or macroscopic properties
+- Parameters are fit to experimental vapor-liquid equilibria data and other macroscopic properties
 - Various versions of SAFT can be used to obtain parameters for coarse-grained MD simulations
 
 ![applications]({{ site.url }}{{ site.baseurl }}/assets/images/jennifer_clark/applications.png)
@@ -57,7 +57,7 @@ First open-source application of its kind for Statistical Associating Fluid Theo
 
 ## How it Works
 
-Our modular and object oriented approach allows this package to easily function for an EOS other than SAFT, and expand the thermodynamic properties it handles.
+Our modular and object oriented approach allows this package to function for an EOS other than SAFT, and expand the thermodynamic properties it handles.
 
  - **Want a different method of fitting?** Add another function and our factory method will find it
  - **Want another objective function?** Add a class using our template
@@ -86,8 +86,8 @@ A thermodynamic calculation is as easy as a 6 line input file:
 | Equations of State | Thermodynamic Calculations | Parameter Fitting |
 |-------|--------|---------|
 | SAFT-$$ \gamma $$-Mie | Bubble/Dew point | Supports fitting with all supported calculation types |
-| SAFT-$$ \gamma $$-SW | Binary Flash | Flexible and easily tuned global and local minimization algorithms |
-| Peng-Robinson | Saturation Properties | Various systems with a shared bead are easily simultaneously fit to experimental data |
+| SAFT-$$ \gamma $$-SW | Binary Flash | Flexible and tunable global and local minimization algorithms |
+| Peng-Robinson | Saturation Properties | Various systems with a shared bead are simultaneously fit to experimental data |
 | | Activity Coefficient | Multiprocessing with spawned workers |
 | | Hildebrand solubility | |
 
