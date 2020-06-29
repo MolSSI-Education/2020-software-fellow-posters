@@ -139,7 +139,7 @@ Revisited. *J. Chem. Phys*. **2009**, 131, 031104. [https://doi.org/10.1063/1.31
 7. D. T. Crawford, H. F. Schaefer III. *Rev. Comp. Chem*. **2007**, 14, 33−136. [https://doi.org/10.1002/9780470125915.ch2](https://doi.org/10.1002/9780470125915.ch2)
 8. L. N. Koulias, L. Lu, D. B. Williams-Young, T. Zhang, A. E. DePrince III, X. Li. Simulating Absorption Spectra with Relativistic Equation-of-Motion Coupled-Cluster Singles and Doubles. TBD.
 9. "TiledArray: A general-purpose scalable block-sparse tensor framework", Justus A. Calvin and Edward F. Valeev, [https://github.com/valeevgroup/tiledarray](https://github.com/valeevgroup/tiledarray)
-10. (Lanczos ref)
+10. C. Lanczos. An Iteration Method for the Solution of the Eigenvalue Problem of Linear Differential and Integral Operators. *Journal of Research of the National Bureau of Standards*. **1950**, 45 (4): 255–282.  [https://doi.org/10.6028/jres.045.026](https://doi.org/10.6028/jres.045.026)
 11. (Brandons in progress paper)
 
 ### Acknowledgements
