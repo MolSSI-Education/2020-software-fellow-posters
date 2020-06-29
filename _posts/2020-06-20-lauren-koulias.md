@@ -51,7 +51,7 @@ The ground state CC wavefunction<sup>[7](#references)</sup> is comprised of an e
 
  where $$\vert\Phi_0\rangle$$ can either be the X2C ground state wavefunction or the generalized Hartree-Fock ground state wavefunction and the cluster operator, $$\hat{T}$$, at the singles and doubles level is:
 
- $$ \hat{T} = \hat{T}_1 + \hat{T}_1 = \sum_{ia} t_i^a \hat{a}_a^\dagger \hat{a}_i +\frac{1}{4} \sum_{ijab} t_{ij}^{ab} \hat{a}_a^\dagger \hat{a}_b^\dagger \hat{a}_j \hat{a}_i $$
+ $$ \hat{T} = \hat{T}_1 + \hat{T}_2 = \sum_{ia} t_i^a \hat{a}_a^\dagger \hat{a}_i +\frac{1}{4} \sum_{ijab} t_{ij}^{ab} \hat{a}_a^\dagger \hat{a}_b^\dagger \hat{a}_j \hat{a}_i $$
 
  where solving for the $$t$$-amplitudes, $$t_i^a$$ and $$t_{ij}^{ab}$$, will allow the CC ground state energy to be obtained via:
 
@@ -87,8 +87,6 @@ where $$\bar{\mu}_\xi$$ is the similarity transformed dipole operator.
 
 This propagation forms a time domain spectrum which can then be Fourier transformed using the Pade approximation to yeild a frequency domain absorption spectrum:
 
-(insert water time domain / freq domain spectrum diagram)
-
 ![Figure Label]({{ site.url }}{{ site.baseurl }}/assets/images/LAUREN_KOULIAS/water_transform.png)  
 ***Figure 1**: The time domain spectra on the left can be converted to the frequency domain absorption spectra on the right using a Fourier transformation. Data from STO-3G water molecule show.*
 
@@ -97,7 +95,7 @@ This propagation forms a time domain spectrum which can then be Fourier transfor
 
 ### Zero-Field Splitting in Atomic Spectra
 
-When ℂ-GHF is used as the reference wavefunction, only one transition is seen in this energy regime, from the $$^2S$$ ground state to the $$^2P$$ excited state. However, when using the X2C reference, the inclusion of relativistic effects, particularly spin-orbit coupling, allows the $$^2P$$ states to split into $$2^P_{1/2}$$ and $$^2P_{3/2}$$ states. Additionally, the relative oscillator strength is as expected for the two- and four-fold degeneracy of the $$2^P_{1/2}$$ and $$^2P_{3/2}$$ states. It should also be noted that the excitation energies and oscillator strengths are in agreement in both the EOM-CCSD and TD-EOM formalisms.
+When ℂ-GHF is used as the reference wavefunction, only one transition is seen in this energy regime, from the $$^2S$$ ground state to the $$^2P$$ excited state. However, when using the X2C reference, the inclusion of relativistic effects, particularly spin-orbit coupling, allows the $$^2P$$ states to split into $$^2P_{1/2}$$ and $$^2P_{3/2}$$ states. Additionally, the relative oscillator strength is as expected for the two- and four-fold degeneracy of the $$^2P_{1/2}$$ and $$^2P_{3/2}$$ states. It should also be noted that the excitation energies and oscillator strengths are in agreement in both the EOM-CCSD and TD-EOM formalisms.
 
 
 ![Figure Label]({{ site.url }}{{ site.baseurl }}/assets/images/LAUREN_KOULIAS/na_td_and_eom.png)  
@@ -108,7 +106,7 @@ A preliminary benchmark for the accuracy of TD-X2C-EOM-CCSD on Zero-Field splitt
 
 ### L-edge X-Ray Spectra
 
-Similarly, in the L-edge of Aluminum when the ℂ-GHF reference wavefunction is use we see transitions from the 2p to 3p orbitals. However, when we use an X2C reference, the p orbitals split into $$J=\frac{1}{2}$$ and $$J=\frac{3}{2}$$, giving rise to the $$L_{2,3}$$-edge separation that can seen in Fig. 3. Again, there is good aggreement between the EOM-CCSD and TD-EOM formalisms.
+Similarly, in the L-edge of Aluminum when the ℂ-GHF reference wavefunction is use we see transitions out of the 2p orbitals. However, when we use an X2C reference, the p orbitals split into $$J=\frac{1}{2}$$ and $$J=\frac{3}{2}$$, giving rise to the $$L_{2,3}$$-edge separation that can seen in Fig. 3. Again, there is good aggreement between the EOM-CCSD and TD-EOM formalisms.
 
 ![Figure Label]({{ site.url }}{{ site.baseurl }}/assets/images/LAUREN_KOULIAS/al_l_edge_spec.png)  
 ***Figure 3**: The X-ray absorption spectra of aluminum using both nonrelativistic and relativistic caluclations for both the EOM and TD-EOM methods are shown, all using the 6-31G basis set.*
