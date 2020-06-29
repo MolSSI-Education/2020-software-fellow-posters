@@ -1,15 +1,20 @@
 ---
 name: adc-poster
-title: "Efficient quantum chemical method for ionization and electron attachment in molecules"
+title: "Efficient implementation of ADC for ionization and electron attachment in molecules"
 author: "Samragni Banerjee"
 mentor-names: "Jessica A. Nash"
+
 full-author-list:
     - name: "Samragni Banerjee"
+      affiliation: 1
     - name: "Alexander Yu. Sokolov"
+      affiliation: 1
 
 affiliations:
-    - name: "Department of Chemistry and Biochemistry, The Ohio State University"
+    - name: "Department of Chemistry, The Ohio State University"
       address: "Columbus, OH"
+      index: 1
+
 toc: true
 toc_sticky: true
 toc_label: "Poster Contents"
@@ -24,7 +29,7 @@ redox potentials, band gaps, and photoelectron spectra.
 and efficient theoretical methods for computing IP and EA of molecules
 and materials is one of the current challenges in modern quantum chemistry.
 * To address this problem, we developed a new and efficient computer
-implementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package PySCF.
+implementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package [PySCF](http://pyscf.org/index.html).
 
 ## Theory
 
@@ -41,7 +46,11 @@ computing the response is called a propagator.
  * The key step of my IP/EA-ADC implementation is a function that defines the form of the  $$\boldsymbol{\sigma} = \textbf{MX}$$ vector that is the product of the ADC effective Hamiltonian matrix ($$\textbf{M}$$) and a trial vector ($$\textbf{X}$$).
  *  Once the $$\boldsymbol{\sigma}$$ vector is defined for a particular ADC approximation, conventional iterative diagonalization techniques are used to solve for several lowest IP or EA energies and the intensities of these transitions.
 
-## Efficiency improvements to pilot code
+ ![algorithm]({{ site.url }}{{ site.baseurl }}/assets/images/SAMRAGNI_BANERJEE/algo.png)
+
+ <sup>***Figure 1**: A schematic representation of the IP/EA-ADC implementation in PySCF.*</sup>
+
+## Efficiency improvements to the previous IP/EA-ADC implementation
 
 The pilot implementation of IP/EA-ADC was limited to systems with upto $$\sim$$ 300 orbitals. As a part of my project supported by MolSSI, I made several improvements to increase the efficiency of my implementation in PySCF :
 
@@ -49,37 +58,40 @@ The pilot implementation of IP/EA-ADC was limited to systems with upto $$\sim$$ 
 
 * An in-core algorithm with optimized memory and CPU efficiency
 
-* An out-of-core algorithm that reduces the memory requirements by storing two-electron integrals on disk (using $$\textit{ h5py}$$ Python module capabilities) and computing them on-the-fly. This is done using a buffering algorithm that computes subsets of the two-electron integrals which fits in the available memory
+* An out-of-core algorithm that reduces the memory requirements by storing two-electron integrals on disk (using $$\textit{ h5py}$$ Python module capabilities) and computing them on-the-fly. This is done using a buffering algorithm that computes subsets of the two-electron integrals which fits in the available memory.
 
 * Use of Basic Linear Algebra Subroutines (BLAS) operations for expensive tensor contractions, which speeds up the calculations of the matrix-vector products ($$\boldsymbol{\sigma}$$ = $$\textbf{MX}$$)
 
 *  A modified ADC code interface to allow for a direct calculation of excitation energies and properties
 
-*  A modified preconditioner for Davidson’s iterative algorithm for better convergence of IP’s/EA’s.
-
-TODO : Add figure for algorithm
+*  A modified preconditioner for Davidson’s iterative algorithm for better convergence of IP/EA energies
 
 ## Results
 
-* The several improvements have led to significant computational savings both with respect to memory usage as well as computational wall times.
+* The several improvements discussed above have led to significant computational savings both with respect to memory usage as well as computational wall times.
 
-* The new ADC implementation is more efficient than the highly optimized EOM-CCSD implementation in PySCF and has a similar accuracy.
+* The new ADC implementation is more efficient than the highly optimized equation-of-motion coupled-cluster singles and doubles (EOM-CCSD) implementation in PySCF and has a similar accuracy.
 
- ![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/SAMRAGNI_BANERJEE/comparisons.png)
-***Figure 2**: Comparison of
-(a) maximum memory usage between the previous and present EA-ADC(3) implementations for H<sub>2</sub>CO (aug-cc-pVTZ),
-(b)computational wall times between the previous and present EA-ADC(3) as well as EA-EOM-CCSD implementations for H<sub>2</sub>CO (aug-cc-pVTZ),
-(c) mean absolute errors (eV) in EA's for a set of closed-shell atoms and molecules simulated using EA-EOM-CCSD and EA-ADC(3) (aug-cc-pVQZ)*
+ ![compare_profiles]({{ site.url }}{{ site.baseurl }}/assets/images/SAMRAGNI_BANERJEE/comparisons.png)
+<sup>***Figure 2**: Comparison of
+(a) maximum memory usage between the previous and present EA-ADC(3) implementations for H<sub>2</sub>CO (basis set: aug-cc-pVTZ),
+(b) computational wall times between the previous and present EA-ADC(3) as well as EA-EOM-CCSD implementations for H<sub>2</sub>CO (basis set : aug-cc-pVTZ),
+(c) mean absolute errors (eV) in EA's for a set of closed-shell atoms and molecules simulated using EA-EOM-CCSD and EA-ADC(3) (basis set : aug-cc-pVQZ)*</sup>
 
-* The present implementation allows computation of larger systems. Shown are results for systems having $$\sim$$ 600 orbitals.
+* The present ADC implementation allows simulation of larger systems (600 orbitals) compared to the previous implementation which was limited to 300 orbitals.
 
-TODO : Add figures for results
+![GC_EA]({{ site.url }}{{ site.baseurl }}/assets/images/SAMRAGNI_BANERJEE/GC_EA_1.png){:height="500px" width="500px"}
+
+<sup>***Figure 3**: Preliminary results for vertical electron attachment energy of DNA nucleobase pair of guanine (G) and cytosine (C) computed using ADC(2) (basis set : aug-cc-pVDZ)*</sup>
+
 
 ## Conclusion
 
-* Implemented ADC as a new module in PySCF for accurate simulation IP/EA of molecules
-* Made several efficiency modifications leading to reduction in memory requirements and computational wall times
-* All these improvements enabled simulation of larger molecules (600 orbitals), which paves the way for materials simulation using ADC in the future
+* Implemented ADC as a new module in PySCF for accurate IP/EA simulation of molecules.
+
+* Made several efficiency modifications leading to significant reduction in memory requirements and computational wall times.
+
+* All the improvements enabled simulations of large molecules (600 orbitals), which paves the way for materials simulation using ADC in the future.
 
 ## References
 
@@ -87,10 +99,11 @@ TODO : Add figures for results
 
 2. [S. Banerjee, A. Yu. Sokolov.  "Third-order algebraic diagrammatic construction theory for electron attachment and ionization energies: Conventional and Green’s function implementation", *J. Chem. Phys.*, **2019**, *151*, 224112](https://doi.org/10.1063/1.5131771)
 
-3.Q. [Sun, et al. “Recent developments in the PySCF program package”,**2020**, *In Review*](https://arxiv.org/abs/2002.12531)
+3. [Q. Sun, et al. “Recent developments in the PySCF program package”,**2020**, *In Review*](https://arxiv.org/abs/2002.12531)
 
 ## Acknowledgements
 
 "`Samragni Banerjee` was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580"
 
 ![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)
+![MolSSI]({{ site.url }}{{ site.baseurl }}/assets/images/molssi_avatar.png)
