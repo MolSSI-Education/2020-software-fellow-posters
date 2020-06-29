@@ -25,7 +25,7 @@ layout: poster
 
 ## Introduction
 
-First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) EOS.
+First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) equation of state (EOS).
 
 Despite the power of SAFT coarse graining, its use has been limited by lack of availability of a freely accessible application.
 
@@ -72,7 +72,7 @@ Our modular and object oriented approach allows this package to function for an 
 
 ## Example Calculations
 
-For a united atom calculation of pentane and methane, a thermodynamic calculation is as easy as a 6 line input file (given parameter files):
+For a united atom calculation of pentane and methane, a thermodynamic calculation is as easy as a 6 line file, input.json (given parameter files):
 
 ````markdown
 {
@@ -100,7 +100,8 @@ beads  = ['CH3', 'CH2']
 beads_per_molecule  = np.array([[2., 8.]])
 beadlibrary  = {'CH3':
                    {'epsilon': 256.7662,'l_a': 6.0, 'l_r': 15.04982, 'sigma': 4.077257e-1, 'Sk': 0.5725512, 'Vks': 1, 'mass': 0.015035},
-                'CH2': {'epsilon': 473.3893, 'l_a': 6.0, 'l_r': 19.87107, 'sigma': 4.880081e-1, 'Sk': 0.2293202, 'Vks': 1, 'mass': 0.014027}}
+                'CH2': 
+                   {'epsilon': 473.3893, 'l_a': 6.0, 'l_r': 19.87107, 'sigma': 4.880081e-1, 'Sk': 0.2293202, 'Vks': 1, 'mass': 0.014027}}
 crosslibrary  = {'CH3': {'CH2': {'epsilon': 350.770}}}
 eos = despasito.equations_of_state.eos(eos="saft.gamma_mie", beads=beads , nui=beads_per_molecule , beadlibrary=beadlibrary , crosslibrary=crosslibrary )
 
@@ -126,7 +127,7 @@ These parameters were taken from Dufal et al. [3]
 - Although our intention was to create a platform to fit parameters for the SAFT EOS, we are equipped to handle other equations of state that can’t be solved explicitly (e.g. Extended UNIQUAC).
 - We added the Peng-Robinson EOS as an example of a non-SAFT EOS.
 - Code Optimization: Implemented options to provide Numba, Cython, or Fortran modules.
-- Shared-Memory Parallelization: Numerous thermodynamic or parametrization calculations can be distributed to multiple nodes for HPC resources.
+- Shared-Memory Parallelization: Numerous thermodynamic or parametrization calculations can be run in parallel with multi cores for HPC resources.
 
 ## What is Next?
 
