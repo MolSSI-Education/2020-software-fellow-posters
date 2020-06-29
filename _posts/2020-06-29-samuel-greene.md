@@ -35,7 +35,7 @@ layout: poster
 * We are developing randomized methods  able to efficiently solve linear algebra problems in quantum chemistry involving large matrices by stochastically introducing sparsity and then averaging.
 * Our ongoing work is focused on reducing statistical error and increasing the sizes of chemical systems to which our methods can be applied.
 
-All methods described here are discussed in more detail in our [forthcoming paper](https://arxiv.org/abs/2005.00654).
+All methods described here are discussed in more detail in our <a href="https://arxiv.org/abs/2005.00654" target="_blank"> forthcoming paper</a>.
 
 ## Stochastic sparsification
 
@@ -102,7 +102,7 @@ We developed an alternative approach to factoring the matrix \\( \left( \mathbf{
 
 ## Implementation considerations
 
-Since receiving the MolSSI fellowship, I have developed a C++ library that supports several different stochastic compression algorithms. Some subroutines are applicable to any matrix or vector, while others have features related specifically to the FCI problem. My library optionally supports MPI parallelism, so vectors are stored in sparse format distributed among multiple MPI processes. Matrix-vector multiplication is parallelized, as is stochastic compression. I developed a protocol for performing stochastic compression that minimizes communication among processes.
+Since receiving the MolSSI fellowship, I have developed a C++ library that supports several different stochastic compression algorithms. Some subroutines are applicable to any matrix or vector, while others have features related specifically to the FCI problem. My library supports MPI parallelism, so vectors are stored in sparse format distributed among multiple MPI processes. Matrix-vector multiplication is parallelized, as is stochastic compression. I developed a protocol for performing stochastic compression that minimizes communication among processes.
 
 ## Ongoing work
 
