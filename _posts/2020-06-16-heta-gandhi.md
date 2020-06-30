@@ -102,3 +102,7 @@ We are working on expanding the suite of methods to perform CG potential learnin
 7. Gowers RJ, Linke M, Barnoud J, Reddy TJE, Melo MN, Seyler SL, Dotson DL, Domanski J, Buchoux S, Kenney IM, Beckstein O (2016). MDAnalysis: A Python package for the rapid analysis of molecular dynamics simulations. In Benthall S and Rostrup S, editors, <i>Proceedings of the 15th Python in Science Conference</i>, 98-105, Austin, TX, 2016. SciPy, doi:10.25080/majora-629e541a-00e.
 
 8. Michaud-Agrawal N, Denning EJ, Woolf TB, and Beckstein O (2011). MDAnalysis: A Toolkit for the Analysis of Molecular Dynamics Simulations. <i>J. Comput. Chem.</i> 32, 2319-2327, doi:10.1002/jcc.21787. PMCID:PMC3144279
+
+## Acknowledgements
+
+Heta A. Gandhi was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580. The authors thank the Center for Integrated Research Computing (CIRC) at the University of Rochester for providing computational resources and technical support. This work was also supported by the National Science Foundation (CBET-1751471 and CHE-1764415).
