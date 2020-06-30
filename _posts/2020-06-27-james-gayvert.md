@@ -39,7 +39,7 @@ resonance position, and the imaginary part $$ \Gamma $$ is the half-width, which
 to the lifetime of the state<sup>1</sup>. 
 
 ### Complex Absorbing Potential (CAP)
-The Complex Absorbing Potential (CAP) is one of the few non-Hermitian formalisms which can be readily applied
+The complex absorbing potential (CAP) is one of the few non-Hermitian formalisms which can be readily applied
 to molecules. In this approach, the electronic Hamiltonian is augmented with an artificial complex
 absorbing potential $$ -i\eta W $$, where $$ \eta $$ is the CAP strength parameter<sup>1</sup>. 
 The CAP absorbs the outgoing tail of the resonance wavefunction, transforming it into a 
@@ -71,7 +71,7 @@ $$
 
 Eigenvalue trajectories can be analyzed at minimal additional computational 
 effort by diagonalizing the reduced dimension $$ H^{CAP} $$ over a range
-of eta values.
+of $$ \eta $$ values.
 
 
 ## Workflow
@@ -197,10 +197,10 @@ pc.add_tdm(arr1,0,1)
  
 
 ## Application: $$ {}^2\Pi_g  $$ resonance of $$ N_2^- $$
-Our results for EOM-CCSD and CAP-XMS-CASPT2 are in good agreement with previous theoretical
+Our results for EOM-CCSD and CAP-XMS-CASPT2 are in agreement with previous theoretical
 and experimental results for this system, clearly demonstrating the potential of the OpenCAP approach 
 for studying resonances. We note that our results for CAP-EOM-CCSD were obtained at a fraction of the 
-computational cost as those obtained in Reference 6, as the original CAP-EOM-CCSD implementation 
+computational cost as those reported by Zuev et al.<sup>6</sup>, as the original CAP-EOM-CCSD implementation 
 in Q-Chem requires a unique electronic structure calculation for each $$ \eta $$ value.
 
 $$
