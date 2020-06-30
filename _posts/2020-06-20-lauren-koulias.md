@@ -117,7 +117,7 @@ A benchmark for the accuracy of X2C-EOM-CCSD in both the US/Vis and X-ray region
 
 ### Real-Time Propagators
 
-Initially, fourth order runge-kutta (RK4) was used as the propagator for the implementation of TD-EOM. With the addition of the tensor contraction engine, Tiled Array,<sup>[9](#references)</sup> along with using the Lanczos method<sup>[10,11](#references)</sup> to propagate using a subspace Hamiltonian, has greatly improved the speed of propagation. 
+Initially, fourth order runge-kutta (RK4) was used as the propagator for the implementation of TD-EOM. With the addition of the tensor contraction engine, Tiled Array,<sup>[9](#references)</sup> along with using the Lanczos method<sup>[10](#references)</sup> to propagate using a subspace Hamiltonian, has greatly improved the speed of propagation. 
 ![Figure Label]({{ site.url }}{{ site.baseurl }}/assets/images/LAUREN_KOULIAS/td_timings.png)  
 ***Figure 4**: Timings of real-time propagation using Tiled Array (TA) and the Lanczos method.*
 
@@ -140,7 +140,6 @@ Revisited. *J. Chem. Phys*. **2009**, 131, 031104. [https://doi.org/10.1063/1.31
 8. L. N. Koulias, L. Lu, D. B. Williams-Young, T. Zhang, A. E. DePrince III, X. Li. Simulating Absorption Spectra with Relativistic Equation-of-Motion Coupled-Cluster Singles and Doubles. TBD.
 9. "TiledArray: A general-purpose scalable block-sparse tensor framework", Justus A. Calvin and Edward F. Valeev, [https://github.com/valeevgroup/tiledarray](https://github.com/valeevgroup/tiledarray)
 10. C. Lanczos. An Iteration Method for the Solution of the Eigenvalue Problem of Linear Differential and Integral Operators. *Journal of Research of the National Bureau of Standards*. **1950**, 45 (4): 255–282.  [https://doi.org/10.6028/jres.045.026](https://doi.org/10.6028/jres.045.026)
-11. (Brandons in progress paper)
 
 ### Acknowledgements
 
