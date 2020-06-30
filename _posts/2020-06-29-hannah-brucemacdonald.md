@@ -1,22 +1,22 @@
 ---
 name: sample-poster
-title: How to add your Poster
-author: "Jessica Nash"
-mentor-names: "Name(s) of your MolSSI Mentor(s) (comma separated on one line)"
+title: Optimal allocation for Free Energy Calculations
+author: "Hannah E. Bruce Macdonald"
+mentor-names: "Sam V. Ellis"
 full-author-list:
-    - name: "Jessica A. Nash"
+    - name: "Hannah E. Bruce Macdonald"
       affiliation: 1
-    - name: "Second Author"
+    - name: "Dominic A. Rufa"
       affiliation: 2
-    - name: "Third Author"
-      affiliation: 2
+    - name: "John D. Chodera"
+      affiliation: 1
 affiliations:
-    - name: "The Molecular Sciences Software Institute"
-      address: "Blacksburg, VA"
+    - name: "Computational and Systems Biology Program, Sloan Kettering Institute,Memorial Sloan Kettering Cancer Center"
+      address: "New York, NY 10065"
       index: 1
-    - name: "Department of Chemistry, Virginia Tech University"
+    - name: "Tri-Institutional PhD Program in Computational Biology and Medicine"
+      address: "New York, NY 10065"
       index: 2
-      address: "Blacksburg, VA"
 toc: true
 toc_sticky: true
 toc_label: "Poster Contents"
@@ -25,173 +25,80 @@ layout: poster
 
 ## Introduction
 
-This is a template to create an online poster for your software project.
+### Relative binding free energies
 
-You can include equations:
+A relative free energy calculation involves perturbing one molecule into another, and calculating the free energy difference of making that change. Relative binding free energies (RBFE) involve the perturbing between two molecules, both in an active site, and in bulk water to calculate the difference in affinity between the two molecules. RBFEs are an effective tool in drug design, as they allow for predictions as to if making a change to a molecule will result in a more or less promising drug candidate (1).
 
-$$ \vec{F} = - \nabla U $$
+![Thermodynamic Cycle]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/thermocycle.png)  
+***Figure 1***: Thermodynamic cycle whereby one molecule is 'alchemically' transformed into another. The difference between the two pink arrows affords the difference between the two green arrows: namely the difference in binding affinity of the two.
 
-$$ \vec{F} = m \cdot \vec{a} = m \cdot \frac{d\vec{v}}{dt} = m \cdot \frac{d^{2}\vec{r}}{dt^{2}}$$
+[Perses](https://github.com/choderalab/perses) is an open-source scientific software package for performing single-topology relative free energy calculations. Single-topology calculations involve simulating with a single hybrid ligand, that is perturbed across the lambda protocol to change from representing ligand A to ligand B, and differs from dual-topology type relative free energy methods whereby two ligands are present in the simulation, where the interactions of one ligand is turned on, while the other is turned off.
 
-images:
+![Single vs. dual topology]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/singledual.png)  
+***Figure 2***: Different methods in perturbing between two ligands can be used: single-topology, which is implemented in [Perses](https://github.com/choderalab/perses), and dual-topology.
 
-![NSF Logo]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/nsf.png)  
-***Figure 1**: The logo of the National Science Foundation.*
+### Software
 
-and code:
+Perses is a python package, written to exploit the molecular dynamics (MD) functionality of [OpenMM](http://openmm.org/). The software is maintained on GitHub, and is developed using the [MolSSI Software Best Practises](https://molssi.org/education/best-practices/) framework. Python allows for the rapid development of novel and exploratory algorithms that are 'developer-time' fast, while performing simulations using the faster C and C++ software of openmm, which is 'run-time' fast.
 
-{% highlight python wl linenos %}
-import numpy as np
 
-for atom1 in atoms:
-    for atom2 in atoms:
-        a1 = atoms.index(atom1)
-        a2 = atoms.index(atom2)
-        coor1 = coordinates[a1]
-        coor2 = coordinates[a2]
-        distance = np.sqrt(np.sum((coor1-coor2)**2))
-        if 0 < distance <= 1.5:
-            print(F'{atom1:2} to {atom2:2} : {distance:.3f}')
+### Efficiency of RBFEs
 
-def hello_world():
-    print("hello world")
+Performing a RBFE calculation is computationally expensive. The expense of the calculation is mitigated if (a) the results are accurate - providing good experimental agreement and (b) the results are reliable - that they are precise. While simulations that are accurate can be achieved by longer simulation times and better physical modelling through improved atomistic forcefields, the precision of a calculation can be improved through choices in the alchemical design. For a given length of simulation (as the variance will reduce with increased simulation time), the precision, or hereforth the variance can be effected by the alchemical pathway in different ways -
+* the nature of the alchemical species: for single topology methods, how the two ligands are combined to make a hybrid ligand.
+* choice in alchemical protocol: the functions through which the interactions of the alchemical species are perturbed.
+* the length of the alchemical protocol: wether that is the number of alchemical windows in a replica-exchange simulation or the switching time in a non-equilibrium switching simulation.
 
-{% endhighlight %}
+Optimizing these alchemical parameters will allow for more efficient simulation, such that results can be afforded with better certainty at a shorter timescale. Alternatively, which simulations are performed from a given set can reduce the variance of the results.
 
-## Adding your poster
 
-### Fork the repository
+### Experimental design
 
-This website uses a Jekyll template on GitHub pages. You will add your poster by adding a markdown file and editing a yaml (directions below). You will need to Fork [the Repository](https://github.com/MolSSI-Education/2020-software-fellow-posters) and submit a pull request to have your poster added.
+Relative calculations rely on choosing pairs of ligands to compare from a given set of molecules of interest. The minimum requirement to be able to fully rank set of molecules is that the pairwise comparisons between ligands results in a weakly connected graph - such that a pathway exists between any two molecules in the set. Even for a small number of ligands, there exists a redundancy in possible graphs that satisfy the connectivity requirement.
 
-### Create a branch on your fork
+![Connectivity]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/connectivity.png)  
+***Figure 4***: Selection of possible graphs for calculating relative free energies that satisfy the criteria of weak connectivity, where ligands are shown as colored circles and RBFEs are shown as the edges between them.
 
-Create a branch to work on.
+The number of RBFEs used (edges) will increase the computational expense, where the cycle-closure type graph is a compromise between the number of edges run, and having redundancy in the networks. Ideally, edges from all of the possible pairwise comparisons would be chosen in an optimal way, such as to minimize the variance.
 
-```bash
-$ git checkout -b YOUR_NAME
-```
+## Methods
+Relative free energy calculations have been performed using [Perses](https://github.com/choderalab/perses), for a set of binders to the Jnk1 protein from the Schrodinger set (2). 100 forwards and backwards non-equilibrium (NEQ) switches of 1 ns, followed by 1 ns of equilibrium sampling at each endstate. While the small molecule forcefields differ, amber-14SB and TIP3P have been used. Input files are [available](https://github.com/openmm/openmmforcefields/tree/master/openmmforcefields/data/perses_jacs_systems). All simulations were performed on folding at home.
 
-### Add your picture
+![jnk1]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/jnk1.png)  
+***Figure 5***: Jnk1 protein PDB: 2GMX
 
-Add a picture of yourself to `assets/images/avatars/`. This is the picture that will show up in the left sidebar for your poster. This picture is pretty small, so please be careful to resize your image appropriately. Please save your image as `firstName_lastName.jpg` (or whatever file extension you are using)
+## Results
 
-### Add your information to `authors.yml`
+### Forcefields
+The RBFEs of the Jnk1 set have been performed for 5 different small molecule forcefields. Two versions of the generalized amber forcefield (GAFF) - 1.81 and 2.11, two versions of the [open forcefield initiative](https://openforcefield.org/) - 1.0.0 and 1.2.0 and smirnoff99Frosst 1.1.0 were used.
 
-There is a file in this repository at `_data/authors.yml`. You should add your author information to this. You can see my example in the repo, and a template is given below: 
+![relative]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/relativefes.png)  
+***Figure 6***: RBFEs of Jnk1 dataset with different small molecule forcefields. RMSE and MUE are quoted in units of $$kcal mol^{-1}$$, with confidence intervals calculated using bootstrapping.
 
-  ```yaml
-YOUR NAME:
-    name    : "YOUR NAME"
-    bio     : "Your position and institution"
-    avatar  : "/assets/images/avatars/firstName_lastName.jpg"
-    links   :
-      - label: "Email"
-        icon: "fas fa-fw fa-envelope-square"
-        url: "mailto:YOUREMAIL@something.con"
-      - label: "Website"
-        icon: "fas fa-fw fa-link"
-        url: "YOUR WEBSITE"
-      - label: "Twitter"
-        icon: "fab fa-fw fa-twitter-square"
-        url: "https://twitter.com/YOUR_TWITTER_HANDLE"
-      - label: "GitHub"
-        icon: "fab fa-fw fa-github"
-        url: "https://github.com/YOUR_GITHUB_NAME"
-      - label: "LinkedIn"
-        icon: "fab fa-fw fa-linkedin"
-        url: "https://www.linkedin.com/in/YOURLINKEDIN/"
-```
+The small molecule forcefield with the best statistical performance is openforcefield v. 1.0.0 for the Jnk1 target, however testing across different protein-ligand systems would be required for more thorough benchmarking.
 
-You should edit your name and links to websites. If you do not have one of these or don't want to include one of the options, remove that entry starting with "label". 
+RBFEs provide pairwise comparisons between  molecules, but for decision-making in live drug design projects, absolute free energies are a more useful metric. If there are resources available to make and test the best _n_ predicted molecules, a maximum likelihood estimator can be used to optimize the graph of results.
 
-### Add a post for your poster
+![absolute]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/absolutefes.png)  
+***Figure 7***: Absolute binding free energies of Jnk1 dataset with different small molecule forcefields. RMSE, MUE, R2 and $$\rho$$ are quoted in units of $$kcal mol^{-1}$$, with confidence intervals calculated using bootstrapping.
 
-To add a poster, go to the `_posts` directory in the top level of this repository. You can copy this file as a starting point. Change the file name so that the file name is `YEAR_MONTH_DAY-firstName-lastName.md`. 
+While the RMSE and MUE of the methods differ in their performance, the small molecules perform similarly with regards to correlation statistics R2 and rho. These results suggest that relative free energy calculations would provide a useful tool for testing design ideas for future Jnk1 inhibitors.
 
-### Submit a pull request
 
-Once you have finished your poster, push to your fork and submit a pull request on the main MolSSI repo.
+### Variance
 
-## Poster Headings and Sections
+The above simulations were performed with the pairwise comparisons performed in Wang et al. (2), however the variance of those simulations aren't all equal, and it is clear from Figures 6 and 7 that the errors associated with each RBFE are not equal. The statistical fluctuation of a relative free energy can be defined as:
 
-The Table of Contents on the right will be rendered automatically based on your poster sections. Sections should be labeled using `##` markdown tags.
+$$ s_{phase} = \sigma _{phase}  * n_{samples}$$
 
-## Including Extras
+![variance]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/variance.png)  
+***Figure 8***: Correlation between the statistical fluctuation of the solvent and complex phases for Jnk1 relative free energy calculations for a range of small molecule forcefields.
 
-Here are some directions on how to include extras like images, equations, and code. Not that you should not copy and paste the examples from the markdown file (rendered page is fine), as the examples in this section have some special characters so that the code can be rendered on the site.
-
-### Images
-
-If you include images on your poster, please make a directory for your poster under `assets/images`. Please make the directory name your name so that the path to your images will be `assets/images/FIRSTNAME_LASTNAME/`.
-
-For images to show up on your poster, you must use this syntax. You can use the example in the Introduction (NSF logo).
-
-```markdown
-![Figure Label]({{ "{{ site.url" }} }}{{ "{{ site.baseurl" }} }}/assets/images/FIRSTNAME_LASTNAME/your_image.png)  
-***Figure 1**: The logo of the National Science Foundation.*
-```
-
-### Code
-
-There are a few ways you might include code snippets in this template. For the first two (markdown highlight tag and using back tick characters) you will include your code on the page. For the GitHub gist, you create a gist on GitHub and embed the script.
-
-#### Highlight tag
-
-Surround your code with a special tag. This example will highlight a code and add line numbers.
-
-```markdown
-{{ "{% highlight LANGUAGE wl linenos " }}%}
-  YOUR CODE HERE
-{{ "{% endhighlight "}}%}
-
-```
-
-#### Backticks
-
-If you don't want line numbers you can use three backticks to start a code block, and three backticks to end the code block. The language should follow the first three backticks.
-
-````markdown
-
-```LANGUAGE
-
-  YOUR CODE HERE
-
- ``` 
-
-````
-
-#### GitHub Gist
-You can embed code from a GitHub Gist. If you have a gist, you can get the code for your script on the page for the gist by copying the code from the 'Embed' button. It will look something like this:
-```
-<script src="https://gist.github.com/janash/7607581a759172ac45efd12c8ca38687.js"></script>
-```
-
-### Equations
-Equations are supported through [MathJax](https://www.mathjax.org). MathJax allows you to use LaTex format for your equations. Here are some example equations
-
-```
-$$ \vec{F} = - \nabla U $$
-
-$$ \vec{F} = m \cdot \vec{a} = m \cdot \frac{d\vec{v}}{dt} = m \cdot \frac{d^{2}\vec{r}}{dt^{2}}$$
-```
-
-And you can see more documentation [here](http://docs.mathjax.org/en/latest/basic/mathematics.html).
-
-## Previewing the site locally
-
-You can preview this site locally by installing [jekyll](https://jekyllrb.com). Once you have jekyll installed, you can preview the site by doing
-
-```bash
-$ bundle install
-$ bundle exec jekyll serve
-```
-
-in the top level of this repository. A preview of the site will be lon `localhost:4000/2020-software-fellow-posters/`
+The above plots illustate there is a correlation between the statistical fluctuation in the solvent and the complex phases. As the solvent phase is much less computationally intensive, this would allow us to design better relative free energy networks for future iterations, resulting in faster simulations, with smaller associated errors. 
 
 ## References
-1. 
-2. 
+1. Cournia, Zoe, Bryce Allen, and Woody Sherman. "Relative binding free energy calculations in drug discovery: recent advances and practical considerations." Journal of chemical information and modeling 57.12 (2017): 2911-2937.
+2. Wang, Lingle, et al. "Accurate and reliable prediction of relative ligand binding potency in prospective drug discovery by way of a modern free-energy calculation protocol and force field." Journal of the American Chemical Society 137.7 (2015): 2695-2703.
 
 ### Acknowledgements
 
