@@ -1,5 +1,5 @@
 ---
-name: sample-poster
+name: james-smith
 title: Gradients and Geometry Optimization with Multireference Wavefunctions
 author: "James Smith"
 mentor-names: "Taylor A. Barnes"
