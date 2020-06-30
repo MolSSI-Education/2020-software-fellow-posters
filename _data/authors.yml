@@ -30,3 +30,21 @@ Nick Stair:
       - label: "GitHub"
         icon: "fab fa-fw fa-github"
         url: "https://github.com/nstair"
+
+James Smith:
+  name: "James E. T. Smith"
+  bio: "Chemical Physics PhD Candidate at CU Boulder"
+  avatar: "/assets/images/avatars/james_smith.jpeg"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:james.e.smith@colorado.edu"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://jamesetsmith.github.io/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/jamesETsmith"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/james-smith-8525792b/"
