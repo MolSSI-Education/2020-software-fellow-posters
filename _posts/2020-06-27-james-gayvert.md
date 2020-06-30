@@ -213,7 +213,7 @@ $$
 \hline
    \textbf{CAP-EOM-CCSD} & \text{QChem/OpenCAP} & 2.48 & 0.43 \\ 
 \hline
-   \text{CAP-XMCQDPT2}^6 & \text{Firefly} & 2.12 & 0.29 \\
+   \text{CAP-XMCQDPT2}^7 & \text{Firefly} & 2.12 & 0.29 \\
 \hline
    \textbf{CAP-XMS-CASPT2} & \text{OpenMolcas/OpenCAP} & 2.12 & 0.31 \\
 \hline
