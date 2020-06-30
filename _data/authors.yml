@@ -19,6 +19,24 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Sebastian Dick:
+  name             : "Sebastian Dick"
+  avatar           : "/assets/images/avatars/sebastian_dick.png"
+  bio              : "Physics Ph.D. Candidate at Stony Brook University"
+  links: 
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:sebastian.dick@stonybrook.edu"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://semodi.github.io"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/semodi"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/sebastianmdick"
+
 Nick Stair:
     name    : "Nicholas H. Stair"
     bio     : "Chemistry Graduate Student, Developing Quantum-Computational Algorithms for Strong Correlation"
