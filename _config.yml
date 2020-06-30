@@ -21,7 +21,9 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "The Molecular Sciences Software Institute"
 description              : ""
-repository               : "laurennk/2020-software-fellow-posters"
+url                      : "https://education.molssi.org"
+baseurl                  : "/2020-software-fellow-posters"
+repository               : "MolSSI-Education/2020-software-fellow-posters"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : "/assets/images/avatars/molssi_avatar.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
