@@ -30,7 +30,7 @@ Heta Gandhi:
         url: "mailto:hgandhi@ur.rochester.edu"
       - label: "Website"
         icon: "fas fa-fw fa-link"
-        url: "https://thewhitelab.org/"
+        url: "http://thewhitelab.org/"
       - label: "Twitter"
         icon: "fab fa-fw fa-twitter-square"
         url: "https://twitter.com/gandhi_heta"
