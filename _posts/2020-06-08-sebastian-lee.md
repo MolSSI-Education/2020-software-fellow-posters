@@ -143,10 +143,10 @@ entos_wavefunction_map = {
 3. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCArchive, https://qcarchive.molssi.org/, 2019.
 4. T. A. Barnes, MolSSI Driver Interface, https://github.com/MolSSI/MDI Library, 2019.
 5. B. P. Pritchard, D. Altarawy, and T. L. Windus, A new basis set exchange: An open, up-to-date resource for the molecular sciences community, Manuscript in Preparation.
-6. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019. (QCSchema)
-7. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019. (QCElemental)
-8. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019. (QCEngine)
-9. R. M. Parrish et al., Journal of Chemical Theory and Computation 13, 3185 (2017)
+6. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019.
+7. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCElemental, 2019.
+8. D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCEngine, 2019.
+9. R. M. Parrish et al., Journal of Chemical Theory and Computation 13, 3185 (2017).
 10. F. Manby, T. F. Miller III et al., ChemRxiv , DOI: 10.26434/chemrxiv.7762646.v2 (2019), Preprint.
 
 ### Acknowledgements
