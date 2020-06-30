@@ -18,6 +18,21 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+        
+Samragni Banerjee:
+    name    : "Samragni Banerjee"
+    bio     : "Graduate Research Assistant, The Ohio State University"
+    avatar  : "/assets/images/avatars/samragni_banerjee.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:banerjee.156@osu.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/Samragni-93"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/samragni-banerjee-141058a8/"
 
 Alon Grinberg Dana:
     name    : "Alon Grinberg Dana"
@@ -120,3 +135,4 @@ Victor Yu:
       - label: "Project Website"
         icon: "fas fa-fw fa-link"
         url: "https://elsi-interchange.org"
+
