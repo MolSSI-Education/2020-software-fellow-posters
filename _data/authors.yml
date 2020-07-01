@@ -19,6 +19,27 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Bradley Dice:
+    name    : "Bradley D. Dice"
+    bio     : "PhD Candidate, Physics & Scientific Computing at University of Michigan (Glotzer Lab)"
+    avatar  : "/assets/images/avatars/bradley_dice.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:bdice@umich.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://bradleydice.com"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/Bradley_Dice"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/bdice"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/bradleydice/"
+
 Jennifer Clark:
     name    : "Jennifer A. Clark"
     bio     : "PhD Candidate at NC State University"
@@ -150,4 +171,3 @@ Victor Yu:
       - label: "Project Website"
         icon: "fas fa-fw fa-link"
         url: "https://elsi-interchange.org"
-
