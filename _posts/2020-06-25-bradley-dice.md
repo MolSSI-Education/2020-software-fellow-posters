@@ -118,6 +118,86 @@ Two modules with such unique features are `pmft`, which implements the [Potentia
 ![Figure 5: Potential of Mean Force and Torque]({{ site.url }}{{ site.baseurl }}/assets/images/bradley_dice/pmft.jpg)
 ***Figure 5**: The PMFT is related to the probability of finding particles at a given position and orientation relative to one another.* a) *The PMFT of an ordered system of hexagons <a href="#shape-allophiles-paper">[4]</a>, where the locations of the wells indicate that particles are much more likely to sit next to the edges of their neighbors than the corners. In two-dimensional systems, the full PMFT is 3-dimensional, since it also must account for the orientation of the second particle relative to the first; for clarity, in this figure we have integrated out that degree of freedom.* b) *A PMFT computed from a system of rhombicosidodecahedra shows distributions of neighboring particles in three dimensions (figure rendered using [Mayavi](https://docs.enthought.com/mayavi/mayavi/)). There are six degrees of freedom in 3D systems, three translational and three rotational. This PMFT only shows the three translational degrees of freedom. The wells representing the deepest energy isosurfaces of the PMFT align with the largest (pentagonal) facets of the polyhedron. Reprinted from <a href="#cpc-paper">[1]</a>.*
 
+## User-defined Analysis Methods
+
+The core data structures for finding particle neighbors also enable user-defined analyses, where neighbor finding is handled by **freud** and user-defined code performs computations over the sets of neighbor bonds.
+For example, the example code below (an excerpt from a corresponding [example in the documentation](https://freud.readthedocs.io/en/stable/gettingstarted/examples/examples/NetworkX-CNA.html)) implements Common Neighbor Analysis.
+
+{% highlight python wl linenos %}
+import freud
+import numpy as np
+from collections import defaultdict
+
+# Use a face-centered cubic (fcc) system
+box, points = freud.data.UnitCell.fcc().generate_system(4)
+aq = freud.AABBQuery(box, points)
+nl = aq.query(points, {'num_neighbors': 12, 'exclude_ii': True}).toNeighborList()
+
+# Get all sets of common neighbors.
+common_neighbors = defaultdict(list)
+for i, p in enumerate(points):
+    for j in nl.point_indices[nl.query_point_indices == i]:
+        for k in nl.point_indices[nl.query_point_indices == j]:
+            if i != k:
+                common_neighbors[(i, k)].append(j)
+{% endhighlight %}
+
+Next, we use NetworkX to build graphs of common neighbors and compute the Common Neighbor Analysis signatures.
+
+{% highlight python wl linenos %}
+import networkx as nx
+from collections import Counter
+
+diagrams = defaultdict(list)
+particle_counts = defaultdict(Counter)
+
+for (a, b), neighbors in common_neighbors.items():
+    # Build up the graph of connections between the
+    # common neighbors of a and b.
+    g = nx.Graph()
+    for i in neighbors:
+        for j in set(nl.point_indices[
+            nl.query_point_indices == i]).intersection(neighbors):
+            g.add_edge(i, j)
+
+    # Define the identifiers for a CNA diagram:
+    # The first integer is 1 if the particles are bonded, otherwise 2
+    # The second integer is the number of shared neighbors
+    # The third integer is the number of bonds among shared neighbors
+    # The fourth integer is an index, just to ensure uniqueness of diagrams
+    diagram_type = 2-int(b in nl.point_indices[nl.query_point_indices == a])
+    key = (diagram_type, len(neighbors), g.number_of_edges())
+    # If we've seen any neighborhood graphs with this signature,
+    # we explicitly check if the two graphs are identical to
+    # determine whether to save this one. Otherwise, we add
+    # the new graph immediately.
+    if key in diagrams:
+        isomorphs = [nx.is_isomorphic(g, h) for h in diagrams[key]]
+        if any(isomorphs):
+            idx = isomorphs.index(True)
+        else:
+            diagrams[key].append(g)
+            idx = diagrams[key].index(g)
+    else:
+        diagrams[key].append(g)
+        idx = diagrams[key].index(g)
+    cna_signature = key + (idx,)
+    particle_counts[a].update([cna_signature])
+{% endhighlight %}
+
+Looking at the counts of common neighbor signatures, we see that the first particle of the fcc structure has 12 bonds with signature (1, 4, 2, 0) as we expect.
+
+{% highlight python wl linenos %}
+particle_counts[0]
+{% endhighlight %}
+
+{% highlight python %}
+Counter({(1, 4, 2, 0): 12,
+         (2, 4, 4, 0): 6,
+         (2, 1, 0, 0): 12,
+         (2, 2, 1, 0): 24})
+{% endhighlight %}
+
 # Open-Source Community
 
 ## Integrations with the Scientific Python Ecosystem
@@ -129,12 +209,13 @@ The use of these standard scientific Python libraries, in addition to previously
 ## User Support and External Contributions
 
 The [freud-users Google Group](https://groups.google.com/d/forum/freud-users) is available for user support, with responses typically within 1 business day.
-The **freud** library has had 39 code contributors, primarily from the University of Michigan, though several recent features have been developed in direct response to user requests from the Google Group or GitHub issue tracker.
-Whenever possible, the **freud** development team requests code review from external users in response to their feature requests or bug reports, building a shared sense of ownership in the results.
+The **freud** library has had 39 code contributors, primarily from the University of Michigan, though several recent features have been developed in direct response to community requests from the Google Group or GitHub issue tracker.
+Whenever possible, the **freud** development team encourages pull requests and/or code review from external users in response to their feature requests or bug reports, building a shared sense of ownership in the results.
 
 ## Impact of freud
 
-Though it is extremely difficult to estimate the size of any package's user base, our metrics indicate that the number of **freud** users has grown significantly over the last two years. The package has been downloaded over 90,000 times [from conda-forge](https://anaconda.org/conda-forge/freud) and the number of users visiting freud's documentation has grown substantially, shown in Figure 6.
+Though it is extremely difficult to estimate the size of any package's user base, metrics from the documentation web pages indicate that the number of **freud** users has grown significantly over the last two years.
+The package has been downloaded over 90,000 times [from conda-forge](https://anaconda.org/conda-forge/freud) and the number of users visiting freud's documentation has grown substantially, shown in Figure 6.
 
 ![Figure 6: freud Documentation - Daily Active Users]({{ site.url }}{{ site.baseurl }}/assets/images/bradley_dice/freud_dau.jpg)
 ***Figure 6**: Daily active users visiting freud's documentation in the last 1, 7, 14, or 28 days, from April 1, 2018 to June 26, 2020.*
@@ -142,7 +223,7 @@ Though it is extremely difficult to estimate the size of any package's user base
 # References
 Figures 2, 3, 4, 5 are reprinted from <a href="#cpc-paper">[1]</a>, copyright 2020, with permission from Elsevier.
 1. <a name="cpc-paper"></a>V. Ramasubramani, B. D. Dice, E. S. Harper, M. P. Spellings, J. A. Anderson, and S. C. Glotzer. freud: A Software Suite for High Throughput Analysis of Particle Simulation Data. Computer Physics Communications Volume 254, September 2020, 107275. [https://doi.org/10.1016/j.cpc.2020.107275](https://doi.org/10.1016/j.cpc.2020.107275).
-2. <a name="scipy-paper"></a>B. Dice, V. Ramasubramani, E. S. Harper, M. P. Spellings, J. A. Anderson, and S. C. Glotzer. Analyzing Particle Systems for Machine Learning and Data Visualization with freud. Proceedings of the 18th Python in Science Conf. (SciPy 2019), SciPy, 27-33. [https://doi.org/10.25080/Majora-7ddc1dd1-004](https://doi.org/10.25080/Majora-7ddc1dd1-004). See also this [YouTube video](https://www.youtube.com/watch?v=D0LWh1BzPRQ) of **freud** at SciPy 2019.
+2. <a name="scipy-paper"></a>B. Dice, V. Ramasubramani, E. S. Harper, M. P. Spellings, J. A. Anderson, and S. C. Glotzer. Analyzing Particle Systems for Machine Learning and Data Visualization with freud. Proceedings of the 18th Python in Science Conf. (SciPy 2019), SciPy, 27-33. [https://doi.org/10.25080/Majora-7ddc1dd1-004](https://doi.org/10.25080/Majora-7ddc1dd1-004). See also this [YouTube video of the **freud** talk at SciPy 2019](https://www.youtube.com/watch?v=D0LWh1BzPRQ).
 3. <a name="hexatic-paper"></a>J. A. Anderson, J. Antonaglia, J. A. Millan, M. Engel, & S. C. Glotzer. Shape and Symmetry Determine Two-Dimensional Melting Transitions of Hard Regular Polygons. Physical Review X, 7(2), 021001 (2017). [https://doi.org/10.1103/PhysRevX.7.021001](https://doi.org/10.1103/PhysRevX.7.021001).
 4. <a name="shape-allophiles-paper"></a> E. S. Harper, R. L. Marson, J. A. Anderson, G. van Anders, & S. C. Glotzer. Shape allophiles improve entropic assembly. Soft Matter, 11(37), 7250–7256 (2015). [https://doi.org/10.1039/C5SM01351H](https://doi.org/10.1039/C5SM01351H).
 
