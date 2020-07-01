@@ -40,6 +40,21 @@ Bradley Dice:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/bradleydice/"
 
+Jennifer Clark:
+    name    : "Jennifer A. Clark"
+    bio     : "PhD Candidate at NC State University"
+    avatar  : "/assets/images/avatars/jennifer_clark.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:jaclark5@ncsu.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/jaclark5"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/jenniferclark13/"
+        
 Samragni Banerjee:
     name    : "Samragni Banerjee"
     bio     : "Graduate Research Assistant, The Ohio State University"
