@@ -19,6 +19,27 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Fang Liu:
+    name    : "Fang Liu"
+    bio     : "Postdoctoral Fellow, Massachusetts Institute of Technology"
+    avatar  : "/assets/images/avatars/Fang_Liu.jpeg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:fangliu@mit.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://fangliu.mit.edu"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/fangliu_ustc"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/ffangliu"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/fang-l-456a3034/"
+
 Bradley Dice:
     name    : "Bradley D. Dice"
     bio     : "PhD Candidate, Physics & Scientific Computing at University of Michigan (Glotzer Lab)"
