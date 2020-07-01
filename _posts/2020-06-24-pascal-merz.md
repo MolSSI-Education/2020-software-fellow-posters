@@ -69,24 +69,68 @@ simulator of GROMACS follows a number of design principles, including
 carrying out a well-defined, limited functionality (e.g. force
 calculation, propagation of positions or velocities, accumulation of
 data over ranks, ...). The entire simulation consists of elements
-being repeatedtly called in a prescribed order. The order of the
-elements defines the simulation algorithm.
+being repeatedly called in a prescribed order. The order of the
+elements defines the simulation algorithm. See [Listing 1](#listing1)
+for an illustrative example of important interfaces and classes.
 * Data encapsulation: Elements own their data. Elements only share
 data over well-defined interfaces.
 * Client system: Infrastructure elements such as trajectory writing,
 checkpoint facility, data communication between simulation ranks, etc
 are agnostic of the simulation algorithm or implementation details of
 other elements. They merely offer a narrow functionality that can be
-used by registered elements, their _clients_.
+used by registered elements, their _clients_. See [Prototype of the
+Monte Carlo framework](#prototype-of-the-monte-carlo-framework) for
+an example of the client system.
 
 This simplifies the maintenance and increases the extensibility by
 making the rearrangement of components straightforward. GROMACS 2020
 ships with an initial version of the modular simulator with a reduced
 feature set.
 
-TODO: Think about adding illustration of design - wouldn't want to
-spend too much space on earlier work, but the concepts are important
-for everything after!
+<a name="listing1"></a>
+{% highlight cpp %}
+class ISimulatorElement {
+public:
+    //! Called once at beginning of simulation
+    virtual void setup() = 0;
+    //! Called once at end of simulation
+    virtual void teardown() = 0;
+    //! Allows element to schedule task at specific time / step
+    virtual void scheduleTask(Step, Time, const RegisterRunFunctionPtr&) = 0;
+}
+
+class SimulatorAlgorithm final {
+public:
+    /*! \brief Get next task in queue
+     *
+     * This function will repeatedly loop over elements list
+     * until end of simulation, calling scheduleTask() to
+     * query whether element needs to run. Task list can be
+     * precomputed to increase performance. */
+    [[nodiscard]] const SimulatorRunFunction* getTask();
+private:
+    //! The list of element defining the algorithm
+    std::vector<ISimulatorElement*> elements;
+}
+
+// Implement general GROMACS simulator interface
+class ModularSimulator final : public ISimulator {
+public:
+    //! Set up and run a simulation (only function of interface)
+    void run() override {
+        auto algorithm = createAlgorithm();
+        while (const auto* task = algorithm.getTask()) {
+            // execute task
+            (*task)();
+        }
+    }
+private:
+    //! Create algorithm by emplacing elements in right order
+    SimulatorAlgorithm createAlgorithm();
+}
+{% endhighlight %}
+***Listing 1**: Simplified declarations of the most relevant
+   modular simulator interfaces and classes.*
 
 ## January to June 2020: Foundation
 
@@ -111,9 +155,7 @@ connected automatically, allowing the user to simply add element in
 the desired order, and let the algorithm builder take care of the
 connection details.
 
-TODO: Add illustration of connection process.
-
-### Prototype of the MC framework
+### Prototype of the Monte Carlo framework
 
 Following the design principles of the modular simulator, a prototype
 of the Monte Carlo framework was implemented. The design follows the
@@ -129,7 +171,13 @@ unnecessary communication is required, and allows simulations
 including MC steps to retain a performance comparable to vanilla MD
 even in highly parallelized simulations.
 
-TODO: Add illustration of design.
+![Monte Carlo framework]({{ site.url }}{{ site.baseurl }}/assets/images/pascal-merz/mcinfrastructure.jpeg)
+
+***Figure 1**: Illustration of the client system that allows to
+   implement general MC algorithms. The MC element does not need to
+   know implementation details of its clients, and the clients do not
+   need to be aware of the details of the MC algorithm.*
+
 
 ### Hybrid MC/MD proof of concept
 
@@ -149,7 +197,7 @@ if (constr)
 builder->add<ComputeGlobalsElement<ComputeGlobalsAlgorithm::LeapFrog>>();
 builder->add<EnergyData::Element>(); // energies at time t here!
 {% endhighlight %}
-***Listing 1**: Definition of a hybrid MC/MD leap frog algorithm in
+***Listing 2**: Definition of a hybrid MC/MD leap frog algorithm in
    GROMACS 2021-dev. The MC element added on the first line indicates
    where in the loop MC states are saved / restored.*
 
@@ -208,8 +256,13 @@ representation to implement novel algorithms.
 
 ## Acknowledgements
 
-Pascal T. Merz was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580.
-Pascal T. Merz wishes to thank Michael Shirts (University of Colorado Boulder), Eliseo Marin-Rimoldi (Molecular Sciences Software Institute), Paul Bauer (KTH Stockholm), M. Eric Irrgang (University of Virginia), and the entire GROMACS developer team for their support.
+Pascal T. Merz was supported by a fellowship from The Molecular
+Sciences Software Institute under NSF grant OAC-1547580.  Pascal
+T. Merz wishes to thank Michael Shirts (University of Colorado
+Boulder), Eliseo Marin-Rimoldi (Molecular Sciences Software
+Institute), Paul Bauer and Mark Abraham (KTH Stockholm), M. Eric
+Irrgang (University of Virginia), and the entire GROMACS developer
+team for their support.
 
 ## References
 [^cit1]: Johan Aqvist, Petra Wennerström, Martin Nervall, Sinisa Bjelic, and Bjørn O. Brandsdal. Molecular dynamics simulations of water and biomolecules with a Monte Carlo constant pressure algorithm. _Chemical Physics Letters_, 384(4):288–294, 2004. doi: 10.1016/j.cplett.2003.12.039.
