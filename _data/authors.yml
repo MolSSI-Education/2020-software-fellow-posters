@@ -133,7 +133,7 @@ Bradley Dice:
 Jennifer Clark:
     name    : "Jennifer A. Clark"
     bio     : "PhD Candidate at NC State University"
-    avatar  : "/assets/images/avatars/jennifer_clark.jpg"
+    avatar  : "/assets/images/avatars/jennifer_clark.JPG"
     links   :
       - label: "Email"
         icon: "fas fa-fw fa-envelope-square"
