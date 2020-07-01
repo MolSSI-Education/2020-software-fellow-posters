@@ -19,6 +19,24 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Tucker Burgin:
+    name    : "Tucker Burgin"
+    bio     : "Ph.D. Candidate, University of Michigan Department of Chemical Engineering"
+    avatar  : "/assets/images/avatars/tucker_burgin.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:tburgin@umich.edu"
+      - label: "Repository"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/team-mayes/atesa"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/tuckerburgin"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/tucker-burgin-72623959"
+        
 Fang Liu:
     name    : "Fang Liu"
     bio     : "Postdoctoral Fellow, Massachusetts Institute of Technology"
