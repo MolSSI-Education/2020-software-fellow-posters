@@ -2,6 +2,7 @@
 name: sample-poster
 title: How to add your Poster
 author: "Jessica Nash"
+mentor-names: "Name(s) of your MolSSI Mentor(s) (comma separated on one line)"
 full-author-list:
     - name: "Jessica A. Nash"
       affiliation: 1
