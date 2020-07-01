@@ -18,6 +18,7 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+
 Bradley Dice:
     name    : "Bradley D. Dice"
     bio     : "PhD Candidate, Physics & Scientific Computing at University of Michigan (Glotzer Lab)"
@@ -38,3 +39,120 @@ Bradley Dice:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/bradleydice/"
+
+Samragni Banerjee:
+    name    : "Samragni Banerjee"
+    bio     : "Graduate Research Assistant, The Ohio State University"
+    avatar  : "/assets/images/avatars/samragni_banerjee.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:banerjee.156@osu.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/Samragni-93"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/samragni-banerjee-141058a8/"
+
+Alon Grinberg Dana:
+    name    : "Alon Grinberg Dana"
+    bio     : "Senior Postdoctoral Researcher, Massachusetts Institute of Technology"
+    avatar  : "/assets/images/avatars/alon_grinberg_dana.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:alongd@mit.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://dana.net.technion.ac.il/"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/alongd"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/alongd/"
+        
+Sina Mostafanejad:
+    name    : "Sina Mostafanejad"
+    bio     : "Postdoctoral Fellow, Florida State University"
+    avatar  : "/assets/images/avatars/sina_mostafanejad.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:smostafanejad@fsu.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://github.com/SinaMostafanejad/OpenRDM"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/M_Mostafanejad"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/SinaMostafanejad/OpenRDM"
+
+Sebastian Dick:
+  name             : "Sebastian Dick"
+  avatar           : "/assets/images/avatars/sebastian_dick.png"
+  bio              : "Physics Ph.D. Candidate at Stony Brook University"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:sebastian.dick@stonybrook.edu"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://semodi.github.io"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/semodi"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/sebastianmdick"
+
+Nick Stair:
+    name    : "Nicholas H. Stair"
+    bio     : "Chemistry Graduate Student, Developing Quantum-Computational Algorithms for Strong Correlation"
+    avatar  : "/assets/images/avatars/nick_stair.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:nstair@emory.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/nstair"
+
+James Smith:
+  name: "James E. T. Smith"
+  bio: "Chemical Physics PhD Candidate at CU Boulder"
+  avatar: "/assets/images/avatars/james_smith.jpeg"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:james.e.smith@colorado.edu"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://jamesetsmith.github.io/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/jamesETsmith"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/james-smith-8525792b/"
+
+Victor Yu:
+    name    : "Victor Yu"
+    bio     : "Ph.D. Candidate, Duke University"
+    avatar  : "/assets/images/avatars/victor_yu.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:wy29@duke.edu"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/vwzyu"
+      - label: "Google Scholar"
+        icon: "fas fa-fw fa-link"
+        url: "https://scholar.google.com/citations?user=GWGRM9gAAAAJ&hl=en"
+      - label: "Project Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://elsi-interchange.org"
