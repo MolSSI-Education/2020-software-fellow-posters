@@ -19,6 +19,21 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Samuel Greene:
+    name    : "Samuel M. Greene"
+    bio     : "Ph.D. Student, Department of Chemistry, Columbia University"
+    avatar  : "/assets/images/avatars/samuel_greene.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:s.greene@columbia.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/sgreene8"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/samuel-greene-77385933/"
+
 Zhi Wang:
     name    : "Zhi Wang"
     bio     : "Postdoctoral Fellow, Washington University in St. Louis"
