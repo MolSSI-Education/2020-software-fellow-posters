@@ -19,6 +19,21 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Sebastian Lee:
+    name    : "Sebastian J. R. Lee"
+    bio     : "PhD Graduate Student at Caltech"
+    avatar  : "/assets/images/avatars/sebastian_lee.png"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:sjrlee@caltech.edu"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/sjrl"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/sebastian-j-r-lee/"
+
 James Gayvert:
     name    : "James R Gayvert"
     bio     : "Graduate Student, Boston University"
