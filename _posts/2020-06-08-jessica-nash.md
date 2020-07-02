@@ -195,4 +195,7 @@ in the top level of this repository. A preview of the site will be lon `localhos
 
 ### Acknowledgements
 
-"Hannah Bruce Macdonald was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580"
+Please include this acknowledgement for MolSSI Funding. Fill in your own name where it says `Software Fellow Name`.
+
+"`Software Fellow Name` was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580"
+
