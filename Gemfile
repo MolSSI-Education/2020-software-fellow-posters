@@ -27,5 +27,5 @@ gem "github-pages"
 #
 # If you have any other plugins, put them here!
 group :jekyll_plugins do
-   gem "jekyll-spaceship"
-end
+    gem "jekyll-spaceship"
+ end
