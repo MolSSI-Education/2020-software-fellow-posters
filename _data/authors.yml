@@ -19,6 +19,27 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Victor H. Chavez:
+      name      : "Victor H. Chavez"
+      bio       : "Ph.D Candidate, Purdue University"
+      avatar    : "/assets/images/avatars/vh_chavez.png"
+      links     :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:gonza445@purdue.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://purduedft.com/"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/vh__chavez"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/vhchavez"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/vhchavez/"
+
 Pascal Merz:
     name    : "Pascal T. Merz"
     bio     : "Postdoctoral Researcher, Shirts Group, CU Boulder"
