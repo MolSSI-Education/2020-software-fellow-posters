@@ -19,6 +19,28 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Heta Gandhi:
+    name    : "Heta A. Gandhi"
+    bio     : "PhD Student at University of Rochester,
+              Software Investment Fellow at The Molecular Sciences Software Institute"
+    avatar  : "/assets/images/avatars/heta_gandhi.JPG"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:hgandhi@ur.rochester.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://thewhitelab.org/"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/gandhi_heta"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/hgandhi2411"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/hetagandhi/"
+
 Lauren Koulias:
     name    : "Lauren N. Koulias"
     bio     : "Graduate Student in the Li group, Department of Chemistry at University of Washington"
