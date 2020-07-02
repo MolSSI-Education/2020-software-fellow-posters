@@ -151,7 +151,7 @@ Ankita Mukhtyar:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://twitter.com/AnkitaMukhtyar"
-
+        
 Farhad Ramezanghorbani:
     name    : "Farhad Ramezanghorbani"
     bio     : "Ph.D. Candidate at University of Florida"
@@ -394,3 +394,24 @@ Victor Yu:
       - label: "Project Website"
         icon: "fas fa-fw fa-link"
         url: "https://elsi-interchange.org"
+        
+Giuseppe Barbalinardo:
+    name    : "Giuseppe Barbalinardo"
+    bio     : "Developer, Scientist, and Inventor."
+    avatar  : "/assets/images/avatars/giuseppe_barbalinardo.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:gbarbalinardo@ucdavis.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://giuseppe.barbalinardo.com"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/GiuseppeQuantum"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/gbarbalinardo"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/giuseppe-barbalinardo-887a3586"
