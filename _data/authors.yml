@@ -40,6 +40,64 @@ Victor H. Chavez:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/vhchavez/"
 
+Pascal Merz:
+    name    : "Pascal T. Merz"
+    bio     : "Postdoctoral Researcher, Shirts Group, CU Boulder"
+    avatar  : "/assets/images/avatars/pascal_merz.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:pascal.merz@colorado.edu"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/pascalmerz"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/ptmerz"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/pascal-t-merz"
+
+Heta Gandhi:
+    name    : "Heta A. Gandhi"
+    bio     : "PhD Student at University of Rochester,
+              Software Investment Fellow at The Molecular Sciences Software Institute"
+    avatar  : "/assets/images/avatars/heta_gandhi.JPG"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:hgandhi@ur.rochester.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://thewhitelab.org/"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/gandhi_heta"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/hgandhi2411"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/hetagandhi/"
+
+Lauren Koulias:
+    name    : "Lauren N. Koulias"
+    bio     : "Graduate Student in the Li group, Department of Chemistry at University of Washington"
+    avatar  : "/assets/images/avatars/lauren_koulias.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:koulil@uw.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://www.chronusquantum.org/"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/laurennk"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/lauren-koulias/"
+
 Sebastian Lee:
     name    : "Sebastian J. R. Lee"
     bio     : "PhD Graduate Student at Caltech"
@@ -93,7 +151,7 @@ Hannah Bruce Macdonald:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
-        
+
 Ankita Mukhtyar:
     name    : "Ankita J. Mukhtyar"
     bio     : "PhD candidate, Cornell University"
@@ -114,7 +172,7 @@ Ankita Mukhtyar:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://twitter.com/AnkitaMukhtyar"
-
+        
 Farhad Ramezanghorbani:
     name    : "Farhad Ramezanghorbani"
     bio     : "Ph.D. Candidate at University of Florida"
@@ -183,7 +241,7 @@ Tucker Burgin:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/tucker-burgin-72623959"
-        
+
 Fang Liu:
     name    : "Fang Liu"
     bio     : "Postdoctoral Fellow, Massachusetts Institute of Technology"
@@ -240,7 +298,7 @@ Jennifer Clark:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jenniferclark13/"
-        
+
 Samragni Banerjee:
     name    : "Samragni Banerjee"
     bio     : "Graduate Research Assistant, The Ohio State University"
@@ -273,7 +331,7 @@ Alon Grinberg Dana:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/alongd/"
-        
+
 Sina Mostafanejad:
     name    : "Sina Mostafanejad"
     bio     : "Postdoctoral Fellow, Florida State University"
@@ -357,3 +415,24 @@ Victor Yu:
       - label: "Project Website"
         icon: "fas fa-fw fa-link"
         url: "https://elsi-interchange.org"
+        
+Giuseppe Barbalinardo:
+    name    : "Giuseppe Barbalinardo"
+    bio     : "Developer, Scientist, and Inventor."
+    avatar  : "/assets/images/avatars/giuseppe_barbalinardo.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:gbarbalinardo@ucdavis.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://giuseppe.barbalinardo.com"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/GiuseppeQuantum"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/gbarbalinardo"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/giuseppe-barbalinardo-887a3586"
