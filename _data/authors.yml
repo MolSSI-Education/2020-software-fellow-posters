@@ -18,6 +18,27 @@ Jessica Nash:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
+
+Hannah Bruce Macdonald:
+    name    : "Hannah E. Bruce Macdonald"
+    bio     : "Research Fellow - Chodera lab, Memorial Sloan Kettering Cancer Center"
+    avatar  : "/assets/images/avatars/Hannah_BruceMacdonald.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:hannah-brucemacdonald@choderalab.org"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "https://hannahbrucemacdonald.com/"
+      - label: "Twitter"
+        icon: "fab fa-fw fa-twitter-square"
+        url: "https://twitter.com/hannahbruce"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/hannahbrucemacdonald"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/jessicanash2/"
         
 Ankita Mukhtyar:
     name    : "Ankita J. Mukhtyar"
