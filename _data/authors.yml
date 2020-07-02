@@ -19,6 +19,24 @@ Jessica Nash:
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
 
+Lauren Koulias:
+    name    : "Lauren N. Koulias"
+    bio     : "Graduate Student in the Li group, Department of Chemistry at University of Washington"
+    avatar  : "/assets/images/avatars/lauren_koulias.jpg"
+    links   :
+      - label: "Email"
+        icon: "fas fa-fw fa-envelope-square"
+        url: "mailto:koulil@uw.edu"
+      - label: "Website"
+        icon: "fas fa-fw fa-link"
+        url: "http://www.chronusquantum.org/"
+      - label: "GitHub"
+        icon: "fab fa-fw fa-github"
+        url: "https://github.com/laurennk"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-linkedin"
+        url: "https://www.linkedin.com/in/lauren-koulias/"
+
 Sebastian Lee:
     name    : "Sebastian J. R. Lee"
     bio     : "PhD Graduate Student at Caltech"
@@ -72,7 +90,7 @@ Hannah Bruce Macdonald:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jessicanash2/"
-        
+
 Ankita Mukhtyar:
     name    : "Ankita J. Mukhtyar"
     bio     : "PhD candidate, Cornell University"
@@ -162,7 +180,7 @@ Tucker Burgin:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/tucker-burgin-72623959"
-        
+
 Fang Liu:
     name    : "Fang Liu"
     bio     : "Postdoctoral Fellow, Massachusetts Institute of Technology"
@@ -219,7 +237,7 @@ Jennifer Clark:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/jenniferclark13/"
-        
+
 Samragni Banerjee:
     name    : "Samragni Banerjee"
     bio     : "Graduate Research Assistant, The Ohio State University"
@@ -252,7 +270,7 @@ Alon Grinberg Dana:
       - label: "LinkedIn"
         icon: "fab fa-fw fa-linkedin"
         url: "https://www.linkedin.com/in/alongd/"
-        
+
 Sina Mostafanejad:
     name    : "Sina Mostafanejad"
     bio     : "Postdoctoral Fellow, Florida State University"
