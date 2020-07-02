@@ -103,10 +103,10 @@ i R_{l \alpha} D_{i\beta li'\beta'}\chi_{kl}
 \eta_{ks i\beta}\eta_{ksi'\beta}
 $$
 
-and the last equality is obtained by applying the derivative with respect to $$\mathbf{q}_k$$ directly to tbe eigenvectors Equation
+and the last equality is obtained by applying the derivative with respect to $$\mathbf{q}_k$$ directly to the eigenvectors Equation
 
 
-The heat current per mode is written in terms of the phonon energy $$\hbar \omega$$, velocity $$v$$, and out-of-equilibrium phonons population, $$\tilde n$$:
+The heat current per mode is written in terms of the phonon energy $$\hbar \omega$$, velocity $$v$$, and out-of-equilibrium phonons population, $$\tilde n$$\:
 
 $$
 j_{\mu\alpha'} =\sum_\alpha \hbar \omega_\mu v_{\mu\alpha'} (\tilde n_{\mu\alpha} - n_{\mu})\simeq- \sum_\alpha c_\mu v_{\mu\alpha'} \mathbf{\lambda}_{\mu\alpha}  \nabla_\alpha T .
