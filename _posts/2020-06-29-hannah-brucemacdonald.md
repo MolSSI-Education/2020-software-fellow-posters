@@ -29,12 +29,12 @@ layout: poster
 
 A relative free energy calculation involves perturbing one molecule into another, and calculating the free energy difference of making that change. Relative binding free energies (RBFE) involve the perturbing between two molecules, both in an active site, and in bulk water to calculate the difference in affinity between the two molecules. RBFEs are an effective tool in drug design, as they allow for predictions as to if making a change to a molecule will result in a more or less promising drug candidate (1).
 
-![Thermodynamic Cycle]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/thermocycle.png)  
+![Thermodynamic Cycle]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/thermocycle.png)  
 ***Figure 1***: Thermodynamic cycle whereby one molecule is 'alchemically' transformed into another. The difference between the two pink arrows affords the difference between the two green arrows: namely the difference in binding affinity of the two.
 
 [Perses](https://github.com/choderalab/perses) is an open-source scientific software package for performing single-topology relative free energy calculations. Single-topology calculations involve simulating with a single hybrid ligand, that is perturbed across the lambda protocol to change from representing ligand A to ligand B, and differs from dual-topology type relative free energy methods whereby two ligands are present in the simulation, where the interactions of one ligand is turned on, while the other is turned off.
 
-![Single vs. dual topology]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/singledual.png)  
+![Single vs. dual topology]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/singledual.png)  
 ***Figure 2***: Different methods in perturbing between two ligands can be used: single-topology, which is implemented in [Perses](https://github.com/choderalab/perses), and dual-topology.
 
 ### Software
@@ -56,7 +56,7 @@ Optimizing these alchemical parameters will allow for more efficient simulation,
 
 Relative calculations rely on choosing pairs of ligands to compare from a given set of molecules of interest. The minimum requirement to be able to fully rank set of molecules is that the pairwise comparisons between ligands results in a weakly connected graph - such that a pathway exists between any two molecules in the set. Even for a small number of ligands, there exists a redundancy in possible graphs that satisfy the connectivity requirement.
 
-![Connectivity]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/connectivity.png)  
+![Connectivity]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/connectivity.png)  
 ***Figure 4***: Selection of possible graphs for calculating relative free energies that satisfy the criteria of weak connectivity, where ligands are shown as colored circles and RBFEs are shown as the edges between them.
 
 The number of RBFEs used (edges) will increase the computational expense, where the cycle-closure type graph is a compromise between the number of edges run, and having redundancy in the networks. Ideally, edges from all of the possible pairwise comparisons would be chosen in an optimal way, such as to minimize the variance.
@@ -64,7 +64,7 @@ The number of RBFEs used (edges) will increase the computational expense, where 
 ## Methods
 Relative free energy calculations have been performed using [Perses](https://github.com/choderalab/perses), for a set of binders to the Jnk1 protein from the Schrodinger set (2). 100 forwards and backwards non-equilibrium (NEQ) switches of 1 ns, followed by 1 ns of equilibrium sampling at each endstate. While the small molecule forcefields differ, amber-14SB and TIP3P have been used. Input files are [available](https://github.com/openmm/openmmforcefields/tree/master/openmmforcefields/data/perses_jacs_systems). All simulations were performed on folding at home.
 
-![jnk1]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/jnk1.png)  
+![jnk1]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/jnk1.png)  
 ***Figure 5***: Jnk1 protein PDB: 2GMX
 
 ## Results
@@ -72,14 +72,14 @@ Relative free energy calculations have been performed using [Perses](https://git
 ### Forcefields
 The RBFEs of the Jnk1 set have been performed for 5 different small molecule forcefields. Two versions of the generalized amber forcefield (GAFF) - 1.81 and 2.11, two versions of the [open forcefield initiative](https://openforcefield.org/) - 1.0.0 and 1.2.0 and smirnoff99Frosst 1.1.0 were used.
 
-![relative]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/relativefes.png)  
+![relative]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/relativefes.png)  
 ***Figure 6***: RBFEs of Jnk1 dataset with different small molecule forcefields. RMSE and MUE are quoted in units of $$kcal mol^{-1}$$, with confidence intervals calculated using bootstrapping.
 
 The small molecule forcefield with the best statistical performance is openforcefield v. 1.0.0 for the Jnk1 target, however testing across different protein-ligand systems would be required for more thorough benchmarking.
 
 RBFEs provide pairwise comparisons between  molecules, but for decision-making in live drug design projects, absolute free energies are a more useful metric. If there are resources available to make and test the best _n_ predicted molecules, a maximum likelihood estimator can be used to optimize the graph of results.
 
-![absolute]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/absolutefes.png)  
+![absolute]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/absolutefes.png)  
 ***Figure 7***: Absolute binding free energies of Jnk1 dataset with different small molecule forcefields. RMSE, MUE, R2 and $$\rho$$ are quoted in units of $$kcal mol^{-1}$$, with confidence intervals calculated using bootstrapping.
 
 While the RMSE and MUE of the methods differ in their performance, the small molecules perform similarly with regards to correlation statistics R2 and rho. These results suggest that relative free energy calculations would provide a useful tool for testing design ideas for future Jnk1 inhibitors.
@@ -91,7 +91,7 @@ The above simulations were performed with the pairwise comparisons performed in 
 
 $$ s_{phase} = \sigma _{phase}  * n_{samples}$$
 
-![variance]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/variance.png)  
+![variance]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/variance.png)  
 ***Figure 8***: Correlation between the statistical fluctuation of the solvent and complex phases for Jnk1 relative free energy calculations for a range of small molecule forcefields.
 
 The above plots illustate there is a correlation between the statistical fluctuation in the solvent and the complex phases. As the solvent phase is much less computationally intensive, this would allow us to design better relative free energy networks for future iterations, resulting in faster simulations, with smaller associated errors. 
