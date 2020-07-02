@@ -56,7 +56,7 @@ Optimizing these alchemical parameters will allow for more efficient simulation,
 
 Relative calculations rely on choosing pairs of ligands to compare from a given set of molecules of interest. The minimum requirement to be able to fully rank set of molecules is that the pairwise comparisons between ligands results in a weakly connected graph - such that a pathway exists between any two molecules in the set. Even for a small number of ligands, there exists a redundancy in possible graphs that satisfy the connectivity requirement.
 
-![Connectivity]({{ site.url }}{{ site.baseurl }}/assets/images/sample-poster/BruceMacdonald_Hannah/connectivity.png)  
+![Connectivity]({{ site.url }}{{ site.baseurl }}/assets/images/BruceMacdonald_Hannah/connectivity.png)  
 ***Figure 4***: Selection of possible graphs for calculating relative free energies that satisfy the criteria of weak connectivity, where ligands are shown as colored circles and RBFEs are shown as the edges between them.
 
 The number of RBFEs used (edges) will increase the computational expense, where the cycle-closure type graph is a compromise between the number of edges run, and having redundancy in the networks. Ideally, edges from all of the possible pairwise comparisons would be chosen in an optimal way, such as to minimize the variance.
