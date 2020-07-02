@@ -19,8 +19,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - uses: helaili/jekyll-action@2.0.3
-        env:
-          JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
+      - uses: jeffreytse/jekyll-deploy-action@v0.1.0
         with:
-          jekyll_src: './'
+          provider: 'github'
+          token: ${{ secrets.GH_TOKEN }}
