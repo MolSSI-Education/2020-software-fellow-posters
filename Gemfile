@@ -16,6 +16,8 @@ source "https://rubygems.org"
 gem "jekyll"
 gem "minimal-mistakes-jekyll"
 
+gem "github-pages"
+
 # The following plugins are automatically loaded by the theme-gem:
 #   gem "jekyll-paginate"
 #   gem "jekyll-sitemap"
@@ -25,5 +27,5 @@ gem "minimal-mistakes-jekyll"
 #
 # If you have any other plugins, put them here!
 group :jekyll_plugins do
-   gem "jekyll-spaceship"
-end
+    gem "jekyll-spaceship"
+ end
