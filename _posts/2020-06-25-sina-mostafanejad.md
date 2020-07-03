@@ -39,7 +39,7 @@ of these issues.
 ## Theory {#Theory}
 
 Throughout this section, we adopt the conventional notation employed within
-multireference methods for labeling molecular orbitals $$\lbrace \psi\rbrace$bund$ \:
+multireference methods for labeling molecular orbitals $$\lbrace \psi\rbrace$$ \:
 the indices $$i$$, $$j$$, $$k$$, and $$l$$ represent inactive orbitals;
 $$t$$, $$u$$, $$v$$, and $$w$$ indicate active orbitals; $$a$$, $$b$$, $$c$$,
 and $$d$$ denote external orbitals; and $$p$$, $$q$$, $$r$$, and $$s$$ represent
