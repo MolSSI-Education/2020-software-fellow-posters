@@ -22,11 +22,9 @@ toc_label: "Poster Contents"
 layout: poster
 ---
 
-## The kALDo package
+> kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle, and RTA. The algorithms are implemented using linear algebra operations on tensors, to take advantage of multithreading on GPU and CPU using Numpy, Tensorflow, and optimized tensor libraries. Using the Atomic Simulation Environment, κALDo can calculate the IFCs using several ab initio and molecular dynamics codes, thus enabling the use of first-principles DFT, empirical forcefields, and semi-empirical tight- binding. A native LAMMPS interface is also available in the USER-PHONON package. Finally, through seamless integration with the hiPhive package, the IFC calculation can take advantage of compressing-sensing machine learning algorithms. The code is released open-source for the community to use and contribute with edits and suggestions. It is designed on modern software best practices, and we hope to provide a development platform to implement new theory and methods.
 
-kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle, and RTA. The algorithms are implemented using linear algebra operations on tensors, to take advantage of multithreading on GPU and CPU using Numpy, Tensorflow, and optimized tensor libraries. Using the Atomic Simulation Environment, κALDo can calculate the IFCs using several ab initio and molecular dynamics codes, thus enabling the use of first-principles DFT, empirical forcefields, and semi-empirical tight- binding. A native LAMMPS interface is also available in the USER-PHONON package. Finally, through seamless integration with the hiPhive package, the IFC calculation can take advantage of compressing-sensing machine learning algorithms. The code is released open-source for the community to use and contribute with edits and suggestions. It is designed on modern software best practices, and we hope to provide a development platform to implement new theory and methods.
-
-The code is available on [GitHub](https://github.com/nanotheorygroup/kaldo), while kALDO website can be found [here](https://nanotheorygroup.github.io/kaldo/).
+> The code is available on [GitHub](https://github.com/nanotheorygroup/kaldo), while kALDO website can be found [here](https://nanotheorygroup.github.io/kaldo/).
 
 
 ## Introduction
