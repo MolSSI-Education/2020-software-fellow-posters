@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>OpenCAP: An open source package for studying resonances in molecules. - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Motivation Electronic states which are metastable with respect to electron detachment, known as resonances, play central roles in electron-molecule scattering processes occurring in various contexts,  including chemistry, physics, and biology. Despite the ubiquity of these processes in nature,  the computational infrastructure available to the scientific community for studying metastable electronic states lags far behind that available for treatment of bound electronic states.  To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of  modern quantum chemistry packages to describe resonances.">
+
+
+  <meta name="author" content="James R Gayvert">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="OpenCAP: An open source package for studying resonances in molecules.">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/james-gayvert/">
+
+
+  <meta property="og:description" content="Motivation Electronic states which are metastable with respect to electron detachment, known as resonances, play central roles in electron-molecule scattering processes occurring in various contexts,  including chemistry, physics, and biology. Despite the ubiquity of these processes in nature,  the computational infrastructure available to the scientific community for studying metastable electronic states lags far behind that available for treatment of bound electronic states.  To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of  modern quantum chemistry packages to describe resonances.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-27T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/james-gayvert/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/james_gayvert.jpg" alt="James R Gayvert" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">James R Gayvert</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Graduate Student, Boston University</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:gayverjr@bu.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://gayverjr.github.io/opencap/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gayverjr" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/james-gayvert-226887123" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="OpenCAP: An open source package for studying resonances in molecules.">
+    <meta itemprop="description" content="MotivationElectronic states which are metastable with respect to electron detachment, known as resonances,play central roles in electron-molecule scattering processes occurring in various contexts, including chemistry, physics, and biology. Despite the ubiquity of these processes in nature, the computational infrastructure available to the scientific community for studying metastableelectronic states lags far behind that available for treatment of bound electronic states. To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of modern quantum chemistry packages to describe resonances.">
+    <meta itemprop="datePublished" content="2020-06-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">OpenCAP: An open source package for studying resonances in molecules.
+</h1>
+          <div id="author-list" class="author__list">
+            
+              James Gayvert<sup>1</sup>,
+            
+              Ksenia Bravaya<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Boston University Department of Chemistry, 590 Commonwealth Avenue, Boston, MA 02215</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Dr. Andrew Abi-Mansour, Dr. Benjamin Pritchard
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#motivation">Motivation</a></li>
+  <li>
+<a href="#theory">Theory</a>
+    <ul>
+      <li><a href="#non-hermitian-quantum-mechanics">Non-Hermitian Quantum Mechanics</a></li>
+      <li><a href="#complex-absorbing-potential-cap">Complex Absorbing Potential (CAP)</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#workflow">Workflow</a>
+    <ul>
+      <li><a href="#step-1-compute-h_0-and-tdms">Step 1: Compute (H_0) and TDMs</a></li>
+      <li><a href="#step-2-compute-cap-matrix">Step 2: Compute CAP matrix</a></li>
+      <li><a href="#step-3-analyze-eta-trajectories">Step 3: Analyze (\eta)-trajectories</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#interfaces-with-quantum-chemistry-packages">Interfaces with Quantum Chemistry Packages</a>
+    <ul>
+      <li><a href="#executable">Executable</a></li>
+      <li><a href="#python-api">Python API</a></li>
+    </ul>
+  </li>
+  <li><a href="#current-features">Current Features</a></li>
+  <li><a href="#application-2pi_g-resonance-of-n_2-">Application: ({}^2\Pi_g) resonance of (N_2^-)</a></li>
+  <li><a href="#conclusions">Conclusions</a></li>
+  <li>
+<a href="#references">References</a>
+    <ul>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="motivation">Motivation</h2>
+<p>Electronic states which are metastable with respect to electron detachment, known as resonances,
+play central roles in electron-molecule scattering processes occurring in various contexts, 
+including chemistry, physics, and biology. Despite the ubiquity of these processes in nature, 
+the computational infrastructure available to the scientific community for studying metastable
+electronic states lags far behind that available for treatment of bound electronic states. 
+To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of 
+modern quantum chemistry packages to describe resonances.</p>
+
+<h2 id="theory">Theory</h2>
+<h3 id="non-hermitian-quantum-mechanics">Non-Hermitian Quantum Mechanics</h3>
+<p>Non-Hermitian quantum mechanics is a powerful tool for describing resonances that allows one
+to utilize quantum chemistry methodologies which have originally been developed
+for the study of bound electronic states. In non-Hermitian quantum mechanics
+formalisms, a resonance is associated with a single square-integrable
+state of a non-Hermitian Hamiltonian with a complex Siegert-Gamow
+energy. The real part of the energy \(E_{res}\) is the
+resonance position, and the imaginary part \(\Gamma\) is the half-width, which is inversely proportional
+to the lifetime of the state<sup>1</sup>.</p>
+
+<h3 id="complex-absorbing-potential-cap">Complex Absorbing Potential (CAP)</h3>
+<p>The complex absorbing potential (CAP) is one of the few non-Hermitian formalisms which can be readily applied
+to molecules. In this approach, the electronic Hamiltonian is augmented with an artificial complex
+absorbing potential \(-i\eta W\), where \(\eta\) is the CAP strength parameter<sup>1</sup>. 
+The CAP absorbs the outgoing tail of the resonance wavefunction, transforming it into a 
+square integrable eigenstate of the non-Hermitian Hamiltonian<sup>1</sup>. 
+When finite basis sets are used, \(E_{res}\) and \(\Gamma\) become \(\eta\) -dependent.
+The best estimate of resonance position and width is obtained by finding an optimal value
+\(\eta_{opt}\) which satisfies the minimum logarithmic velocity criteria<sup>1</sup>.</p>
+
+\[min|\eta\frac{\mathrm{dE} }{\mathrm{d} \eta}|\]
+
+<p>\(\eta_{opt}\) is typically found by analyzing so called \(\eta\) -trajectories (see the last panel of Figure 1).</p>
+
+<p>Here, we exploit a projected version of the CAP formalism<sup>2</sup>, which treats the CAP as a 
+first order perturbation in a basis of pre-computed eigenstates of a Hermitian Hamiltonian, 
+yielding the following matrix equation:</p>
+
+\[H^{CAP} = H_0-i \eta W\]
+
+<p>Both \(H_0\) and \(W\) are computed once for a set of eigenstates, and the matrix elements of \(W\) are obtained using the 
+one-electron reduced density matrices \(\rho^i\),  and transition density matrices \(\gamma^{ij}\).</p>
+
+\[W_{ij}=
+\begin{Bmatrix}
+Tr\left[W^{AO}\gamma^{ij} \right ] ,&amp; i \neq j \\ 
+Tr\left[W^{AO}\rho^{i} \right ] ,&amp;  i=j
+\end{Bmatrix}\]
+
+<p>Eigenvalue trajectories can be analyzed at minimal additional computational 
+effort by diagonalizing the reduced dimension \(H^{CAP}\) over a range
+of \(\eta\) values.</p>
+
+<h2 id="workflow">Workflow</h2>
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/james_gayvert/workflow.png" alt="OpenCAP"><br>
+<em>Figure 1</em>: Workflow for conducting calculations with OpenCAP.</p>
+
+<h3 id="step-1-compute-h_0-and-tdms">Step 1: Compute \(H_0\) and TDMs</h3>
+
+<p>The first step of any OpenCAP calculation is running an excited state electronic structure calculation with a supported package
+in order to generate the zeroth order Hamiltonian \(H_0\), and the set of one-electron reduced density 
+and transition density matrices between each pair of eigenstates. These matrices can be 
+read from disk (HDF5, formatted checkpoint) or passed directly in RAM when using the Python API.</p>
+
+<h3 id="step-2-compute-cap-matrix">Step 2: Compute CAP matrix</h3>
+<p>The CAP matrix is computed entirely by OpenCAP, first in atomic orbital basis, and then projected
+into the subspace of the real Hamiltonian using the one-electron reduced density and 
+transition density matrices generated by the previous electronic structure calculation. 
+To perform the projection of \(W\) into the subspace, the ordering of the basis functions of the CAP computed by OpenCAP 
+must match the ordering of the density matrices computed by the electronic structure package.</p>
+
+<h3 id="step-3-analyze-eta-trajectories">Step 3: Analyze \(\eta\)-trajectories</h3>
+<p>Since the \(H_0\) and \(W\) matrices only need to be computed once, and can easily be stored, eigenvalue trajectories
+can be analyzed at the users convenience using a variety of analysis tools, such as Matplotlib or gnuplot.</p>
+
+<h2 id="interfaces-with-quantum-chemistry-packages">Interfaces with Quantum Chemistry Packages</h2>
+<p>OpenCAP currently supports interfaces with the OpenMolcas<sup>3</sup> and Pyscf<sup>4</sup> packages, along with an interface
+to a locally modified version of Q-Chem<sup>5</sup>. OpenCAP supports two modes of operation: a standalone C++ executable, 
+and a Python API.</p>
+
+<h3 id="executable">Executable</h3>
+<p>When using the executable version of OpenCAP, the user prepares an input file as described in our
+<a href="https://gayverjr.github.io/opencap/">documentation</a>. Electronic structure data is read from disk, and OpenCAP prints the \(H_0\) and 
+\(W\) matrices to standard output. The output can be analyzed using the script provided 
+in our repository as a template. We have tested and obtained results using the executable version with OpenMolcas<sup>4</sup> and a
+locally modified copy of Q-Chem.</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opencap test.in &gt; test.out
+tail -23 test.out
+Zeroth order Hamiltonian
+-109.3052074400    0.0000000000   -0.0020964200    0.0000467200    0.0035367800   -0.0000949700    0.0020805500    0.0000616700   -0.0000000000    0.0000000000
+<span class="p">   0.</span>0000000000 -109.3052074400   -0.0000467200   -0.0020964000    0.0000949700    0.0035367800    0.0000616700   -0.0020805500    0.0000000000    0.0000000000
+  -0.0020964200   -0.0000467200 -109.2407164400    0.0000000000    0.0270582400   -0.0001235400    0.0196302200    0.0001443500   -0.0000000000   -0.0000000000
+<span class="p">   0.</span>0000467200   -0.0020964000    0.0000000000 -109.2407160800    0.0001235400    0.0270583000    0.0001443500   -0.0196302500    0.0000000000    0.0000000000
+<span class="p">   0.</span>0035367800    0.0000949700    0.0270582400    0.0001235400 -109.2178091100    0.0000000000   -0.0482309000   -0.0001344500    0.0000000000    0.0000000000
+  -0.0000949700    0.0035367800   -0.0001235400    0.0270583000    0.0000000000 -109.2178091100   -0.0001344500    0.0482309000    0.0000000000   -0.0000000000
+<span class="p">   0.</span>0020805500    0.0000616700    0.0196302200    0.0001443500   -0.0482309000   -0.0001344500 -109.0721414500   -0.0000000000   -0.0000000000    0.0000000000
+<span class="p">   0.</span>0000616700   -0.0020805500    0.0001443500   -0.0196302500   -0.0001344500    0.0482309000   -0.0000000000 -109.0721416100   -0.0000000000   -0.0000000000
+  -0.0000000000    0.0000000000   -0.0000000000    0.0000000000    0.0000000000    0.0000000000   -0.0000000000   -0.0000000000 -109.0298915100    0.0000000000
+<span class="p">   0.</span>0000000000    0.0000000000   -0.0000000000    0.0000000000    0.0000000000   -0.0000000000    0.0000000000   -0.0000000000    0.0000000000 -109.0298916000
+CAP matrix
+-44.8078328210  -0.0000000000  21.8690451058  -0.4873519211  10.1088261447  -0.2714592872  -4.9300500373  -0.1461457678   0.0000000000  -0.0000000001
+ -0.0000000000 -44.8078328201   0.4873519211  21.8690451052   0.2714592872  10.1088261454  -0.1461457678   4.9300500382  -0.0000000001  -0.0000000000
+<span class="p"> 21.</span>8690451058   0.4873519211 -22.4698997766  -0.0000000000 -15.5224308448   0.0708743307  10.2163509455   0.0751310495  -0.0000000000   0.0000000003
+ -0.4873519211  21.8690451052  -0.0000000000 -22.4698997752  -0.0708743307 -15.5224308447   0.0751310495 -10.2163509460   0.0000000003   0.0000000000
+<span class="p"> 10.</span>1088261447   0.2714592872 -15.5224308448  -0.0708743307 -14.0795461907   0.0000000000  11.6779607539   0.0325580627  -0.0000000000   0.0000000004
+ -0.2714592872  10.1088261454   0.0708743307 -15.5224308447   0.0000000000 -14.0795461911   0.0325580627 -11.6779607547   0.0000000004  -0.0000000000
+ -4.9300500373  -0.1461457678  10.2163509455   0.0751310495  11.6779607539   0.0325580627 -11.5451058835   0.0000000000  -0.0000000001   0.0000000010
+ -0.1461457678   4.9300500382   0.0751310495 -10.2163509460   0.0325580627 -11.6779607547   0.0000000000 -11.5451058846  -0.0000000010  -0.0000000000
+<span class="p">  0.</span>0000000000  -0.0000000001  -0.0000000000   0.0000000003  -0.0000000000   0.0000000004  -0.0000000001  -0.0000000010 -44.8627543309  -0.0000000000
+ -0.0000000001  -0.0000000000   0.0000000003   0.0000000000   0.0000000004  -0.0000000000   0.0000000010  -0.0000000000  -0.0000000000 -44.8627543302
+Wall time:2.4992220000
+</code></pre></div></div>
+
+<h3 id="python-api">Python API</h3>
+<p>We currently have an experimental Python API which has been tested with OpenMolcas and Pyscf. 
+Using the <a href="https://pybind11.readthedocs.io/en/stable/">PyBind11</a> library, OpenCAP data structures and methods are exposed to Python, 
+providing the user with direct control over the various parts of the calculation. After cloning the repository, 
+OpenCAP can be installed as a python module called <code class="language-plaintext highlighter-rouge">pycap</code>.</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pycap
+sys_dict = {"geometry":    '''N  0  0   1.039
+                             N  0  0   -1.039
+                            Gh 0  0   0.0''',
+            "basis_file":"basis.bas",
+            "bohr_coordinates": "true"}
+
+cap_dict = {
+            "cap_type": "box",
+            "cap_x":"2.76",
+            "cap_y":"2.76",
+            "cap_z":"4.88",
+            "Radial_precision": "14",
+            "angular_points": "110"
+}
+nstates = 10 
+package = "openmolcas"
+<span class="gh"># Defining classes</span>
+s = pycap.System(sys_dict)
+pc = pycap.Projected_CAP(s,cap_dict,nstates,package)
+... 
+<span class="gh"># Calling methods</span>
+pc.compute_ao_cap()
+pc.compute_projected_cap()
+</code></pre></div></div>
+<p>Transition density matrices can be read from disk, or passed directly in RAM.</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># Read data from disk</span>
+es_dict = {"method" : "ms-caspt2",
+           "molcas_output":"anion_ms.out",
+           "rassi_h5":"anion_ms.rassi.h5",
+}
+pc.read_data(es_dict)
+mat=pc.get_projected_cap()
+h0 = pc.get_H()
+
+<span class="gh"># pass TDM from state 1--&gt;2 directly </span>
+import h5py
+import numpy as np
+f = h5py.File('anion_ms.rassi.h5', 'r')
+arr = f["SFS_TRANSITION_DENSITIES"]
+arr1 = np.reshape(arr<span class="p">[</span><span class="nv">0</span><span class="p">][</span><span class="ss">1</span><span class="p">]</span>,(119,119))
+pc.add_tdm(arr1,0,1)
+</code></pre></div></div>
+
+<h2 id="current-features">Current Features</h2>
+<ul>
+  <li>Optimized numerical integration routines for computing the CAP matrix in atomic orbital basis</li>
+  <li>Compatible with data generated by OpenMolcas, Pyscf, and Q-Chem</li>
+  <li>Support for commonly used Box-type and Voronoi-type CAPs with user specified parameters</li>
+  <li>Support for standard and custom ab initio basis sets specified in Psi4 format</li>
+  <li>Easily modifiable sample scripts for eigenvalue trajectory analysis provided in the repository</li>
+  <li>CMake cross platform build system</li>
+</ul>
+
+<h2 id="application-2pi_g-resonance-of-n_2-">Application: \({}^2\Pi_g\) resonance of \(N_2^-\)</h2>
+<p>Our results for EOM-CCSD and CAP-XMS-CASPT2 are in agreement with previous theoretical
+and experimental results for this system, clearly demonstrating the potential of the OpenCAP approach 
+for studying resonances. We note that our results for CAP-EOM-CCSD were obtained at a fraction of the 
+computational cost as those reported by Zuev et al.<sup>6</sup>, as the original CAP-EOM-CCSD implementation 
+in Q-Chem requires a unique electronic structure calculation for each \(\eta\) value.</p>
+
+\[\small
+\begin{array}{|c|c|c|c|}
+\hline
+  \text{Method} &amp; \text{Package} &amp; E_{res} &amp; \Gamma \\ 
+\hline
+   \text{CAP-EOM-CCSD}^6 &amp; \text{QChem/Complex CCMAN2} &amp; 2.48 &amp; 0.42 \\
+\hline
+   \textbf{CAP-EOM-CCSD} &amp; \text{QChem/OpenCAP} &amp; 2.48 &amp; 0.43 \\ 
+\hline
+   \text{CAP-XMCQDPT2}^7 &amp; \text{Firefly} &amp; 2.12 &amp; 0.29 \\
+\hline
+   \textbf{CAP-XMS-CASPT2} &amp; \text{OpenMolcas/OpenCAP} &amp; 2.12 &amp; 0.31 \\
+\hline
+   \text{Experiment}^8 &amp;  &amp; 2.32 &amp; 0.41 \\
+\hline
+\end{array}\]
+
+<h2 id="conclusions">Conclusions</h2>
+<ul>
+  <li>OpenCAP is the first software of its kind which extends the functionality of 
+modern quantum chemistry packages to describe resonances.</li>
+  <li>The software functions as standalone executable and importable Python module.</li>
+  <li>Our results obtained using supported interfaces show promising agreements with previous theoretical 
+ and experimental results.</li>
+  <li>Future directions of the project include development of scattering-based approaches 
+such as Feshbach Projection<sup>9</sup> and R-matrix Theory<sup>10</sup>.</li>
+</ul>
+
+<h2 id="references">References</h2>
+<ol>
+  <li>Riss, U. V.; Meyer, H. D. J. Phys. B At. Mol. Opt. Phys. 1993, 26 (23), 4503–4535.</li>
+  <li>Sommerfeld, T.; Santra, R. Int. J. Quantum Chem. 2001, 82 (5), 218–226.</li>
+  <li>Fdez. Galván, I.; Vacher, M.; Alavi, A.; Angeli, C.; Aquilante, F.; Autschbach, J.; Bao, J. J.; Bokarev, S. I.; Bogdanov, N. A.; Carlson, R. K.; et al.  J. Chem. Theory Comput. 2019, 15 (11), 5925–5964.</li>
+  <li>Sun, Q.; Berkelbach, T. C.; Blunt, N. S.; Booth, G. H.; Guo, S.; Li, Z.; Liu, J.; McClain, J. D.; Sayfutyarova, E. R.; Sharma, S.; et al. WIREs Comput. Mol. Sci. 2018, 8 (1), e1340.</li>
+  <li>Shao, Y.; Gan, Z.; Epifanovsky, E.; Gilbert, A. T. B.; Wormit, M.; Kussmann, J.; Lange, A. W.; Behn, A.; Deng, J.; Feng, X.; et al. Mol. Phys. 2015, 113 (2), 184–215.</li>
+  <li>Zuev, D.; Jagau, T. C.; Bravaya, K. B.; Epifanovsky, E.; Shao, Y.; Sundstrom, E.; Head-Gordon, M.; Krylov, A. I. J. Chem. Phys. 2014, 141 (2).</li>
+  <li>Kunitsa, A. A.; Granovsky, A. A.; Bravaya, K. B. J. Chem. Phys. 2017, 146 (18).</li>
+  <li>M. Berman, H. Estrada, L. S. Cederbaum, and W. Domcke, Phys. Rev. A
+28, 1363 (1983).</li>
+  <li>Feshbach, H. II. Ann. Phys. (N. Y). 1962, 19 (2), 287–313.</li>
+  <li>Tennyson, J. Phys. Rep. 2010, 491 (2), 29–76.</li>
+</ol>
+
+<h3 id="acknowledgements">Acknowledgements</h3>
+
+<p><code class="language-plaintext highlighter-rouge">James Gayvert</code> was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-27T00:00:00+00:00">June 27, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=OpenCAP%3A+An+open+source+package+for+studying+resonances+in+molecules.%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjames-gayvert%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjames-gayvert%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjames-gayvert%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/alon-grinberg-dana/" class="pagination--pager" title="TCKDB - Theoretical Chemical Kinetics Database
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/ankita-mukhtyar/" class="pagination--pager" title="Pattern recognition based framework to characterize order in materials - Focus on block copolymer self assembly
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

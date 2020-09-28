@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Introduction">
+
+
+  <meta name="author" content="Jennifer A. Clark">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/jennifer-clark/">
+
+
+  <meta property="og:description" content="Introduction">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-29T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/jennifer-clark/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/jennifer_clark.JPG" alt="Jennifer A. Clark" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Jennifer A. Clark</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>PhD Candidate at NC State University</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:jaclark5@ncsu.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/jaclark5" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/jenniferclark13/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State">
+    <meta itemprop="description" content="Introduction">
+    <meta itemprop="datePublished" content="2020-06-29T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Jennifer A. Clark<sup>1</sup>,
+            
+              Erik E. Santiso<sup>1</sup>,
+            
+              Andrew Abi-Mansour<sup>2</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Department of Chemical and Biomolecular Engineering, North Carolina State University, Raleigh, NC</div>
+            
+              <div>
+<strong>2</strong> The Molecular Sciences Software Institute, Blacksburg, VA</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Andrew Abi-Mansour
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li>
+<a href="#introduction">Introduction</a>
+    <ul>
+      <li><a href="#project-goals">Project Goals:</a></li>
+      <li><a href="#audience">Audience:</a></li>
+      <li><a href="#available-alternatives">Available Alternatives:</a></li>
+    </ul>
+  </li>
+  <li><a href="#statistical-associating-fluid-theory-saft">Statistical Associating Fluid Theory, SAFT</a></li>
+  <li><a href="#how-it-works">How it Works</a></li>
+  <li><a href="#example-calculations">Example Calculations</a></li>
+  <li><a href="#currently-supported-features">Currently Supported Features</a></li>
+  <li><a href="#what-is-next">What is Next?</a></li>
+  <li>
+<a href="#references">References</a>
+    <ul>
+      <li><a href="#acknowledgments">Acknowledgments</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) equation of state (EOS).</p>
+
+<p>Despite the power of SAFT coarse graining, its use has been limited by lack of availability of a freely accessible application.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/logo.png" alt="logo">
+<em><strong>Figure 1</strong>: DESPASITO: <strong>D</strong>etermining <strong>E</strong>quilibrium <strong>S</strong>tate and <strong>P</strong>arametrization: <strong>A</strong>pplication for <strong>S</strong>AFT, <strong>I</strong>ntended for <strong>T</strong>hermodynamic <strong>O</strong>utput</em></p>
+
+<h3 id="project-goals">Project Goals:</h3>
+<ol>
+  <li>Design a thermodynamic platform for equations of state that allows natural extension</li>
+  <li>Provide accessible parametrization routine that fits equation of state parameters that are useful for simulations</li>
+</ol>
+
+<h3 id="audience">Audience:</h3>
+<ul>
+  <li>Historically complex equations of state are desired by the oil and gas industry</li>
+  <li>Academically the SAFT EOS has been developed into a coarse-graining formalism [1-3] that provides chemical specificity to larger scale molecular dynamics simulations</li>
+</ul>
+
+<h3 id="available-alternatives">Available Alternatives:</h3>
+<ul>
+  <li>Bottled SAFT [4] is a web application meant to remedy issue of parameterizing by applying corresponding states for homonuclear molecules, but represents a general correlation that relies on possessing critical properties.</li>
+  <li>PC-SAFT calculations are available in the commercial package, Aspen</li>
+  <li>The commercial package gSAFT from Process Systems Enterprise, PSE, is a more direct comparison supporting SAFT-γ-Mie</li>
+</ul>
+
+<h2 id="statistical-associating-fluid-theory-saft">Statistical Associating Fluid Theory, SAFT</h2>
+
+<ul>
+  <li>Explicitly links the intermolecular potential with thermodynamic properties</li>
+  <li>Parameters are fit to experimental vapor-liquid equilibria data and other macroscopic properties</li>
+  <li>Various versions of SAFT can be used to obtain parameters for coarse-grained MD simulations</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/applications.png" alt="applications">
+<em><strong>Figure 2</strong>: SAFT-γ-Mie has been successfully applied to various larger scale systems, DESPASITO makes contributing more accessible.</em></p>
+
+<ul>
+  <li>As of now, a new contributor to this emerging method of coarse-graining would need to write their code from scratch</li>
+  <li>Our application makes SAFT accessible to the general public</li>
+</ul>
+
+<h2 id="how-it-works">How it Works</h2>
+
+<p>Our modular and object oriented approach allows this package to function for an EOS other than SAFT, and expand the thermodynamic properties it handles.</p>
+
+<ul>
+  <li>
+<strong>Want a different method of fitting?</strong> Add another function and our factory method will find it</li>
+  <li>
+<strong>Want another objective function?</strong> Add a class using our template</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/blockflow.png" alt="blockflow">
+<em><strong>Figure 3</strong>: DESPASITO Program Flowchart</em></p>
+
+<ul>
+  <li>
+<strong>Want a new calculation type?</strong> Add another function and our factory method will find it</li>
+  <li>
+<strong>Want a new EOS?</strong> Use the class template for guaranteed compatibility</li>
+</ul>
+
+<h2 id="example-calculations">Example Calculations</h2>
+
+<p>For a united atom calculation of pentane and methane, a thermodynamic calculation is as easy as a 6 line file, input.json (given parameter files):</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "beadconfig": [[["CH3", 2],["CH2", 3]], [["CH4", 1]]],
+    "EOSgroup": "SAFTgroup.json",
+    "EOScross": "SAFTcross.json",
+    "calculation_type" : "vapor_properties",
+    "Tlist" : [270.0],
+    "yilist": [[0.99, 0.01]]
+}
+</code></pre></div></div>
+
+<p>Run it with:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python -m despasito -i input.json
+</code></pre></div></div>
+
+<p>DESPASITO can also be imported as a library so that a user can use the EOS object’s accessible attributes.</p>
+
+<p>For example, we can break-down the Helmholtz energy components for hexane.</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beads  = ['CH3', 'CH2']
+beads_per_molecule  = np.array([[2., 8.]])
+beadlibrary  = {'CH3':
+                   {'epsilon': 256.7662,'l_a': 6.0, 'l_r': 15.04982, 'sigma': 4.077257e-1, 'Sk': 0.5725512, 'Vks': 1, 'mass': 0.015035},
+                'CH2': 
+                   {'epsilon': 473.3893, 'l_a': 6.0, 'l_r': 19.87107, 'sigma': 4.880081e-1, 'Sk': 0.2293202, 'Vks': 1, 'mass': 0.014027}}
+crosslibrary  = {'CH3': {'CH2': {'epsilon': 350.770}}}
+eos = despasito.equations_of_state.eos(eos="saft.gamma_mie", beads=beads , nui=beads_per_molecule , beadlibrary=beadlibrary , crosslibrary=crosslibrary )
+
+rho, T, xi = 553.0, 700.0, np.array([1.0])
+AHS = eos.saft_source.Ahard_sphere(rho, T, xi)
+A1 = eos.saft_source.Afirst_order(rho, T, xi)
+A2 = eos.saft_source.Asecond_order(rho, T, xi)
+A3 = eos.saft_source.Athird_order(rho, T, xi)
+Am1 = AHS+A1+A2+A3
+Am2 = eos.Amonomer(rho, T, xi)
+print('The Monomer Contribution for Helmholtz Energy: {},<span class="se">\n</span>    equals the sum of its components: {}'.format(Am2,Am1))
+
+The Monomer Contribution for Helmholtz Energy: [-0.19323846],
+    equals the sum of its components: [-0.19323846]
+</code></pre></div></div>
+
+<p>These parameters were taken from Dufal et al. [3]</p>
+
+<h2 id="currently-supported-features">Currently Supported Features</h2>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/features.png" alt="features"></p>
+
+<ul>
+  <li>Although our intention was to create a platform to fit parameters for the SAFT EOS, we are equipped to handle other equations of state that can’t be solved explicitly (e.g. Extended UNIQUAC).</li>
+  <li>We added the Peng-Robinson EOS as an example of a non-SAFT EOS.</li>
+  <li>Code Optimization: Implemented options to provide Numba, Cython, or Fortran modules.</li>
+  <li>Shared-Memory Parallelization: Numerous thermodynamic or parametrization calculations can be run in parallel with multi cores for HPC resources.</li>
+</ul>
+
+<h2 id="what-is-next">What is Next?</h2>
+
+<ul>
+  <li>Add second derivative thermodynamic properties</li>
+  <li>Add ability to implement complex parametrization constraints</li>
+  <li>Upgrade thermodynamic algorithms for more robust multicomponent handling</li>
+  <li>Provide interface for MoSDeF [7-8] for easy transfer from EOS to simulation</li>
+</ul>
+
+<h2 id="references">References</h2>
+<ol>
+  <li><a href="https://doi.org/10.1016/B978-0-444-54298-4.50097-0">Papaioannou, V.; Lafitte, T.; Adjiman, C. S.; Galindo, A.; Jackson, G. Simultaneous Prediction of Phase Behaviour and Second Derivative Properties with a Group Contribution Approach (SAFT-γ Mie). In Computer Aided Chemical Engineering; Elsevier, 2011; Vol. 29, pp 1593–1597.</a></li>
+  <li><a href="https://doi.org/10.1063/1.4851455">Papaioannou, V.; Lafitte, T.; Avendaño, C.; Adjiman, C. S.; Jackson, G.; Müller, E. A.; Galindo, A. Group Contribution Methodology Based on the Statistical Associating Fluid Theory for Heteronuclear Molecules Formed from Mie Segments. J. Chem. Phys. 2014, 140 (5), 054107.</a></li>
+  <li><a href="https://doi.org/10.1021/je500248h">Dufal, S.; Papaioannou, V.; Sadeqzadeh, M.; Pogiatzis, T.; Chremos, A.; Adjiman, C. S.; Jackson, G.; Galindo, A. Prediction of Thermodynamic Properties and Phase Behavior of Fluids and Mixtures with the SAFT-γ Mie Group-Contribution Equation of State. J. Chem. Eng. Data 2014, 59 (10), 3272–3288.</a></li>
+  <li><a href="https://doi.org/10.1021/acs.jcim.6b00149">Ervik, Å.; Mejía, A.; Müller, E. A. Bottled SAFT: A Web App Providing SAFT-γ Mie Force Field Parameters for Thousands of Molecular Fluids. J. Chem. Inf. Model. 2016, 56 (9), 1609–1614.</a></li>
+  <li><a href="https://doi.org/10.1146/annurev-chembioeng-061312-103314">Müller EA; Jackson G. Force-Field Parameters from the SAFT-γ Equation of State for Use in Coarse-Grained Molecular Simulations. Annual Review of Chemical and Biomolecular Engineering. 2014, 5 (1), 405-427.</a></li>
+  <li><a href="https://dx.doi.org/10.1021/acs.macromol.9b02255">Pervaje, A. K.; Tilly, J. C.; Detwiler, A. T.; Spontak, R. J.; Khan, S A.; Santiso, E. E. Molecular Simulations of Thermoset Polymers Implementing Theoretical Kinetics with Top-Down Coarse-Grained Models. Macromolecules. 2020, 53, 2310−2322.</a></li>
+  <li><a href="https://doi.org/10.1007/978-981-10-1128-3_5">Klein C.; Sallai J.; Jones T.J.; Iacovella C.R.; McCabe C.; Cummings P.T. (2016) A Hierarchical, Component Based Approach to Screening Properties of Soft Matter. In: Snurr R., Adjiman C., Kofke D. (eds) Foundations of Molecular Modeling and Simulation. Molecular Modeling and Simulation (Applications and Perspectives). Springer, Singapore</a></li>
+  <li><a href="https://doi.org/10.1016/j.commatsci.2019.05.026">Klein C.; Summers, A. Z.; Thompson, M. W.; Gilmer, J. B.; McCabe, C.; Cummings, P. T.; Sallai, J.; Iacovella, C. R. Formalizing atom-typing and the dissemination of force fields with foyer. Computational Materials Science. 2019, 167, 215-227.</a></li>
+</ol>
+
+<h3 id="acknowledgments">Acknowledgments</h3>
+
+<p>Jennifer Clark was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580</p>
+
+<p>Jennifer Clark acknowledges North Carolina State University’s High Performance Computing (HPC) Services</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-29T00:00:00+00:00">June 29, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DESPASITO%2C+Quickly+Fit+MD-Simulation+Parameters+using+Equations+of+State%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjennifer-clark%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjennifer-clark%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fjennifer-clark%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/hannah-brucemacdonald/" class="pagination--pager" title="Optimal allocation for Free Energy Calculations
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/samuel-greene/" class="pagination--pager" title="Randomized Methods for Quantum Chemistry
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

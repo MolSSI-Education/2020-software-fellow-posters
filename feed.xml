@@ -1,0 +1,1505 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://education.molssi.org/2020-software-fellow-posters/feed.xml" rel="self" type="application/atom+xml" /><link href="https://education.molssi.org/2020-software-fellow-posters/" rel="alternate" type="text/html" /><updated>2020-09-28T03:16:06+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/feed.xml</id><title type="html">2020 MolSSI Software Fellow Posters</title><subtitle></subtitle><author><name>The Molecular Sciences Software Institute</name></author><entry><title type="html">PDFT - An accessible density embedding code</title><link href="https://education.molssi.org/2020-software-fellow-posters/vh-chavez/" rel="alternate" type="text/html" title="PDFT - An accessible density embedding code" /><published>2020-06-30T00:00:00+00:00</published><updated>2020-06-30T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/vh-chavez</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/vh-chavez/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Density embedding methods avoid the exponential scaling that hinders users from using accurate quantum chemistry in large and complex systems. Partition Density Functional Theory (PDFT)[1-4], makes use of functionals of non-interacting fragments, so that the energy of the entire system and any other electronic properties is given by functionals of the set of the less computationally demanding fragment densities. In PDFT we minimize \(E_f \equiv \sum_i E_i[ n_i ]\) while satisfying the density constraint \(\sum_i n_i(\mathbf{r}) = n_m(\mathbf{r})\).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/vp.png&quot; alt=&quot;NSF Logo&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;: The unique local potential \(v_p(\mathbf{r})\) ensures that the fragment densities sum up to the total correct density \(n(\mathbf{r})\)&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The caveat is that an extra component–that accounts for the inter-fragment interaction–is missing: The partition potential. This extra component modifies the external potential of each fragment just slightly so that the sum of all the fragment densities matches the molecular density. Finding out what the partition potential is for a given set of fragments, whether using an “exact” or approximated potential, is our code’s goal.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;calculations-with-pdft&quot;&gt;Calculations with PDFT&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;PDFT is written in the interpreted language Python, and it strives to be readable, reliable and reusable. We do this is by enforcing the programming best practices that are being set by the greater community of the computational molecular sciences.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;PDFT makes use of the PSIAPI[5] and thus is written similarly to Psi4Numpy[6]. The most basic calculation in PDFT is a self-consistent calculation. The SCF solves the Kohn-Sham equations by diagonalizing the DFT Fock Matrix:&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[F^{DFT}_{\mu \nu} = H_{\mu \nu} + 2J[D]_{\mu \nu} - \zeta K[D]_{\mu \nu} + V^{xc}_{\mu \nu}\]
+
+&lt;h3 id=&quot;basic-calculation&quot;&gt;Basic Calculation&lt;/h3&gt;
+&lt;p&gt;Making a DFT calculation in PDFT is extremely easy, and users of Psi4Numpy will find it extremely familiar. Given an exchange-correlation approximation available in Libxc[7], one can calculate the energy of a molecule. As an example, the energy for a Hydrogen atom with the Local Density Approximation (LDA) in the Universal Gaussian Basis set (UGBS) is computed as:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;psi4&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pdft&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;psi4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reference&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uhf&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#Geometry Definition
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H_geo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geometry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“””&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;””&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#Define pdft object and run scf cycle
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UMolecule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;H_geometry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ugbs&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;svwn&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Notice that PDFT uses the molecule class of Psi4, but it is then used to define an instance of the class &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UMolecule&lt;/code&gt;. PDFT contains two main classes, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RMolecule&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UMolecule&lt;/code&gt;. Both are inherited from a parent class &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Molecule&lt;/code&gt;, that allows modifications to be directly reflected on each child, making additions, troubleshooting and debugging a breeze.&lt;/p&gt;
+
+&lt;h3 id=&quot;getting-information-on-the-grid&quot;&gt;Getting information on the grid&lt;/h3&gt;
+
+&lt;p&gt;The components of the Fock-Matrix and other results from the scf calculation are expressed in the atomic orbital (ao) basis. Several steps are required to be able to visualize any of those quantities on the grid. PDFT has a wide variety of elements available on the grid directly as attributes. Information on the grid can quickly be requested by adding some arguments to the scf method:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_ingredients&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_orbitals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The first option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get_ingredients&lt;/code&gt; stores components relevant to the development of Density Functional Approximations (DFA), such as the density and its derivatives, kinetic energy density and contributions to the Kohn-Sham potential. Whereas the latter option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get_orbitals&lt;/code&gt; stores each of the molecular orbitals both on the atomic orbital basis and on the grid.&lt;/p&gt;
+
+&lt;p&gt;To highlight the effortless visualization of quantities relevant to developers in the DFT community, Figure 2 and Figure 3 show two examples of the aforementioned quantities on the grid that are commonly explored in the literature[8,9].&lt;/p&gt;
+
+&lt;p&gt;Consider the ubiquitous self-Interaction error: An exchange-correlation potential from a DFA will typically not be able to fully cancel out the Hartree potential for a one-electron system, generating a spurious behavior where an electron will interact with itself. Consider the calculation we performed for Hydrogen using LDA, after running the scf cycle we can visualize the potentials by simply typing:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;vha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;potential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vxc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;potential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vxc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sie&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vxc&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis_plot_r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vxc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;V_Hartree&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;v_xc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;v_Hxc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The method &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;axis_plot_r&lt;/code&gt; simply looks at information in 1D, in this case the axis that runs through the atom. In the future, this function will allow the user to select any line in space, or any plane in space. If ran within a Jupyter Notebook, the previous line will generate a plot as seen in Figure 2. Nevertheless one can export the data on the grid to be used elsewhere.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/SIE.png&quot; alt=&quot;NSF Logo&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;: Self-interaction error of the LDA for the Hydrogen atoms.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Besides from potentials, the electron density and its derivatives are also available. For example, lets visualize some ingredients used in the development of generalized gradient approximations. Consider a HF/UGBS calculation of the Kr atom.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#Basic calculation:
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr_geometry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geometry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+0 1
+Kr 0.0 0.0 0.0
+units bohr
+symmetry c1
+&quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UMolecule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr_geometry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ugbs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hf&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_matrices&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_ingredients&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_orbitals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nblocks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    
+&lt;span class=&quot;n&quot;&gt;density&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;density&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;da&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;density&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;db&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    
+&lt;span class=&quot;c1&quot;&gt;#Density
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;density&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#Gradient
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;da_x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;db_x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;da_y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;db_y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;da_z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;db_z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nblocks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqrt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#Laplacian
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;la_x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lb_x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;la_z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lb_y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;la_y&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Kr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredients&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;laplacian&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lb_z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;After running the scf calculation, one can build the ingredients involving the density, gradient and laplacian. They can be individually seen in Figure 3.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/ingredients.png&quot; alt=&quot;NSF Logo&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;: Dimensionless ingredients of GGA’s for a Kr atom.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;advanced-methods-in-pdft&quot;&gt;Advanced methods in PDFT&lt;/h2&gt;
+
+&lt;p&gt;Having an scf cycle completely written in Python allows it to be quickly modified to suit the developers needs. For example, in embedding methods, we are required to add an external potential to each of the fragments. Assuming one has a partition potential \(v_p(r)\) expressed in the ao basis, one can simply run the following to solve self-consistently:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;potential_mn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;density-to-potential-inversions&quot;&gt;Density-to-Potential inversions.&lt;/h3&gt;
+
+&lt;p&gt;The previous feature is required for the development of inversion methods. Where a potential–such as the embedding potential–can be obtained “exactly” (for a given DFA and a basis set) by using a density-to-potential algorithm. Such an algorithm is exemplified in Figure 4.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/vp_update.png&quot; alt=&quot;NSF Logo&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 4&lt;/strong&gt;: Algorithm for the generation of an embedding potential given a set of fragments and a target density.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The previous algorithm is implemented in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Inversion&lt;/code&gt; class within PDFT. Such a class takes as arguments fragments and target systems in the same ao basis and builds the relevant information for inversion. (e.g. density differences and non-additive quantities). One can select many different methods to compute \(\delta v_p(r)\) of step 4. It is known that these methods can be very finicky and dependant on parameters, initial guess and choice of basis set. Although basic algorithms such as density difference and ZMP[10] are already implemented, we are working on making other methods available such as Wu-Yang[11] and Ou-Carter[12]. We are striving for these methods to be reliable and require minimum input from the user. With orbitals, and other ingredients available at ease, we are confident that our code will provide a quick and easy way to implementing and benchmarking new inversion methods.&lt;/p&gt;
+
+&lt;h2 id=&quot;future-of-pdft&quot;&gt;Future of PDFT&lt;/h2&gt;
+
+&lt;h3 id=&quot;to-be-approximated-or-not-to-be-that-is-the-question&quot;&gt;To be (approximated) or not to be: That is the question&lt;/h3&gt;
+&lt;p&gt;Although inversions required for finding the exact embedding potential, in practice one could approximate the non-additive kinetic energy functional (NAKE) \(T_s^{nad}[{ n_i }] = T_s[n_m] - \sum_i T_s[n_i]\). PDFT will have an abstract class for the NAKE functional with a consistent set of attributes that will provide a blueprint for new proposed functionals from the broader research community.&lt;/p&gt;
+
+&lt;h3 id=&quot;fractional-charges&quot;&gt;Fractional Charges&lt;/h3&gt;
+&lt;p&gt;By generalizing PDFT to fragments with non-integer occupations, it is possible to remove the static-correlation and delocalization errors. This is done by defining an ensemble of two systems, each with an integer number of electrons \(E_{\omega} = \omega E[N+1] + (1 - \omega)E[N]\), where the argument in each term refers to a density that integrates to N and N+1 electron. By doing so it will be possible to obtain qualitatively correct results for system in different molecular environments such as charge transfer. This capability will soon be implemented in our Molecule class.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Jonathan Nafziger and Adam Wasserman. Density-based partitioning methods for ground-state molecular calculations. The Journal of Physical Chemistry A, 118(36): 7623–7639, 2014.&lt;/li&gt;
+  &lt;li&gt;Peter Elliott, Kieron Burke, Morrel H. Cohen, and Adam Wasserman. Partition densityfunctional theory. Physical Review A, 82(2):024501, 2010.&lt;/li&gt;
+  &lt;li&gt;Martin A. Mosquera and Adam Wasserman. Partition density functional theory and its extension to the spin-polarized case. Molecular Physics, 111(4):505–515, 2013.&lt;/li&gt;
+  &lt;li&gt;Victor H. Chavez and Adam Wasserman. Towards a density functional theory of molecular fragments. what is the shape of atoms in molecules? Revista de la Academia Colombiana de Ciencias Exactas, Fisicas y Naturales, 44(170):269–279, 2020&lt;/li&gt;
+  &lt;li&gt;Smith, D. G., Burns, L. A., Simmonett, A. C., Parrish, R. M., Schieber, M. C., Galvelis, R., … &amp;amp; James, A. M. (2020). PSI4 1.4: Open-source software for high-throughput quantum chemistry. The Journal of Chemical Physics, 152(18), 184108.&lt;/li&gt;
+  &lt;li&gt;Smith, D. G., Burns, L. A., Sirianni, D. A., Nascimento, D. R., Kumar, A., James, A. M., … &amp;amp; Berquist, E. J. (2018). Psi4NumPy: An interactive quantum chemistry programming environment for reference implementations and rapid development. Journal of chemical theory and computation, 14(7), 3504-3511.&lt;/li&gt;
+  &lt;li&gt;Lehtola, S., Steigemann, C., Oliveira, M. J., &amp;amp; Marques, M. A. (2018). Recent developments in libxc—A comprehensive library of functionals for density functional theory. SoftwareX, 7, 1-5.&lt;/li&gt;
+  &lt;li&gt;Gaiduk, A. P., Mizzi, D., &amp;amp; Staroverov, V. N. (2012). Self-interaction correction scheme for approximate Kohn-Sham potentials. Physical Review A, 86(5), 052518.&lt;/li&gt;
+  &lt;li&gt;Gaiduk, A. P., &amp;amp; Staroverov, V. N. (2011). Construction of integrable model Kohn-Sham potentials by analysis of the structure of functional derivatives. Physical Review A, 83(1), 012509.&lt;/li&gt;
+  &lt;li&gt;Qingsheng Zhao, Robert C. Morrison, and Robert G. Parr. From electron densities
+to Kohn-Sham kinetic energies, orbital energies, exchange-correlation potentials, and
+exchange-correlation energies. Physical Review A, 50(3):2138, 1994.&lt;/li&gt;
+  &lt;li&gt;Qin Wu and Weitao Yang. A direct optimization method for calculating density functionals and exchange–correlation potentials from electron densities. The Journal of
+Chemical Physics, 118(6):2498–2509, 2003.&lt;/li&gt;
+  &lt;li&gt;Ou, Q., &amp;amp; Carter, E. A. (2018). Potential Functional Embedding Theory with an Improved Kohn–Sham Inversion Algorithm. Journal of Chemical Theory and Computation, 14(11), 5680-5689.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;Victor H. Chavez was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580. Victor H. Chavez thanks Yuming Shi and Yan Oueis for helpful conversations.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/sample-poster/nsf.png&quot; alt=&quot;NSF Logo&quot; /&gt;&lt;/p&gt;</content><author><name>Victor H. Chavez</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Simple interoperability via a general representation of molecular wavefunctions</title><link href="https://education.molssi.org/2020-software-fellow-posters/sebastian-lee/" rel="alternate" type="text/html" title="Simple interoperability via a general representation of molecular wavefunctions" /><published>2020-06-30T00:00:00+00:00</published><updated>2020-06-30T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/sebastian-lee</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/sebastian-lee/">&lt;h2 id=&quot;background-and-motivation&quot;&gt;Background and Motivation&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;The barrier to entry for preparing a new tool for use by the broader computational molecular science (CMS) community can be prohibitively high.
+Typically developers choose to restrict the implementation of their new tool into an established software package or construct an entirely new package from scratch.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Recently, there has been a trend of developing open-source standalone libraries or packages that serve a specific focus
+    &lt;ul&gt;
+      &lt;li&gt;e.g. Libxc\(^1\), GeomeTRIC\(^2\), and projects at MolSSI&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;MolSSI has embraced the goal of connecting the CMS community through projects like the QCArchive\(^3\), the MolSSI driver interface\(^4\), and the revamped basis set exchange\(^5\).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Goal:&lt;/strong&gt; Therefore, in collaboration with MolSSI, we propose to create a general wavefunction representation of a molecule to provide the CMS community a simple way to pass information between different software packages to combine available methodologies and facilitate analysis&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;enabling-interoperability&quot;&gt;Enabling Interoperability&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This new framework allows simple access to wavefunction properties that can used in more workflows such as
+    &lt;ul&gt;
+      &lt;li&gt;Post processing in other quantum chemistry programs (e.g. correlated calculations)&lt;/li&gt;
+      &lt;li&gt;Integration into the MolSSI Driver Interface&lt;/li&gt;
+      &lt;li&gt;Orbital and density visualization&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/sebastian_lee/Figure_V8.png&quot; alt=&quot;Figure&quot; /&gt;
+&lt;strong&gt;Figure 1&lt;/strong&gt;: A schematic representation of the types of workflow enabled by the wavefunction representation framework&lt;/p&gt;
+
+&lt;h2 id=&quot;representing-molecular-wavefunctions&quot;&gt;Representing Molecular Wavefunctions&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;This new framework has been implented within QCArchive\(^3\)&lt;/li&gt;
+  &lt;li&gt;QCArchive provides an open-sourced, community-wide quantum chemistry platform to facilitate computational chemistry research by enabling tasks such as force field construction, physical property prediction, and new methodology assessment&lt;/li&gt;
+  &lt;li&gt;QCArchive is modularized into a set of smaller projects (QCSchema, QCElemental, QCEngine, QCFractal) that work in concert to achieve complex computational work flows
+    &lt;h3 id=&quot;qcschema-integration&quot;&gt;QCSchema Integration&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li&gt;QCSchema provides a standardized JSON format for storing quantum chemical information&lt;/li&gt;
+  &lt;li&gt;We have expanded the MolSSI QCSchema to include wavefunction quantities&lt;/li&gt;
+  &lt;li&gt;For example, here are some of the self-consistent field (SCF) quantities that have been added to QCSchema&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Orbitals
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf_wavefunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;scf_orbitals_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;array&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin orbitals in the AO basis.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;items&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;shape&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;nao&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;nmo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Density
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf_wavefunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;scf_density_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;array&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin density in the AO basis.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;items&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;shape&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;nao&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;nao&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Fock matrix
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scf_wavefunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;scf_fock_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;array&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin Fock matrix in the AO basis.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;items&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;shape&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;nao&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;nao&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;qcelemental-integration&quot;&gt;QCElemental Integration&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Next we have added the wavefunction quantities to QCElemental\(^7\) so they are available to QCEngine and QCFractal (representative code snippet shown below)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WavefunctionProperties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ProtoModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# The full basis set description
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;basis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BasisSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(...,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BasisSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__doc__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# SCF Results
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;scf_orbitals_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin orbitals.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_orbitals_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF beta-spin orbitals.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_density_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin density matrix.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_density_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF beta-spin density matrix.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_fock_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin Fock matrix.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_fock_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF beta-spin Fock matrix.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_eigenvalues_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin eigenvalues.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_eigenvalues_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF beta-spin eigenvalues.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_occupations_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF alpha-spin occupations.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;scf_occupations_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;SCF beta-spin occupations.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A major complication of storing and exporting wavefunction quantities is fully specifying the basis set used to construct these objects&lt;/li&gt;
+  &lt;li&gt;This complication was overcome by utilizing the previous work of MolSSI on the Basis Set Exchange\(^5\), which provided a natural way to integrate a basis set definition in QCElemental&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;gathering-wavefunction-information&quot;&gt;Gathering Wavefunction Information&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Next QCEngine\(^8\) is used to gather wavefunction information from quantum chemistry software packages&lt;/li&gt;
+  &lt;li&gt;For example the Entos QCore Program Harness retrieves properties for both restricted and unrestricted wavefunctions (example code snippet)
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;entos_wavefunction_map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;s&quot;&gt;&quot;restricted&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;orbitals&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_orbitals_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;density&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_density_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;fock&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_fock_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;eigenvalues&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_eigenvalues_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;occupations&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_occupations_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+     &lt;span class=&quot;s&quot;&gt;&quot;unrestricted&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;orbitals_alpha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_orbitals_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;orbitals_beta&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_orbitals_b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;density_alpha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_density_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;density_beta&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_density_b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;fock_alpha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_fock_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;fock_beta&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_fock_b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;eigenvalues_alpha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_eigenvalues_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;eigenvalues_beta&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_eigenvalues_b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;occupations_alpha&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_occupations_a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;s&quot;&gt;&quot;occupations_beta&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scf_occupations_b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Both Psi4\(^9\) and Entos QCore\(^{10}\) have wavefunction support with more programs planned for the future&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;The outcome of this project will provide a powerful tool for new and existing members of the CMS community&lt;/li&gt;
+  &lt;li&gt;For example:
+    &lt;ul&gt;
+      &lt;li&gt;This wavefunction data framework contains the necessary information (i.e. MO coefficients and the one-electron density) to plot isosurfaces of these properties, which is an essential tool for gaining a qualitative perspective of a chemical system&lt;/li&gt;
+      &lt;li&gt;Integration of this framework into QCEngine allows for the combination of methodologies available in different quantum chemistry programs. For example, a mean-field calculation could be run in Entos QCore and then a package with strong wavefunction support (e.g. Psi4) could perform a correlated calculation using the mean-field reference&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;S. Lehtola, C. Steigemann, M. J. Oliveira, and M. A. Marques, SoftwareX 7, 1 (2018).&lt;/li&gt;
+  &lt;li&gt;L.-P. Wang and C. Song, The Journal of Chemical Physics 144, 214108 (2016).&lt;/li&gt;
+  &lt;li&gt;D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCArchive, https://qcarchive.molssi.org/, 2019.&lt;/li&gt;
+  &lt;li&gt;T. A. Barnes, MolSSI Driver Interface, https://github.com/MolSSI/MDI Library, 2019.&lt;/li&gt;
+  &lt;li&gt;B. P. Pritchard, D. Altarawy, and T. L. Windus, A new basis set exchange: An open, up-to-date resource for the molecular sciences community, Manuscript in Preparation.&lt;/li&gt;
+  &lt;li&gt;D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCSchema, 2019.&lt;/li&gt;
+  &lt;li&gt;D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCElemental, 2019.&lt;/li&gt;
+  &lt;li&gt;D. G. Smith, L. Naden, D. Altarawy, and L. Burns, QCSchema, https://github.com/MolSSI/QCEngine, 2019.&lt;/li&gt;
+  &lt;li&gt;R. M. Parrish et al., Journal of Chemical Theory and Computation 13, 3185 (2017).&lt;/li&gt;
+  &lt;li&gt;F. Manby, T. F. Miller III et al., ChemRxiv , DOI: 10.26434/chemrxiv.7762646.v2 (2019), Preprint.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;“Sebastian Lee was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580”&lt;/p&gt;</content><author><name>Sebastian J. R. Lee</name></author><summary type="html">Background and Motivation</summary></entry><entry><title type="html">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo</title><link href="https://education.molssi.org/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="alternate" type="text/html" title="Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo" /><published>2020-06-30T00:00:00+00:00</published><updated>2020-06-30T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/giuseppe-barbalinardo</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/giuseppe-barbalinardo/">&lt;blockquote&gt;
+  &lt;p&gt;kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle, and RTA. The algorithms are implemented using linear algebra operations on tensors, to take advantage of multithreading on GPU and CPU using Numpy, Tensorflow, and optimized tensor libraries. Using the Atomic Simulation Environment, κALDo can calculate the IFCs using several ab initio and molecular dynamics codes, thus enabling the use of first-principles DFT, empirical forcefields, and semi-empirical tight- binding. A native LAMMPS interface is also available in the USER-PHONON package. Finally, through seamless integration with the hiPhive package, the IFC calculation can take advantage of compressing-sensing machine learning algorithms. The code is released open-source for the community to use and contribute with edits and suggestions. It is designed on modern software best practices, and we hope to provide a development platform to implement new theory and methods.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The code is available on &lt;a href=&quot;https://github.com/nanotheorygroup/kaldo&quot;&gt;GitHub&lt;/a&gt;, while kALDO website can be found &lt;a href=&quot;https://nanotheorygroup.github.io/kaldo/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Understanding  heat transport in semiconductors and insulators is of fundamental importance because of its  technological impact in electronics and renewable energy harvesting and conversion.
+Anharmonic Lattice Dynamics provides a powerful framework for the description of heat transport at the nanoscale. One of the advantages of this method is that it naturally includes quantum effects due to atoms vibrations, which are needed to compute thermal properties of semiconductors widely use in nanotechnology, like Silicon and Carbon, even at room temperature.
+While heat transport in amorphous and crystalline semiconductors has a  different microscopic origin, a unified approach to simulate both crystals and glasses has been devised.
+Here we introduce a unified workflow, which implements both the Boltzmann Transport equation (BTE) and the Quasi Harmonic Green-Kubo (QHGK) methods. We discuss how the theory can be optimized to exploit modern parallel architectures, and how it is implemented in kALDo:  a versatile and scalable open-source software to compute phonon transport in solids.&lt;/p&gt;
+
+&lt;h2 id=&quot;theory&quot;&gt;Theory&lt;/h2&gt;
+
+&lt;p&gt;In semiconductors, electronic and vibrational dynamics often occur over different time scales, and can thus be decoupled using the Born Oppenheimer approximation. Under this assumption, the potential \(\phi\) of a system made of \(N_{atoms}\) atoms, is a function of all the \(x_{i\alpha}\) atomic positions, where \(i\) and \(\alpha\) refer to the atomic and Cartesian indices, respectively. Near thermal equilibrium, the potential energy can be Taylor expanded in the atomic displacements, \(\mathbf{u}=\mathbf x-\mathbf{x}_{\rm equilibrium}\),&lt;/p&gt;
+
+\[\phi(\{x_{i\alpha}\})=\phi_0 +
+\sum_{i\alpha}\phi^{\prime}_{i\alpha }u_{i\alpha}
++\frac{1}{2}
+\sum_{i\alpha i'\alpha'}
+\phi^{\prime\prime}_{i\alpha i'\alpha '}u_{i\alpha} u_{i'\alpha'}+\]
+
+\[+
+\frac{1}{3!}\sum_{i\alpha i'\alpha 'i''\alpha ''}
+\phi^{\prime\prime\prime}_{i\alpha i'\alpha 'i''\alpha ''} u_{i\alpha }u_{i'\alpha '} u_{i''\alpha ''}  + \dots,\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\phi^{\prime\prime}_{i\alpha i'\alpha '}=\frac{\partial^{2} \phi}{\partial u_{i\alpha } \partial u_{i'\alpha '} },\qquad
+\phi^{\prime\prime\prime}_{i\alpha i'\alpha 'i''\alpha ''}=\frac{\partial^{3} \phi}{\partial u_{i\alpha } \partial u_{i'\alpha '} \partial u_{i''\alpha ''}},\]
+
+&lt;p&gt;are the second and third order interatomic force constants (IFC). The term \(\phi_0\) can be discarded, and the forces \(F = - \phi^{\prime}\) are zero at equilibrium.&lt;/p&gt;
+
+&lt;p&gt;The IFCs  can be evaluated by finite difference, which consists in calculating the difference between the forces acting on the system when one of the atoms is displaced by a small finite shift along a Cartesian direction. The second and third order IFCs need respectively, \(2N_{atoms}\), and \(4N_{atoms}^2\) forces calculations. In crystals, this amount can be reduced exploiting the spatial symmetries of the system, or adopting a compressed sensing approach. In the framework of DFT, it is also possible and often convenient to compute IFCs using perturbation theory.&lt;/p&gt;
+
+&lt;p&gt;The dynamical matrix is the second order IFC rescaled by the masses, \(D_{i\alpha i'\alpha}=\phi^{\prime\prime}_{i\alpha i'\alpha'}/\sqrt{m_im_{i'}}\). It is diagonal in the phonons basis&lt;/p&gt;
+
+\[\sum_{i'\alpha'} D_{i\alpha i'\alpha'}\eta_{i'\alpha'\mu} =\eta_{i\alpha\mu} \omega_\mu^2\]
+
+&lt;p&gt;and \(\omega_\mu/(2\pi)\) are the frequencies of the normal modes of the system.&lt;/p&gt;
+
+&lt;p&gt;For crystals, where there is long range order due to the periodicity, the dimensionality of the problem can be reduced. The Fourier transfom maps the large direct space onto a compact volume in the reciprocal space: the Brillouin zone. More precisely we adopt a supercell approach, where we calculate the dynamical matrix on \(N_{\rm replicas}\) replicas of a unit cell of \(N_{\rm unit}\) atoms, at positions \(\mathbf R_l\), and calculate&lt;/p&gt;
+
+\[D_{i \alpha k i' \alpha'}=\sum_l \chi_{kl}  D_{i \alpha l i' \alpha'},\quad \chi_{kl} = \mathrm{e}^{-i \mathbf{q_k}\cdot \mathbf{R}_{l} },\]
+
+&lt;p&gt;where \(\mathbf q_k\) is a grid of size \(N_k\) indexed by \(k\) and the eigenvalue equation becomes&lt;/p&gt;
+
+\[\sum_{i'\alpha'} D_{i \alpha k i' \alpha'} \eta_{i' \alpha'k s}=\omega_{k m}^{2} \eta_{i \alpha k s }.\]
+
+&lt;p&gt;which now depends on the quasi-momentum index, \(k\), and the phonons mode \(s\).&lt;/p&gt;
+
+&lt;h3 id=&quot;boltzman-transport-equation&quot;&gt;Boltzman Transport Equation&lt;/h3&gt;
+
+&lt;p&gt;At finite temperature \(T\), the Bose Einstein statistic is the quantum distribution for atomic vibrations&lt;/p&gt;
+
+\[n_{\mu}=n(\omega_{\mu})=\frac{1}{e^{\frac{\hbar\omega_{\mu}}{k_B T}}-1}\]
+
+&lt;p&gt;where \(k_B\) is the Boltzmann constant and we use \(\mu =(k,s)\).&lt;/p&gt;
+
+&lt;p&gt;We consider a small temperature gradient applied along the \(\alpha\)-axis of a crystalline material. If the phonons population depends on the position only through the temperature,  \(\frac{\partial n_{\mu\alpha}}{\partial x_\alpha} =  \frac{\partial n_{\mu\alpha}}{\partial T}\nabla_\alpha T\), we can Taylor expand it&lt;/p&gt;
+
+\[\tilde n_{\mu\alpha} \simeq n_\mu + \lambda_{\mu\alpha} \frac{\partial n_\mu}{\partial x_\alpha} \simeq  n_\mu + \psi_{\mu\alpha}\nabla_\alpha T\]
+
+&lt;p&gt;with \(\psi_{\mu\alpha}=\lambda_{\mu\alpha} \frac{\partial n_\mu}{\partial T}\), where \(\lambda_{\mu\alpha}\) is the phonons mean free path.
+Being quantum quasi-particles, phonons have a well-defined group velocity, which, for the acoustic modes in the long wavelength limit, corresponds to the speed of sound in the material,&lt;/p&gt;
+
+\[v_{ ks\alpha}=\frac{\partial \omega_{k s}}{\partial {q_{k\alpha}}} = \frac{1}{2\omega_{ks}}\sum_{i\beta l i'\beta'}
+i R_{l \alpha} D_{i\beta li'\beta'}\chi_{kl}
+\eta_{ks i\beta}\eta_{ksi'\beta}\]
+
+&lt;p&gt;and the last equality is obtained by applying the derivative with respect to \(\mathbf{q}_k\) directly to the eigenvectors Equation&lt;/p&gt;
+
+&lt;p&gt;The heat current per mode is written in terms of the phonon energy \(\hbar \omega\), velocity \(v\), and out-of-equilibrium phonons population, \(\tilde n\):&lt;/p&gt;
+
+\[j_{\mu\alpha'} =\sum_\alpha \hbar \omega_\mu v_{\mu\alpha'} (\tilde n_{\mu\alpha} - n_{\mu})\simeq- \sum_\alpha c_\mu v_{\mu\alpha'} \mathbf{\lambda}_{\mu\alpha}  \nabla_\alpha T .\]
+
+&lt;p&gt;As we deal with extended systems, we can assume heat transport in the diffusive regime, and we can use Fourier’s law&lt;/p&gt;
+
+\[J_{\alpha}=-\sum_{\alpha'}\kappa_{\alpha\alpha'} \nabla_{\alpha'} T,\]
+
+&lt;p&gt;where the heat current is the sum of the contribution from each phonon mode: \(J_\alpha = 1/(N_k V)\sum_\mu j_{\mu\alpha}\).
+The thermal conductivity then results:&lt;/p&gt;
+
+\[\kappa_{\alpha \alpha'}=\frac{1}{ V N_k} \sum_{\mu} c_\mu v_{\mu\alpha} \lambda_{\mu\alpha'},\]
+
+&lt;p&gt;where we defined the heat capacity per mode&lt;/p&gt;
+
+\[c_\mu=\hbar \omega_\mu \frac{\partial n_\mu}{\partial T},\]
+
+&lt;p&gt;which is connected to total heat capacity through \(C = \sum_\mu c_\mu /NV\).&lt;/p&gt;
+
+&lt;p&gt;We can now introduce the BTE, which combines the kinetic theory of gases with collective phonons vibrations:
+\({\mathbf{v}}\_{\mu} \cdot {\boldsymbol{\nabla}} T \frac{\partial n\_{\mu}}{\partial T}=\left.\frac{\partial n\_{\mu}}{\partial t}\right|\_{\text {scatt}},\)
+where the scattering term, in the linearized form is&lt;/p&gt;
+
+\[\left.\frac{\partial n\_{\mu}}{\partial t}\right|\_{\text {scatt}}=\]
+
+\[\frac{\nabla_\alpha T}{\omega_\mu N_k}\sum_{\mu^{\prime} \mu^{\prime \prime}}^{+} \Gamma_{\mu \mu^{\prime}  \mu^{\prime \prime}}^{+}
+\left(\omega_\mu\mathbf{\psi}_{\mu\alpha}
++\omega_{\mu^{\prime}}\mathbf{\psi}_{\mu^{\prime}\alpha}
+-\omega_{\mu^{\prime \prime}} \mathbf{\psi}_{\mu^{\prime \prime}\alpha}\right)
++\]
+
+\[+\frac{\nabla_\alpha T}{\omega_\mu N_k}\sum_{\mu^{\prime} \mu^{\prime \prime}}^{-}  \frac{1}{2} \Gamma_{\mu  \mu^{\prime} \mu^{\prime \prime}}^{-}
+\left(\omega_\mu\mathbf{\psi}_{\mu\alpha}
+-\omega_{\mu^{\prime}} \mathbf{\psi}_{\mu^{\prime}\alpha}
+-\omega_{\mu^{\prime \prime}} \mathbf{\psi}_{\mu^{\prime \prime}\alpha}\right) .\]
+
+&lt;p&gt;\(\Gamma^{+}_{\mu\mu'\mu''}\)  and \(\Gamma^{-}_{\mu\mu'\mu''}\)  are the scattering rates for three-phonon scattering processes, and they correspond to the events of phonons annihilation \(\mu, \mu'\rightarrow\mu''\)  and phonons creation \(\mu \rightarrow\mu',\mu''\)&lt;/p&gt;
+
+\[\Gamma\_{\mu \mu^{\prime} \mu^{\prime \prime}}^{\pm} =\frac{\hbar \pi}{8} \frac{g\_{\mu\mu'\mu''}^{\pm}}{\omega\_{\mu} \omega\_{\mu'} \omega\_{\mu''}}\left|\phi\_{\mu \mu^{\prime} \mu^{\prime \prime}}^{\pm}\right|^{2},\]
+
+&lt;p&gt;and the projection of the potentials on the phonon modes are given by&lt;/p&gt;
+
+\[\phi^\pm
+_{ksk's'k'' s''}=
+\sum_{il'i'l''i''}
+\frac{
+\phi_{il'i'l''i''}}
+{\sqrt{m_{i}m_{i'}m_{i''}}}
+\eta_{i ks}\eta^{\pm}_{i'k' s'}
+\eta^*_{i''k''s''}\chi^\pm_{k'l'}\chi^*_{k''l''}\]
+
+&lt;p&gt;with \(\eta^+ =\eta\), \(\chi^+=\chi\) and \(\eta^- =\eta^*\), \(\chi^-=\chi^*\).
+The phase space volume \(g^\pm_{\mu\mu^\prime\mu^{\prime\prime}}\) in the previous equation are defined as&lt;/p&gt;
+
+\[g^+_{\mu\mu^\prime\mu^{\prime\prime}}  = (n_{\mu'}-n_{\mu''})
+\delta^+_{\mu\mu^\prime\mu^{\prime\prime}}\]
+
+\[g^-_{\mu\mu^\prime\mu^{\prime\prime}}  = (1 + n_{\mu'}+n_{\mu''})
+\delta^-_{\mu\mu^\prime\mu^{\prime\prime}},\]
+
+&lt;p&gt;and include the \(\delta\) for the conservation of the energy and momentum in three-phonons scattering processes,&lt;/p&gt;
+
+\[\delta_{ks k's' k''s''}^{\pm}=
+\delta_{\mathbf q_{k}\pm\mathbf q_{k'}-\mathbf q_{k''}, \mathbf Q}
+\delta\left(\omega_{ks}\pm\omega_{k's'}-\omega_{k''s''}\right),\]
+
+&lt;p&gt;with \(Q\) the lattice vectors. Finally, the normalized phase-space per mode  \(g_\mu=\frac{1}{N}\sum_{\mu'\mu''}g_{\mu\mu'\mu''}\), provides useful information about the weight of a specific mode in the anharmonic scattering processes.&lt;/p&gt;
+
+&lt;p&gt;In order to calculate the conductivity, we express the mean free path in terms of the 3-phonon scattering rates
+\(v_{\mu\alpha} = \tilde \Gamma_{\mu\mu' }\lambda_\mu = (\delta_{\mu\mu'}\Gamma^0_\mu + \Gamma^{1}_{\mu\mu'})\lambda_{\mu\alpha},\)&lt;/p&gt;
+
+&lt;p&gt;where we introduced&lt;/p&gt;
+
+\[\Gamma^{0}_\mu=\sum_{\mu'\mu''}(\Gamma^+_{\mu\mu'\mu''}  + \Gamma^-_{\mu\mu'\mu''} ),\]
+
+&lt;p&gt;and&lt;/p&gt;
+
+\[\Gamma^{1}_{\mu\mu'}=
+\frac{\omega_{\mu'}}{\omega_\mu}
+\sum_{\mu''}(\Gamma^+_{\mu\mu'\mu''}
+-\Gamma^+_{\mu\mu''\mu'}
+-\Gamma^-_{\mu\mu'\mu''}
+-\Gamma^-_{\mu\mu''\mu'}
+).\]
+
+&lt;p&gt;In RTA, the off-diagonal terms are ignored, \(\Gamma^{1}_{\mu\mu'}=0\), and the conductivity is&lt;/p&gt;
+
+\[\kappa_{\alpha\alpha'} =\frac{1}{N_kV} \sum_{\mu}c_\mu v_{\mu\alpha}{\lambda_{\mu\alpha'}}
+=\frac{1}{N_kV} \sum_\mu c_\mu v_{\mu\alpha} {\tau_\mu}{v_{\mu\alpha'}},\]
+
+&lt;p&gt;where \(\tau_\mu=1/2\Gamma_{\mu}^0\) corresponds the phonons lifetime calculated using the Fermi Golden Rule.&lt;/p&gt;
+
+&lt;p&gt;It has been shown that, to correctly capture the physics of phonon transport, especially in highly conductive materials, the off diagonal terms of the scattering rates cannot be disregarded.
+More generally, the mean free path is calculated inverting the scattering tensor&lt;/p&gt;
+
+\[\lambda_{\mu\alpha} = \sum_{\mu'}(\tilde \Gamma_{\mu\mu' })^{-1}v_{\mu'\alpha}.\]
+
+\[\kappa_{\alpha\alpha'} =\frac{1}{N_kV} \sum_{\mu\mu'} c_\mu v_{\mu\alpha}(\tilde \Gamma_{\mu\mu' })^{-1}v_{\mu'\alpha'}.\]
+
+&lt;p&gt;This inversion operation is computationally expensive; however, when the off-diagonal elements of the scattering rate matrix are much smaller than the diagonal, we can rewrite the mean free path obtained from the BTE as a series:&lt;/p&gt;
+
+\[\lambda_{\mu\alpha} = \sum_{\mu'}\left(\delta_{\mu\mu'} + \frac{1}{\Gamma^0_\mu}\Gamma^{1}_{\mu\mu'}\right)^{-1}\frac{1}{\Gamma^0_{\mu'}}v_{\mu'\alpha} =\]
+
+\[=
+\sum_{\mu'}
+\left[
+\sum^{\infty}_{n=0}\left(- \frac{1}{\Gamma^0_\mu}\Gamma^{1}_{\mu\mu'}\right)^n
+\right]\frac{1}{\Gamma^0_{\mu'}}v_{\mu'\alpha} ,\]
+
+&lt;p&gt;where in the last step we used the identity \(\sum_0 q^n = (1 - q)^{-1}\), true when \(|q|=|\Gamma^1/\Gamma^0|&amp;lt;1\).
+This equation can then be written in an iterative form&lt;/p&gt;
+
+\[\lambda^0_{\mu\alpha} = \frac{1}{\Gamma^0_\mu}v_\mu
+\qquad
+\lambda^{n+1}_{\mu\alpha} = - \frac{1}{\Gamma^0_\mu}\sum_{\mu'}\Gamma^{1}_{\mu\mu'} \lambda^{n}_{\mu'\alpha}.\]
+
+&lt;p&gt;Hence, the inversion in of the scattering tensor is obtained by a recursive expression. Once the mean free path is calculated, the conductivity is straightforwardly computed.&lt;/p&gt;
+
+&lt;h3 id=&quot;quasi-harmonic-green-kubo&quot;&gt;Quasi-Harmonic Green Kubo&lt;/h3&gt;
+
+&lt;p&gt;In non-crystalline solids with no long range order, such as glasses, alloys, nano-crystalline, and partially disordered systems, the phonon picture is formally not well-defined. While vibrational modes are still the heat carriers, their mean-free-paths may be so short that the quasi-particle picture of heat carriers breaks down and the BTE is no longer applicable.
+In glasses heat transport is dominated by a diffusive processes in which delocalized modes with similar frequency transfer energy from one to another.
+Whereas this mechanism is intrinsically distinct from the underlying hypothesis of the BTE approach, the two transport pictures have been recently reconciled in a unified theory, in which the thermal conductivity is written as:&lt;/p&gt;
+
+\[\kappa_{\alpha \alpha'}=\frac{1}{V} \sum_{\mu \mu'} c_{\mu \mu'} v_{\mu \mu' \alpha} v_{\mu \mu' \alpha'} \tau_{\mu \mu'}.\]
+
+&lt;p&gt;This expression is analogous to the RTA one, where modal heat capacity, phonon group velocity and lifetimes are replaced by
+the generalized heat capacity,&lt;/p&gt;
+
+\[c_{\mu \mu'}=\frac{\hbar \omega_{\mu} \omega_{\mu'}}{T} \frac{n_{\mu}-n_{\mu'}}{\omega_{\mu}-\omega_{\mu'}},\]
+
+&lt;p&gt;the generalized velocities,&lt;/p&gt;
+
+\[v_{\mu\mu'\alpha}=\frac{1}{2\sqrt{\omega_\mu\omega_{\mu'}}}
+\sum_{ii'\beta'\beta''}(x_{i\alpha}-x_{i'\alpha })D_{i\beta i'\beta'}\eta_{\mu i\beta}\eta_{\mu'i'\beta'},\]
+
+&lt;p&gt;and the generalized lifetime \(\tau_{\mu\mu'}\).
+The latter is expressed as a Lorentzian, which weighs diffusive processes between phonons with nearly-resonant frequencies:&lt;/p&gt;
+
+\[\tau_{\mu\mu'} =
+ \frac{\gamma_{\mu}+\gamma_{\mu'}}{\left(\omega_{\mu}-\omega_{\mu'}\right)^{2}+\left(\gamma_{\mu}+\gamma_{\mu'}\right)^{2}}\]
+
+&lt;p&gt;where \(\gamma_\mu\) is the line width of mode \(\mu\) that can be computed using Fermi Golden rule.
+These equations have been derived from the Green-Kubo theory of linear response applied to thermal conductivity, by taking a quasi-harmonic approximation of the heat current, from which this approach is named quasi-harmonic Green-Kubo (QHGK).
+It has been proven that for crystalline materials QHGK is formally equivalent to the BTE in the relaxation time approximation, and that its classical limit reproduces correctly molecular dynamics simulations for amorphous silicon up to relatively high temperature (600 K).
+Finally, we provide a microscopic definition of the mode diffusivity,&lt;/p&gt;
+
+\[D_{\mu} =\frac{1}{N_k V} \sum_{\mu'}v_{\mu\mu'} \tau_{\mu\mu'}v_{\mu\mu'},\]
+
+&lt;p&gt;which conveniently provide a measure of the temperature-independent contribution of each mode to thermal transport.&lt;/p&gt;
+
+&lt;h2 id=&quot;scalable-and-general-implementation-the-kaldo-package&quot;&gt;Scalable and general implementation: the kALDo package&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/logo.png&quot; alt=&quot;logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The theory outlined in the previous section is implemented in kALDo, an efficient and scalable software package which applies the ALD framework to compute the thermal transport in crystalline and non-crystalline solids at various levels of accuracy.  kALDo features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle and RTA.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/features.png&quot; alt=&quot;features&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, we want to show the kALDo code architecture
+&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/class_diagram.png&quot; alt=&quot;logo&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;benchmarks-applications&quot;&gt;Benchmarks applications&lt;/h2&gt;
+&lt;p&gt;The workflow for ALD calculations is illustrated below&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/timeline.png&quot; alt=&quot;timeline&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here, we present two example simulations of both a periodic and an amorphous structure.&lt;/p&gt;
+
+&lt;h3 id=&quot;ab-initio-silicon-diamond&quot;&gt;&lt;em&gt;Ab initio&lt;/em&gt; silicon diamond&lt;/h3&gt;
+
+&lt;p&gt;In this example we calculate the second order IFC using Density Functional Perturbation Theory as implemented in the Quantum-Espresso package. The phonon lifetimes and thermal conductivity calculations are performed using a (19, 19, 19) q-point grid.&lt;/p&gt;
+
+&lt;p&gt;The kALDo minimal input file, looks like&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# IFCs object creation using ase.build.bulk
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ForceConstants&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;atoms&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bulk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Si'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'diamond'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.699&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;supercell&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# input is the ASE input for QE
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;finite_difference&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calculate_second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calculator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Espresso&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;finite_difference&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calculate_third&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calculator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Espresso&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Phonons object creation
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phonons&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phonons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;force_constants&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;n&quot;&gt;kpts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+               &lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;# Conductivity calculations
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cond&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Conductivity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phonons&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phonons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Thermal conductivity matrix, in (W/m/K):'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cond&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conductivity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'inverse'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We performed the simulation using the local density approximation for the exchange and correlation functional and a Bachelet-Hamann-Schluter norm-conserving  pseudoptential. Kohn-Sham orbitals are represented on a plane-waves basis set with a cutoff of 20 Ry and (8, 8, 8) k-points mesh. The minimized lattice parameter is 5.398A. The third-order IFC is calculated using finite difference displacement on (5, 5, 5) replicas of the irreducible fcc-unit cell, including up to the 5th nearest neighbor.
+We obtained the following thermal properties&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/si-diamond-observables.png&quot; width=&quot;450&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The silicon diamond modes analysis is shown above. Quantum (red) and classical (blue) results are compared. a) Normalized density of states, b) Normalized phase-space per mode \(g\), c) lifetime per mode \(\tau\), d) mean free path \(\lambda\), and e) cumulative conductivity \(\kappa_{cum}\).&lt;/p&gt;
+
+&lt;h3 id=&quot;amorphous-silicon&quot;&gt;Amorphous silicon&lt;/h3&gt;
+
+&lt;p&gt;Here we study a-Si generated by LAMMPS molecular dynamics simulations of quenching from the melt a 4096 atom crystal silicon structure, with 1989 Tersoff interatomic potential and the QHGK method. The minimal input file looks like the following&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# IFCs object creation
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ForceConstants&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from_folder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;atoms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                &lt;span class=&quot;n&quot;&gt;folder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'./input_data'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Phonons object creation
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Phonons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;force_constants&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Conductivity calculations
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cond&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Conductivity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phonons&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phonons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Thermal conductivity matrix, in (W/m/K):'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cond&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conductivity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'qhgk'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In a simliar treatment to the silicon crystal, a full battery of modal analysis can be calculated with both quantum and classical statistics on the amorphous systems returning the phonon DoS as well as the associated lifetimes, generalized diffusivities, normalized phase space and cumulative conductivity&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/gbarbalinardo-poster/amorphous.png&quot; width=&quot;700&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Classical and quantum properties for 4096 atom amorphous silicon system are shown above. a) density of states, b) lifetimes, c) diffusivities, and e) cumulative thermal conductivity. In spite of the increased quantum lifetimes, a decrease of 0.17W/m/K is seen in the quantum conductivity. The difference in conductivity is primarily a result of the overestimation of classical high frequency heat capacities.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;We introduced a new implementation of ALD approaches to compute the thermal conductivity of solids. The widely used BTE approach is supplemented by a recently developed unified theory, QHGK, that extends the application of ALD to compute heat transport in disordered materials.&lt;/p&gt;
+
+&lt;p&gt;kALDo is a modern Python-based software that can seamlessly link to different molecular simulation packages to get IFC either from DFT or semiempirical forcefields. kALDo runs on GPUs and CPUs, and is released open-source, for the scientific community to use and develop further.&lt;/p&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;Giuseppe Barbalinardo was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;B. J. Alder, D. M. Gass, and T. E. Wainwright, “Studies in Molecular Dynamics. VIII. The Transport Coefficients for a Hard-Sphere Fluid,” Journal Chemical Physics 53, 3813–3826 (1970).&lt;/li&gt;
+  &lt;li&gt;A. J. C. Ladd, B. Moran, and W. G. Hoover, “Lattice thermal conductivity: A comparison of molecular dynamics and anharmonic lattice dynamics,” Physical Review B 34, 5058–5064 (1986).&lt;/li&gt;
+  &lt;li&gt;A. Marcolongo, P. Umari, and S. Baroni, “Microscopic theory and quantum simulation of atomic heat transport,” Nature Physics 12, 80–84 (2015).&lt;/li&gt;
+  &lt;li&gt;R. Peierls, “Zur kinetischen Theorie der Wärmeleitung in Kristallen,” Annalen der Physik 395, 1055–1101 (1929).&lt;/li&gt;
+  &lt;li&gt;J. M. Ziman, Electrons and Phonons: The Theory of Transport Phenomena in Solids, International series of monographs on physics (OUP Oxford, 2001).&lt;/li&gt;
+  &lt;li&gt;A. J. H. McGaughey, A. Jain, and H.-Y. Kim, “Phonon properties and thermal conductivity from first principles, lattice dynamics, and the Boltzmann transport equation,” Journal of Applied Physics 125, 011101–20 (2019).&lt;/li&gt;
+  &lt;li&gt;M. Omini and A. Sparavigna, “Beyond the isotropic-model approximation in the theory of thermal conductivity,” Physical Review B 53, 9064–9073 (1996).&lt;/li&gt;
+  &lt;li&gt;A. Ward, D. A. Broido, D. A. Stewart, and G. Deinzer, “Ab initio theory of the lattice thermal conductivity in diamond,” Physical Review B 80, 125203 (2009).&lt;/li&gt;
+  &lt;li&gt;L. Chaput, A. Togo, I. Tanaka, and G. Hug, “Phonon-phonon interactions in transition metals,” Physical Review B 84, 094302 (2011).&lt;/li&gt;
+  &lt;li&gt;W. Li, J. Carrete, N. A. Katcho, and N. Mingo, “ShengBTE: A solver of the Boltzmann transport equation for phonons,” Computer Physics Communications 185, 1747–1758 (2014).&lt;/li&gt;
+  &lt;li&gt;G. Fugallo, M. Lazzeri, L. Paulatto, and F. M. B, “Ab initio variational approach for evaluating lattice thermal conductivity,” Physical Review B 88, 045430 (2013).&lt;/li&gt;
+  &lt;li&gt;A. Cepellotti and N. Marzari, “Thermal Transport in Crystals as a Kinetic Theory of Relaxons,” Physical Review X 6, 041013–14 (2016).&lt;/li&gt;
+  &lt;li&gt;A. Chernatynskiy and S. R. Phillpot, “Phonon Transport Simulator (PhonTS),” Computer Physics Communications 192, 196–204 (2015).&lt;/li&gt;
+  &lt;li&gt;A. Togo, L. Chaput, and I. Tanaka, “Distributions of phonon lifetimes in brillouin zones,” Physical Review B 91, 094306 (2015).&lt;/li&gt;
+  &lt;li&gt;J. Carrete, B. Vermeersch, A. Katre, A. van Roekeghem, T. Wang, G. K. H. Madsen, and N. Mingo, “almaBTE : A solver of the space–time dependent Boltzmann transport equation for phonons in structured materials,” Computer Physics Communications 220, 351–362 (2017).&lt;/li&gt;
+  &lt;li&gt;T. Tadano, Y. Gohda, and S. Tsuneyuki, “Anharmonic force constants extracted from first-principles molecular dynamics: applications to heat transfer simulations,” Journal of Physics: Condensed Matter 26, 225402–13 (2014).&lt;/li&gt;
+  &lt;li&gt;D. A. Broido, M. Malorny, G. Birner, N. Mingo, and D. A. Stewart, “Intrinsic lattice thermal conductivity of semiconductors from first principles,” Applied Physics Letters 91, 231922 (2007).&lt;/li&gt;
+  &lt;li&gt;L. Lindsay, A. Katre, A. Cepellotti, and N. Mingo, “Perspective on ab initio phonon thermal transport,” Journal Applied Physics 126, 050902–21 (2019).&lt;/li&gt;
+  &lt;li&gt;L. Lindsay, D. A. Broido, and T. L. Reinecke, “First-Principles Determination of Ultrahigh Thermal Conductivity of Boron Arsenide: A Competitor for Diamond?” Physical Review Letters 111, 025901–5 (2013).&lt;/li&gt;
+  &lt;li&gt;G. Fugallo, A. Cepellotti, L. Paulatto, M. Lazzeri, N. Marzari, and F. Mauri, “Thermal Conductivity of Graphene and Graphite: Collective Ex-
+citations and Mean Free Paths,” Nano Letters 14, 6109–6114 (2014).&lt;/li&gt;
+  &lt;li&gt;A. Cepellotti, G. Fugallo, L. Paulatto, M. Lazzeri, F. Mauri, and N. Marzari, “Phonon hydrodynamics in two-dimensional materials,” Na-
+ture Communications 6, 6400 (2015).&lt;/li&gt;
+  &lt;li&gt;A. Jain and A. J. H. Mcgaughey, “Strongly anisotropic in-plane thermal transport in single-layer black phosphorene,” Scientific Reports 5, 8501–5 (2015).&lt;/li&gt;
+  &lt;li&gt;M. Zeraati, S. M. Vaez Allaei, I. Abdolhosseini Sarsari, M. Pourfath, and D. Donadio, “Highly anisotropic thermal conductivity of arsenene: An ab initio study,” Physical Review B 93, 085424 (2016).&lt;/li&gt;
+  &lt;li&gt;B. Ouyang, S. Chen, Y. Jing, T. Wei, S. Xiong, and D. Donadio, “Enhanced thermoelectric performance of two dimensional MS2 (M=Mo,W) through phase engineering,” Journal of Materiomics 4, 329–337 (2018).&lt;/li&gt;
+  &lt;li&gt;S. Chen, A. Sood, E. Pop, K. E. Goodson, and D. Donadio, “Strongly tunable anisotropic thermal transport in MoS 2by strain and lithium inter-
+calation: first-principles calculations,” 2D Materials 6, 025033–10 (2019). 26A. Sood, F. Xiong, S. Chen, R. Cheaito, F. Lian, M. Asheghi, Y. Cui, D. Donadio, K. E. Goodson, and E. Pop, “Quasi-Ballistic Thermal Transport Across MoS 2Thin Films,” Nano Letters 19, 2434–2442 (2019).&lt;/li&gt;
+  &lt;li&gt;C. Ott, F. Reiter, M. Baumgartner, M. Pielmeier, A. Vogel, P. Walke, S. Burger, M. Ehrenreich, G. Kieslich, D. Daisenberger, J. Armstrong, U. K. Thakur, P. Kumar, S. Chen, D. Donadio, L. S. Walter, R. T. Weitz, K. Shankar, and T. Nilges, “Flexible and Ultrasoft Inorganic 1D Semiconductor and Heterostructure Systems Based on SnIP,” Advanced Functional
+Materials 271, 1900233 (2019).&lt;/li&gt;
+  &lt;li&gt;P. B. Allen and J. L. Feldman, “Thermal conductivity of disordered harmonic solids,” Physical Review B 48, 12581–12588 (1993).&lt;/li&gt;
+  &lt;li&gt;L. Isaeva, G. Barbalinardo, D. Donadio, and S. Baroni, “Modeling heat transport in crystals and glasses from a unified lattice-dynamical approach,”
+Nature Communications 10, 3853 (2019).&lt;/li&gt;
+  &lt;li&gt;M. Simoncelli, N. Marzari, and F. Mauri, “Unified theory of thermal transport in crystals and glasses,” Nature Physics 15, 809–813 (2019).
+31F. Eriksson, E. Fransson, and P. Erhart, “The Hiphive Package for the Extraction of High-Order Force Constants by Machine Learning,” Advanced
+Theory and Simulations 2, 1800184–11 (2019).&lt;/li&gt;
+  &lt;li&gt;S. Baroni, S. de Gironcoli, A. Dal Corso, and P. Giannozzi, “Phonons and related crystal properties from density-functional perturbation theory,” Rev Mod Phys 73, 515–562 (2001).&lt;/li&gt;
+  &lt;li&gt;L. Paulatto, F. Mauri, and M. Lazzeri, “Anharmonic properties from a generalized third-order ab initioapproach: Theory and applications to graphite and graphene,” Phys. Rev. B 87, 214303–18 (2013).&lt;/li&gt;
+  &lt;li&gt;G. P. Srivastava, “The Physics of Phonons, ,” Adam Hilger, Bristol 1990. (1990).&lt;/li&gt;
+  &lt;li&gt;M. S. Green, “Markoff random processes and the statistical mechanics of time-dependent phenomena.” Journal Chemical Physics 20, 1281–1295 (1952).&lt;/li&gt;
+  &lt;li&gt;M. Green, “Markoff random processes and the statistical mechanics of time-dependent phenomena. ii. irreversible processes in fluids,” Journal Chemical Physics 22, 398–413 (1954).&lt;/li&gt;
+  &lt;li&gt;R. Kubo, “Statistical-Mechanical Theory of Irreversible Processes. I. General Theory and Simple Applications to Magnetic and Conduction Prob lems,” Journal of the Physical Society of Japan 12, 570–586 (1957).&lt;/li&gt;
+  &lt;li&gt;R. Kubo, M. Yokota, and S. Nakajima, “Statistical-Mechanical Theory of Irreversible Processes. II. Response to Thermal Disturbance,” Journal of the Physical Society of Japan 12, 1203–1211 (1957).&lt;/li&gt;
+  &lt;li&gt;Y. He, I. Savic ́, D. Donadio, and G. Galli, “Lattice thermal conductivity of semiconducting bulk materials: atomistic simulations,” Physical Chemistry Chemical Physics 14, 16209–14 (2012).&lt;/li&gt;
+  &lt;li&gt;A. H. Larsen, J. J. Mortensen, J. Blomqvist, I. E. Castelli, R. Christensen, M. Dułak, J. Friis, M. N. Groves, B. Hammer, C. Hargus, E. D. Hermes, P. C. Jennings, P. B. Jensen, J. Kermode, J. R. Kitchin, E. L. Kolsbjerg, J. Kubal, K. Kaasbjerg, S. Lysgaard, J. B. Maronsson, T. Maxson, T. Olsen, L. Pastewka, A. Peterson, C. Rostgaard, J. Schiøtz, O. Schütt, M. Strange, K. S. Thygesen, T. Vegge, L. Vilhelmsen, M. Walter, Z. Zeng, and K. W. Jacobsen, “The atomic simulation environment—a python library for working with atoms,” Journal of Physics: Condensed Matter 29, 273002 (2017).&lt;/li&gt;
+  &lt;li&gt;B. Aradi, B. Hourahine, and T. Frauenheim, “Dftb+, a sparse matrix-based implementation of the dftb method,” J Phys Chem A 111, 5678–5684 (2007).&lt;/li&gt;
+  &lt;li&gt;D. G A Smith and J. Gray, “opt_einsum - A Python package for optimizing contraction order for einsum-like expressions,” Journal of Open Source Software 3, 753–3 (2018).&lt;/li&gt;
+  &lt;li&gt;P. Giannozzi, O. Andreussi, T. Brumme, O. Bunau, M. B. Nardelli, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, M. Cococcioni, N. Colonna, I. Carnimeo, A. D. Corso, S. de Gironcoli, P. Delugas, R. A. D. Jr, A. Ferretti, A. Floris, G. Fratesi, G. Fugallo, R. Gebauer, U. Gerstmann, F. Giustino, T. Gorni, J. Jia, M. Kawamura, H.-Y. Ko, A. Kokalj, E. Küçükbenli, M. Lazzeri, M. Marsili, N. Marzari, F. Mauri, N. L. Nguyen, H.-V. Nguyen, A. O. de-la Roza, L. Paulatto, S. Poncé, D. Rocca, R. Sabatini, B. Santra, M. Schlipf, A. P. Seitsonen, A. Smogunov, I. Timrov, T. Thonhauser, P. Umari, N. Vast, X. Wu, and S. Baroni, “Advanced capabilities for materials modelling with quantum espresso,” Journal of Physics: Condensed Matter 29, 465901 (2017).&lt;/li&gt;
+  &lt;li&gt;G. B. Bachelet, D. R. Hamann, and M. Schluter, “Pseudopotentials That Work - From H to Pu,” Physical Review B 26, 4199–4228 (1982).&lt;/li&gt;
+  &lt;li&gt;R. Kremer, K. Graf, M. Cardona, G. Devyatykh, A. Gusev, A. Gibin, A. In- yushkin, A. Taldenkov, and H. Pohl, “Thermal conductivity of isotopically enriched Si-28: revisited,” Solid State Communications 131, 499–503 (2004).&lt;/li&gt;
+  &lt;li&gt;J. Tersoff, “Modeling solid-state chemistry: Interatomic potentials for multicomponent systems,” Physical Review B 39, 5566–5568 (1989).&lt;/li&gt;
+  &lt;li&gt;A. Krylov, T. L. Windus, T. Barnes, E. Marin-Rimoldi, J. A. Nash, B. Pritchard, D. G. Smith, D. Altarawy, P. Saxe, C. Clementi, T. D. Crawford, R. J. Harrison, S. Jha, V. S. Pande, and T. Head-Gordon, “Perspective: Computational chemistry software and its advancement as illustrated through three grand challenge cases for molecular science,” Journal
+of Chemical Physics 149, 180901 (2018).&lt;/li&gt;
+  &lt;li&gt;N.Wilkins-Diehrand, T.D.Crawford,“NSF’s Inaugural Software Institutes: The Science Gateways Community Institute and the Molecular Sciences Software Institute.” Computing in Science and Engineering 20 (2018).&lt;/li&gt;
+  &lt;li&gt;W. Li, N. Mingo, L. Lindsay, D. A. Broido, D. A. Stewart, and N. A. Katcho, “Thermal conductivity of diamond nanowires from first princi-
+ples,” Physical Review B 85, 195436 (2012).&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Giuseppe Barbalinardo</name></author><summary type="html">kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle, and RTA. The algorithms are implemented using linear algebra operations on tensors, to take advantage of multithreading on GPU and CPU using Numpy, Tensorflow, and optimized tensor libraries. Using the Atomic Simulation Environment, κALDo can calculate the IFCs using several ab initio and molecular dynamics codes, thus enabling the use of first-principles DFT, empirical forcefields, and semi-empirical tight- binding. A native LAMMPS interface is also available in the USER-PHONON package. Finally, through seamless integration with the hiPhive package, the IFC calculation can take advantage of compressing-sensing machine learning algorithms. The code is released open-source for the community to use and contribute with edits and suggestions. It is designed on modern software best practices, and we hope to provide a development platform to implement new theory and methods.</summary></entry><entry><title type="html">Randomized Methods for Quantum Chemistry</title><link href="https://education.molssi.org/2020-software-fellow-posters/samuel-greene/" rel="alternate" type="text/html" title="Randomized Methods for Quantum Chemistry" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/samuel-greene</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/samuel-greene/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Strong correlation among the electrons in many molecules and materials gives rise to unique and useful properties (e.g. catalytic behavior, superconductivity).&lt;/li&gt;
+  &lt;li&gt;Calculating properties of strongly correlated systems is expensive, requiring the solution of linear algebra problems involving large matrices. Many conventional approximations fail for strongly correlated problems.&lt;/li&gt;
+  &lt;li&gt;We are developing randomized methods  able to efficiently solve linear algebra problems in quantum chemistry involving large matrices by stochastically introducing sparsity and then averaging.&lt;/li&gt;
+  &lt;li&gt;Our ongoing work is focused on reducing statistical error and increasing the sizes of chemical systems to which our methods can be applied.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All methods described here are discussed in more detail in our &lt;a href=&quot;https://arxiv.org/abs/2005.00654&quot; target=&quot;_blank&quot;&gt; forthcoming paper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;stochastic-sparsification&quot;&gt;Stochastic sparsification&lt;/h2&gt;
+
+&lt;p&gt;We use a 2-step process&lt;sup&gt;1&lt;/sup&gt; to randomly compress a vector to a user-specified number of nonzero elements. First, we identify a set of elements that will be preserved exactly on the basis of their relative magnitudes. Then, we randomly select a subset of the remaining elements using a correlated sampling procedure. Elements are selected with probabilities proportional to their magnitude. All other elements are zeroed.&lt;/p&gt;
+
+\[\begin{pmatrix}
+0.90 \\
+-0.025 \\
+0.025 \\
+0.025 \\
+-0.025
+\end{pmatrix} \to
+\begin{pmatrix}
+\color{red}{0.90} \\
+-\color{blue}{0.05} \\
+0 \\
+\color{blue}{0.05} \\
+0
+\end{pmatrix}\]
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;: A schematic showing the stochastic compression of a vector to 3 nonzero elements. Elements designated to be preserved exactly are shown in red, while those selected during the sampling procedure are shown in blue.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Introducing zeros in this way allows for the storage of vectors in sparse format, with significantly reduced memory requirements.&lt;/p&gt;
+
+&lt;h2 id=&quot;estimating-the-ground-state-energy&quot;&gt;Estimating the ground-state energy&lt;/h2&gt;
+
+&lt;p&gt;We estimate the ground-state energy (least eigenvalue) of the full configuration interaction Hamiltonian matrix, \( \mathbf{H} \), using an iterative procedure. In each iteration, the current vector is multiplied by the matrix \( \left( \mathbf{1} - \varepsilon \mathbf{H} \right) \), where \(\varepsilon\) is a small, positive parameter. The resulting vector is then stochastically compressed. Although \( \mathbf{H} \) is sparse, the number of nonzero elements in each of its columns renders this step expensive for many chemical systems of interest. We address this by factoring \( \left( \mathbf{1} - \varepsilon \mathbf{H} \right) \) and compressing the vector obtained after multiplication by each of its factors.&lt;sup&gt;3, 4&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;After each iteration, the energy is estimated from the resulting vector \(\mathbf{v}^{(\tau)} \) as&lt;/p&gt;
+
+\[E^{(\tau)} = \frac{\mathbf{v}_\text{ref}^* \mathbf{H} \mathbf{v}^{(\tau)}}{\mathbf{v}_\text{ref}^* \mathbf{v}^{(\tau)}}\]
+
+&lt;p&gt;where \(\mathbf{v}^{(\tau)} \) is an approximation to the ground-state eigenvector, obtained from an approximate method. An estimate of the ground-state energy, as well as its associated standard error, are obtained by averaging over all iterations. We also report the statistical efficiency, which is inversely proportional to the square of the standard error.&lt;/p&gt;
+
+&lt;h2 id=&quot;extensions-for-error-reduction&quot;&gt;Extensions for error reduction&lt;/h2&gt;
+
+&lt;h3 id=&quot;initiator-approximation&quot;&gt;Initiator approximation&lt;/h3&gt;
+
+&lt;p&gt;The following figure shows the behavior of the energy estimates \(E^{(\tau)}\) for a small chemical system as a function of the user-specified number of nonzero elements retained in compression operations \( m \).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/Samuel_Greene/en_trace.png&quot; alt=&quot;Energy blowsup&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;: Energy estimates for the Neon atom in the aug-cc-pVDZ basis.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The standard error in the average energy increases substantially as \( m \) is decreased below a system-dependent threshold. Since the cost of these calculations (per iteration) scales with \( m \), this renders it difficult to apply this method to larger chemical systems, for which greater values of \( m \) are required.&lt;/p&gt;
+
+&lt;p&gt;We address this using the initiator approximation,&lt;sup&gt;5&lt;/sup&gt; in which only the elements in the current iteration with a magnitude greater than an “initiator threshold” \( n_a \) are allowed to introduce weight in the next iteration on vector elements that were previously zero. This greatly reduces the standard error (increases the statistical efficiency).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/Samuel_Greene/ini_trace.png&quot; alt=&quot;Initiator trace&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;: Energy estimates for the Neon atom in the aug-cc-pVDZ basis obtained using the initiator approximation.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;This technique is an “approximation” because it increases a bias that increases with increasing \( n_a \). Nonetheless, the associated reduction in statistical error makes this worthwhile for many chemical systems of interest.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/Samuel_Greene/ini_thresh.pdf&quot; alt=&quot;Initiator threshold&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 4&lt;/strong&gt;: The behavior of the mean energy and statistical efficiency for calculations on three chemical systems as the initiator threshold is increased from 0 to 2.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;alternative-hamiltonian-matrix-factorization&quot;&gt;Alternative Hamiltonian matrix factorization&lt;/h3&gt;
+
+&lt;p&gt;We developed an alternative approach to factoring the matrix \( \left( \mathbf{1} - \varepsilon \mathbf{H} \right) \) designed to further reduce the statistical error. Some of the matrix factors have fewer nonzero elements, making the associated matrix-vector multiplication operations cheaper, and their elements are cheaper to compute on the fly. We see that this alternative factorization yields consistent improvements in statistical efficiency while reducing overall execution times by as much as 17% for the three chemical systems tested.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/Samuel_Greene/newhb.pdf&quot; alt=&quot;New factorization&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 5&lt;/strong&gt;: The statistical efficiencies of calculations performed using this alternative factorization scheme in relation to those performed with the existing scheme.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;implementation-considerations&quot;&gt;Implementation considerations&lt;/h2&gt;
+
+&lt;p&gt;Since receiving the MolSSI fellowship, I have developed a C++ library that supports several different stochastic compression algorithms. Some subroutines are applicable to any matrix or vector, while others have features related specifically to the FCI problem. My library supports MPI parallelism, so vectors are stored in sparse format distributed among multiple MPI processes. Matrix-vector multiplication is parallelized, as is stochastic compression. I developed a protocol for performing stochastic compression that minimizes communication among processes.&lt;/p&gt;
+
+&lt;h2 id=&quot;ongoing-work&quot;&gt;Ongoing work&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Extending these methods for the estimation of excited-state energies&lt;/li&gt;
+  &lt;li&gt;Applying these methods to the Hubbard-Holstein model, a minimal model of superconductivity&lt;/li&gt;
+  &lt;li&gt;Extending the applicability of these methods to larger systems through improvements in code and stochastic sampling methodology&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h2&gt;
+
+&lt;p&gt;Samuel M. Greene was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580. Additional funding for this project was provided by the NSF through award DMS-1646339 and the Advanced Scientific Computing Research Program within the DOE Office of Science through award DE-SC0020427. The Flatiron Institute is a division of the Simons Foundation.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;L.-H. Lim and J. Weare. SIAM Rev. 2017, 59, 547-587.&lt;/li&gt;
+  &lt;li&gt;G. H. Booth, A. J. W. Thom, and A. Alavi. J. Chem. Phys. 2009, 131, 054106.&lt;/li&gt;
+  &lt;li&gt;S. M. Greene, R. J. Webber, J. Weare, and T. C. Berkelbach. J. Chem. Theory Comput. 2019, 15, 4834-4850.&lt;/li&gt;
+  &lt;li&gt;V. A. Neufeld and A. J. W. Thom. J. Chem. Theory Comput. 2019, 15, 127-140.&lt;/li&gt;
+  &lt;li&gt;D. Cleland, G. H. Booth, and A. Alavi. J. Chem. Phys. 2010, 132, 041103.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Samuel M. Greene</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">ATESA: an Automated Aimless Shooting Workflow</title><link href="https://education.molssi.org/2020-software-fellow-posters/tucker-burgin/" rel="alternate" type="text/html" title="ATESA: an Automated Aimless Shooting Workflow" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/tucker-burgin</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/tucker-burgin/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Transition path sampling methods are an indispensable tool for computational study of the dynamics of rare events in molecular simulations. However, access to advanced sampling techniques like transition path sampling is generally restricted to experts with the knowledge and resources to carefully set up, curate, and analyze the potentially huge number of simulations that constitute a complete study. ATESA (“Aimless Transition Ensemble Sampling and Analysis”) is a new open-source software program written in Python that automates a full transition path sampling workflow based on the aimless shooting algorithm, with a particular focus on extending accessibility to non-expert users who are familiar with the basics of molecular simulations, but not necessarily with programming or advanced sampling methods. It also implements novel methodological contributions that should be of use to anyone performing aimless shooting. Here, we will introduce ATESA and showcase some of the results of its automated transition path sampling process flow for an example reaction — including finding an initial transition state, sampling with aimless shooting, building a reaction coordinate with inertial likelihood maximization, verifying that coordinate with committor analysis, and measuring the reaction energy profile with umbrella sampling — all without leaving the software.&lt;/p&gt;
+
+&lt;p&gt;ATESA was built on the &lt;a href=&quot;https://github.com/MolSSI/cookiecutter-cms&quot;&gt;MolSSI computational chemistry cookiecutter&lt;/a&gt; using open-source best practices wherever possible. More complete documentation than is available here can be found on the project’s &lt;a href=&quot;https://atesa.readthedocs.io/en/latest/&quot;&gt;documentation webpage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;rare-event-sampling-and-atesa&quot;&gt;Rare Event Sampling and ATESA&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-is-a-rare-event&quot;&gt;What is a rare event?&lt;/h3&gt;
+
+&lt;p&gt;Molecular simulations are a powerful tool for investigating the workings of chemical systems at the extremely small scale. However, due to technical limitations, simulations are necessarily quite limited in scope and cannot replicate the time- and length-scales relevant in laboratory studies. This can be particularly troublesome when the important feature of a system is a chemical reaction or transformation with a significant activation barrier; although such an event may take place very quickly in the eyes of an experimentalist, it could take years of computer time before the same event might be expected to occur just once in a simulation. This is what is meant when we call certain reactions or transformations “rare events”.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-aimless-shooting&quot;&gt;What is aimless shooting?&lt;/h3&gt;
+
+&lt;p&gt;Aimless shooting is a method for sampling of the region of state space corresponding to the ensemble of transition states. Because by definition the transition state is a local maximum in energy along at least one dimension, this region is difficult to sample using conventional simulations – that is, a transition is a rare event. The aimless shooting approach is to leverage one or more putative or “guess” transition state structures, which will be “aimlessly” “shot” through phase space using unbiased initial velocities chosen from the appropriate Boltzmann distribution. The resulting trajectory is at the same time also simulated in reverse (using initial velocities of opposite direction and equal magnitude), and if after simulations the two trajectories converge to different pre-defined energetic basins (&lt;em&gt;e.g.&lt;/em&gt;, one “products”, one “reactants”), then the trajectory connecting them is considered a success. New starting points are daisy-chained from older successful ones by taking an early frame from the reactive trajectory as the initial coordinates, and in this way it is ensured that sampling remains within the transition state ensemble [1].&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/aimless_shooting.png&quot; alt=&quot;Aimless Shooting&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;: An example of three aimless shooting moves in a hypothetical 2-D state space. Each shooting move consists of an initial coordinate (colored circle) from which two trajectories begin in opposite directions (colored lines). If the two trajectories go to opposite basins (“A” and “B”), then the move is accepted and new initial coordinates for the next step are chosen from an early part of the accepted trajectory (as move 2 (green) begins along the pathway from move 1 (blue)). If a move is not accepted (move 3 (red)), then the next step would begin from a different point and/or with different initial velocities from the previous accepted move (not shown).&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-atesa&quot;&gt;What is ATESA?&lt;/h3&gt;
+
+&lt;p&gt;ATESA is a Python program that implements aimless shooting and several related methods, with the intent of making them readily accessible to non-experts without requiring them to write (or read!) code. It automates the aimless shooting process with a system of independent “threads” representing one particular path in the search through phase space. A thread has a given set of initial coordinates, which it repeatedly “shoots” until it finds a successful reactive trajectory, at which point it picks a new shooting point on the reactive trajectory and continues. Because threads run entirely in parallel, aimless shooting with ATESA scales perfectly so long as sufficient computational resources are available.&lt;/p&gt;
+
+&lt;p&gt;ATESA also features a suite of analysis and utility tools that run in much the same fashion. Most importantly, once aimless shooting has been completed, ATESA can be used to automate likelihood maximization to “mine” the data for a reaction coordinate that describes the transition path, committor analysis to verify that reaction coordinate, and equilibrium path or umbrella sampling to obtain the free energy profile along it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/ATESA_workflow.png&quot; alt=&quot;ATESA Workflow&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;: The complete workflow automated with ATESA. Excluding the initial model, every step from start to finish is automated.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;By design, ATESA is suitable for researchers who are familiar with the basic tenants of molecular simulation, but may not be experts in Python or in rare event sampling. By providing tools and guidance for a ready-made workflow from start to finish, ATESA aims to take the guesswork out of adding transition path sampling to your toolkit.&lt;/p&gt;
+
+&lt;h2 id=&quot;example-reaction-study&quot;&gt;Example Reaction Study&lt;/h2&gt;
+
+&lt;p&gt;To demonstrate ATESA in action, we will look at a study for the gas-phase decomposition of ethyl chlorosulfite. We chose this reaction because the small number of atoms involved facilitate quick simulations and easy visualizations, but ATESA has also been successfully applied for much larger systems, such as enzyme reaction modeling.&lt;/p&gt;
+
+&lt;p&gt;Despite its size, the ethyl chlorosulfite decomposition reaction is deceptively complex. Aurell &lt;em&gt;et al.&lt;/em&gt; describe at four distinct possible mechanisms [2], and Schreiner &lt;em&gt;et al.&lt;/em&gt; performed quantum mechanical calculations to identify the most favorable pathways under various conditions [3]. They argue that the most favorable pathway involves a “front-side attack” S&lt;sub&gt;N&lt;/sub&gt;i mechanism as shown here:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/reaction_pathway.png&quot; alt=&quot;Schreiner Pathway&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;: The reaction pathway identified by Schreiner&lt;/em&gt; et al. &lt;em&gt;[3] as the most favorable, recreated using VMD. Teal: carbon; white: hydrogen; red: oxygen; yellow: sulfur; green: chlorine.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;We will not discuss the details of each step of the workflow here, but more information on this example study can be found on our documentation website, &lt;a href=&quot;https://atesa.readthedocs.io/en/latest/example_study.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/ATESA_infographic_top.png&quot; alt=&quot;Infographic Top&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/200625_ethyl_chlorosulfite_as_data.gif&quot; alt=&quot;Infographic gif&quot; /&gt;
+&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/tucker_burgin/ATESA_infographic_bottom.png&quot; alt=&quot;Infographic Bottom&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Every step in this workflow (with the exception of comparison to results from existing literature, of course) has been performed automatically through ATESA, requiring no analysis or simulation effort on the part of the user. It is our hope that widespread use of this software will help make advanced sampling an accessible tool for chemistry and physics researchers not specialized in molecular simulations.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Beckham, G. T.; Peters, B. In Computational Modeling in Lignocellulosic Biofuel Pro- duction; Nimlos, M. R., Crowley, M. F., Eds.; American Chemical Society: Washington, D.C., 2010; Chapter 13, pp 299–332.&lt;/li&gt;
+  &lt;li&gt;Aurell, M. J., González-Cardenete, M. A., and Zaragozá R. J. Organic &amp;amp; Biomolecular Chemistry 2018, 16, 1101-1112&lt;/li&gt;
+  &lt;li&gt;Schreiner, P. R.; Schleyer, P. v. R.; Hill, R. K. Journal of Organic Chemistry 1994, 59, 1849–1854.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;Tucker Burgin was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580&lt;/p&gt;</content><author><name>Tucker Burgin</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling</title><link href="https://education.molssi.org/2020-software-fellow-posters/zhi-wang/" rel="alternate" type="text/html" title="Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/zhi-wang</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/zhi-wang/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+characterization of novel materials. These new potentials incorporate explicit
+polarization effects and are calibrated very closely against energy
+decompositions derived from electronic structure calculations. The Tinker
+molecular modeling packages constitute one of the leading code families
+implementing the AMOEBA (Atomic Multipole Optimized Energetics for Biomolecular
+Applications) force field and many other advanced potential energy models.&lt;/p&gt;
+
+&lt;p&gt;As a new member of the Tinker suite, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tinker.gpu&lt;/code&gt;
+(get it on &lt;a href=&quot;https://github.com/zhi-wang/tinker.gpu&quot;&gt;GitHub&lt;/a&gt;) will focus on
+accelerating the advanced force fields and enhanced sampling methods with novel
+parallel algorithms on the state-of-the-art GPU devices.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/2020-06-25-zhi-wang/mechanic.png&quot; alt=&quot;Tinker Logo&quot; width=&quot;400px&quot; /&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Figure 1:&lt;/b&gt; The Tinker logo.&lt;/i&gt;&lt;/center&gt;
+
+&lt;h2 id=&quot;advanced-molecular-modeling&quot;&gt;Advanced Molecular Modeling&lt;/h2&gt;
+&lt;p&gt;The polarizable force field AMOEBA has been implemented in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tinker.gpu.&lt;/code&gt; Our
+next-generation force field HIPPO (Hydrogen-like Polarizable Potential)
+developed in the Ponder lab, and other advanced force fields developed by our
+collaborators are being added. In addition to the new energy terms,
+we are in close collaboration with Prof. Wei Yang from Florida State University
+to add his family of powerful orthogonal space sampling methods for biomolecular
+applications.&lt;/p&gt;
+
+&lt;h3 id=&quot;multipole-electrostatics&quot;&gt;Multipole Electrostatics&lt;/h3&gt;
+&lt;p&gt;The pairwise multipole electrostatics (\(U_{ij}\)) includes up to
+quadrupole-quadrupole interaction,&lt;/p&gt;
+
+\[U_{ij} = M_i T_{ij} M_j,\]
+
+&lt;p&gt;where \(M\) is the multipole in Cartesian coordinate&lt;/p&gt;
+
+\[M = [c, d_x, d_y, d_z, q_{xx}, q_{xy}, \cdots, q_{zz}],\]
+
+&lt;p&gt;and&lt;/p&gt;
+
+\[T_{ij} = \begin{pmatrix}
+1          &amp;amp;           \nabla_j &amp;amp;           \nabla_j^2 \\
+\nabla_i   &amp;amp; \nabla_i  \nabla_j &amp;amp; \nabla_i  \nabla_j^2 \\
+\nabla_i^2 &amp;amp; \nabla_i^2\nabla_j &amp;amp; \nabla_i^2\nabla_j^2
+\end{pmatrix}\frac{1}{r_{ij}}.\]
+
+&lt;h3 id=&quot;polarization&quot;&gt;Polarization&lt;/h3&gt;
+&lt;p&gt;If the system has \(N\) atoms, the induced dipoles \(\mu\) are first
+obtained by solving a \(3N \times 3N\) linear equation
+\(\mu = T_p^{-1} {\bf E}\), where \({\bf E}\)
+is the electrostatic field due to the permanent multipoles, and \(T_p\) is the
+matrix analogous to multipole interaction with Thole damping. [1]
+The polarization energy is computed by&lt;/p&gt;
+
+\[U_p = -\frac{1}{2}\mu\cdot{\bf E}.\]
+
+&lt;h3 id=&quot;charge-transfer&quot;&gt;Charge Transfer&lt;/h3&gt;
+&lt;p&gt;The charge transfer term was added to HIPPO force field. It has an empirical
+pairwise form of&lt;/p&gt;
+
+\[U_{ct} = -A_i\exp(-\eta_j r) -A_i\exp(-\eta_i r),\]
+
+&lt;p&gt;where \(A\) is the magnitude coefficient and \(\eta\) is the exponential
+decay factor.&lt;/p&gt;
+
+&lt;h3 id=&quot;dispersion-and-repulsion&quot;&gt;Dispersion and Repulsion&lt;/h3&gt;
+&lt;p&gt;The dispersion and repulsion terms are also newly supported energy terms
+introduced by HIPPO. [2] Dispersion (and Dispersion PME) are implemented as the
+classical dispersion interaction, plus extra damping function to account for
+the quantum effects. The form of damping function adopted in HIPPO is&lt;/p&gt;
+
+\[f(r) = 1 - (1+\frac{1}{2}\alpha r)\exp(-\alpha r).\]
+
+&lt;p&gt;We use the pseudo-orbital model with a form of&lt;/p&gt;
+
+\[\phi = \sqrt{\frac{Q\alpha^3}{8\pi}} \exp(-\alpha r/2)\]
+
+&lt;p&gt;to account for the repulsion energy potential.&lt;/p&gt;
+
+&lt;h2 id=&quot;code-structure&quot;&gt;Code Structure&lt;/h2&gt;
+&lt;p&gt;Even though &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tinker.gpu&lt;/code&gt; is written in modern templated C++, we will not
+immediately give up our Fortran code base. As a matter of fact, this
+program still depends on the pre-built Fortran Tinker subroutines and modules
+to manage the program I/O and global variables. The C++ is the glue layer to
+communicate with Fortran library, to launch OpenACC/CUDA kernels at runtime,
+and to perform unit tests.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/2020-06-25-zhi-wang/code-struct.png&quot; alt=&quot;Code Structure&quot; width=&quot;600px&quot; /&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Figure 2:&lt;/b&gt; Code structure.&lt;/i&gt;&lt;/center&gt;
+
+&lt;h3 id=&quot;fortran-subroutines-and-modules&quot;&gt;Fortran Subroutines and Modules&lt;/h3&gt;
+&lt;p&gt;The interoperability of Fortran with C is of vital importance. Fortran
+subroutines with no character string parameters can often be used directly in
+C/C++ code with the assistance of following macro&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// subroutine &quot;getxyz&quot; becomes &quot;getxyz_&quot; in C&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// &quot;call getxyz&quot; becomes &quot;TINKER_RT(getxyz)();&quot;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define TINKER_RT(getxyz) getxyz##_
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;whereas for the global variables in the modules, different compiler vendors may
+have different implementations. We used the following macro to access variable
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var&lt;/code&gt; in module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mod,&lt;/code&gt; for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gfortran&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Intel ifort,&lt;/code&gt; respectively&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// if gfortran&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define TINKER_MOD(mod, var) __##mod##_MOD_##var
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// if Intel ifort&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define TINKER_MOD(mod, var) mod##_mp_##var##_
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A syntax parser that can scan the Fortran Tinker source code and generate the
+aforementioned bindings has been added to the source code.&lt;/p&gt;
+
+&lt;p&gt;The alternative solution would be exporting these symbols to C programs from
+Fortran source code using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iso_c_binding&lt;/code&gt; but requires extensive modification
+in the Fortran code base.&lt;/p&gt;
+
+&lt;h3 id=&quot;multi-precision-and-multi-platform&quot;&gt;Multi-precision and Multi-Platform&lt;/h3&gt;
+&lt;p&gt;Our program can be configured (by &lt;a href=&quot;https://cmake.org&quot;&gt;CMake&lt;/a&gt; options)
+to compile with single precision, double precision, and mixed precision
+floating-point numbers, as well as to compile the production GPU build
+or reference CPU build.&lt;/p&gt;
+
+&lt;h3 id=&quot;templated-openacc-and-cuda-kernels&quot;&gt;Templated OpenACC and CUDA Kernels&lt;/h3&gt;
+&lt;p&gt;Here are some of our principles in the GPU kernel developments that lead us to
+the multipole kernel shown below.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Don’t repeat ourselves, especially for the energy/gradient/virial expressions.&lt;/li&gt;
+  &lt;li&gt;Don’t pay for the things we don’t need, e.g., skip energy evaluation in the
+simulation between saved MD frames.&lt;/li&gt;
+  &lt;li&gt;Put calculation on GPU as much as possible.&lt;/li&gt;
+  &lt;li&gt;Maximal code reuse in multipole electrostatics.&lt;/li&gt;
+  &lt;li&gt;Minimal communication and synchronization between CPU and GPU.&lt;/li&gt;
+  &lt;li&gt;Always implement an OpenACC kernel first, unless we believe there will be
+significant improvement by CUDA.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-cuda highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;/// Pairwise quadrupole electrostatics.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// @tparam Version   Flag for using energy counts, potential energy,&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;///                   virial tensor, and energy gradient in the pairwise&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;///                   interaction.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;/// @tparam ElecType  Flag for doing real space PME or Non-EWALD pairwise&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;///                   electrostatics.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ElecType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;__device__&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pair_mpole&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INPUT_PARAMETERS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RESULTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;do_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// flag for number of interactions&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;do_e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// flag for potential energy&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;do_v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// flag for virial tensor&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;do_g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// flag for energy gradient&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;unit-tests-and-continuous-integration&quot;&gt;Unit Tests and Continuous Integration&lt;/h3&gt;
+&lt;p&gt;We are using &lt;a href=&quot;https://github.com/catchorg/Catch2&quot;&gt;Catch2&lt;/a&gt; as the unit test
+framework and &lt;a href=&quot;https://travis-ci.com/github/zhi-wang/tinker.gpu&quot;&gt;Travis CI&lt;/a&gt;
+as the continuous integration platform for the reference CPU build.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This program &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tinker.gpu,&lt;/code&gt; has proved feasible and effective to incorporate
+recent software advances and enable community collaboration. It is a convenient
+framework to implement novel advanced force fields of greater complexity with
+lower engineering difficulty and maintain good performance.
+Benchmark results are comparable to our previous work. [3]&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Polarizable Atomic Multipole Water Model for Molecular Mechanics Simulation.
+  Ren et al. &lt;em&gt;J. Phys. Chem. B,&lt;/em&gt; &lt;strong&gt;107,&lt;/strong&gt; 5933-5947 (2003)&lt;/li&gt;
+  &lt;li&gt;A Physically Grounded Damped Dispersion Model with Particle Mesh Ewald Summation.
+  Rackers et al. &lt;em&gt;J. Chem. Phys.&lt;/em&gt; &lt;strong&gt;149&lt;/strong&gt; 084115 (2018);
+  Classical Pauli Repulsion: An Anisotropic, Atomic Multipole Model.
+  Rackers et al. &lt;em&gt;J. Chem. Phys.&lt;/em&gt; &lt;strong&gt;150&lt;/strong&gt; 084104 (2019)&lt;/li&gt;
+  &lt;li&gt;Tinker 8: Software Tools for Molecular Design. Rackers et al.
+  &lt;em&gt;J. Chem. Theory Comput.,&lt;/em&gt; &lt;strong&gt;14,&lt;/strong&gt; 5273-5289 (2018)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h2&gt;
+&lt;p&gt;Zhi Wang was supported by a fellowship from The Molecular Sciences Software
+Institute under NSF grant OAC-1547580.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/2020-06-25-zhi-wang/heart.png&quot; alt=&quot;Tinker Heart&quot; width=&quot;400px&quot; /&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Figure 3:&lt;/b&gt; ❤️ Tinker.&lt;/i&gt;&lt;/center&gt;</content><author><name>Zhi Wang</name></author><summary type="html">Introduction Advanced potential energy surfaces and models are being applied to an ever-expanding array of problems in structural biology, drug design and characterization of novel materials. These new potentials incorporate explicit polarization effects and are calibrated very closely against energy decompositions derived from electronic structure calculations. The Tinker molecular modeling packages constitute one of the leading code families implementing the AMOEBA (Atomic Multipole Optimized Energetics for Biomolecular Applications) force field and many other advanced potential energy models.</summary></entry><entry><title type="html">DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State</title><link href="https://education.molssi.org/2020-software-fellow-posters/jennifer-clark/" rel="alternate" type="text/html" title="DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/jennifer-clark</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/jennifer-clark/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;First open-source application of its kind for Statistical Associating Fluid Theory (SAFT) equation of state (EOS).&lt;/p&gt;
+
+&lt;p&gt;Despite the power of SAFT coarse graining, its use has been limited by lack of availability of a freely accessible application.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/logo.png&quot; alt=&quot;logo&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;: DESPASITO: &lt;strong&gt;D&lt;/strong&gt;etermining &lt;strong&gt;E&lt;/strong&gt;quilibrium &lt;strong&gt;S&lt;/strong&gt;tate and &lt;strong&gt;P&lt;/strong&gt;arametrization: &lt;strong&gt;A&lt;/strong&gt;pplication for &lt;strong&gt;S&lt;/strong&gt;AFT, &lt;strong&gt;I&lt;/strong&gt;ntended for &lt;strong&gt;T&lt;/strong&gt;hermodynamic &lt;strong&gt;O&lt;/strong&gt;utput&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;project-goals&quot;&gt;Project Goals:&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Design a thermodynamic platform for equations of state that allows natural extension&lt;/li&gt;
+  &lt;li&gt;Provide accessible parametrization routine that fits equation of state parameters that are useful for simulations&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;audience&quot;&gt;Audience:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Historically complex equations of state are desired by the oil and gas industry&lt;/li&gt;
+  &lt;li&gt;Academically the SAFT EOS has been developed into a coarse-graining formalism [1-3] that provides chemical specificity to larger scale molecular dynamics simulations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;available-alternatives&quot;&gt;Available Alternatives:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bottled SAFT [4] is a web application meant to remedy issue of parameterizing by applying corresponding states for homonuclear molecules, but represents a general correlation that relies on possessing critical properties.&lt;/li&gt;
+  &lt;li&gt;PC-SAFT calculations are available in the commercial package, Aspen&lt;/li&gt;
+  &lt;li&gt;The commercial package gSAFT from Process Systems Enterprise, PSE, is a more direct comparison supporting SAFT-γ-Mie&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;statistical-associating-fluid-theory-saft&quot;&gt;Statistical Associating Fluid Theory, SAFT&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Explicitly links the intermolecular potential with thermodynamic properties&lt;/li&gt;
+  &lt;li&gt;Parameters are fit to experimental vapor-liquid equilibria data and other macroscopic properties&lt;/li&gt;
+  &lt;li&gt;Various versions of SAFT can be used to obtain parameters for coarse-grained MD simulations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/applications.png&quot; alt=&quot;applications&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;: SAFT-γ-Mie has been successfully applied to various larger scale systems, DESPASITO makes contributing more accessible.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;As of now, a new contributor to this emerging method of coarse-graining would need to write their code from scratch&lt;/li&gt;
+  &lt;li&gt;Our application makes SAFT accessible to the general public&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-it-works&quot;&gt;How it Works&lt;/h2&gt;
+
+&lt;p&gt;Our modular and object oriented approach allows this package to function for an EOS other than SAFT, and expand the thermodynamic properties it handles.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Want a different method of fitting?&lt;/strong&gt; Add another function and our factory method will find it&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Want another objective function?&lt;/strong&gt; Add a class using our template&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/blockflow.png&quot; alt=&quot;blockflow&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;: DESPASITO Program Flowchart&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Want a new calculation type?&lt;/strong&gt; Add another function and our factory method will find it&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Want a new EOS?&lt;/strong&gt; Use the class template for guaranteed compatibility&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-calculations&quot;&gt;Example Calculations&lt;/h2&gt;
+
+&lt;p&gt;For a united atom calculation of pentane and methane, a thermodynamic calculation is as easy as a 6 line file, input.json (given parameter files):&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;beadconfig&quot;: [[[&quot;CH3&quot;, 2],[&quot;CH2&quot;, 3]], [[&quot;CH4&quot;, 1]]],
+    &quot;EOSgroup&quot;: &quot;SAFTgroup.json&quot;,
+    &quot;EOScross&quot;: &quot;SAFTcross.json&quot;,
+    &quot;calculation_type&quot; : &quot;vapor_properties&quot;,
+    &quot;Tlist&quot; : [270.0],
+    &quot;yilist&quot;: [[0.99, 0.01]]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run it with:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ python -m despasito -i input.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;DESPASITO can also be imported as a library so that a user can use the EOS object’s accessible attributes.&lt;/p&gt;
+
+&lt;p&gt;For example, we can break-down the Helmholtz energy components for hexane.&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;beads  = ['CH3', 'CH2']
+beads_per_molecule  = np.array([[2., 8.]])
+beadlibrary  = {'CH3':
+                   {'epsilon': 256.7662,'l_a': 6.0, 'l_r': 15.04982, 'sigma': 4.077257e-1, 'Sk': 0.5725512, 'Vks': 1, 'mass': 0.015035},
+                'CH2': 
+                   {'epsilon': 473.3893, 'l_a': 6.0, 'l_r': 19.87107, 'sigma': 4.880081e-1, 'Sk': 0.2293202, 'Vks': 1, 'mass': 0.014027}}
+crosslibrary  = {'CH3': {'CH2': {'epsilon': 350.770}}}
+eos = despasito.equations_of_state.eos(eos=&quot;saft.gamma_mie&quot;, beads=beads , nui=beads_per_molecule , beadlibrary=beadlibrary , crosslibrary=crosslibrary )
+
+rho, T, xi = 553.0, 700.0, np.array([1.0])
+AHS = eos.saft_source.Ahard_sphere(rho, T, xi)
+A1 = eos.saft_source.Afirst_order(rho, T, xi)
+A2 = eos.saft_source.Asecond_order(rho, T, xi)
+A3 = eos.saft_source.Athird_order(rho, T, xi)
+Am1 = AHS+A1+A2+A3
+Am2 = eos.Amonomer(rho, T, xi)
+print('The Monomer Contribution for Helmholtz Energy: {},&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;    equals the sum of its components: {}'.format(Am2,Am1))
+
+The Monomer Contribution for Helmholtz Energy: [-0.19323846],
+    equals the sum of its components: [-0.19323846]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;These parameters were taken from Dufal et al. [3]&lt;/p&gt;
+
+&lt;h2 id=&quot;currently-supported-features&quot;&gt;Currently Supported Features&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/jennifer_clark/features.png&quot; alt=&quot;features&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Although our intention was to create a platform to fit parameters for the SAFT EOS, we are equipped to handle other equations of state that can’t be solved explicitly (e.g. Extended UNIQUAC).&lt;/li&gt;
+  &lt;li&gt;We added the Peng-Robinson EOS as an example of a non-SAFT EOS.&lt;/li&gt;
+  &lt;li&gt;Code Optimization: Implemented options to provide Numba, Cython, or Fortran modules.&lt;/li&gt;
+  &lt;li&gt;Shared-Memory Parallelization: Numerous thermodynamic or parametrization calculations can be run in parallel with multi cores for HPC resources.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-is-next&quot;&gt;What is Next?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Add second derivative thermodynamic properties&lt;/li&gt;
+  &lt;li&gt;Add ability to implement complex parametrization constraints&lt;/li&gt;
+  &lt;li&gt;Upgrade thermodynamic algorithms for more robust multicomponent handling&lt;/li&gt;
+  &lt;li&gt;Provide interface for MoSDeF [7-8] for easy transfer from EOS to simulation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1016/B978-0-444-54298-4.50097-0&quot;&gt;Papaioannou, V.; Lafitte, T.; Adjiman, C. S.; Galindo, A.; Jackson, G. Simultaneous Prediction of Phase Behaviour and Second Derivative Properties with a Group Contribution Approach (SAFT-γ Mie). In Computer Aided Chemical Engineering; Elsevier, 2011; Vol. 29, pp 1593–1597.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1063/1.4851455&quot;&gt;Papaioannou, V.; Lafitte, T.; Avendaño, C.; Adjiman, C. S.; Jackson, G.; Müller, E. A.; Galindo, A. Group Contribution Methodology Based on the Statistical Associating Fluid Theory for Heteronuclear Molecules Formed from Mie Segments. J. Chem. Phys. 2014, 140 (5), 054107.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1021/je500248h&quot;&gt;Dufal, S.; Papaioannou, V.; Sadeqzadeh, M.; Pogiatzis, T.; Chremos, A.; Adjiman, C. S.; Jackson, G.; Galindo, A. Prediction of Thermodynamic Properties and Phase Behavior of Fluids and Mixtures with the SAFT-γ Mie Group-Contribution Equation of State. J. Chem. Eng. Data 2014, 59 (10), 3272–3288.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1021/acs.jcim.6b00149&quot;&gt;Ervik, Å.; Mejía, A.; Müller, E. A. Bottled SAFT: A Web App Providing SAFT-γ Mie Force Field Parameters for Thousands of Molecular Fluids. J. Chem. Inf. Model. 2016, 56 (9), 1609–1614.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1146/annurev-chembioeng-061312-103314&quot;&gt;Müller EA; Jackson G. Force-Field Parameters from the SAFT-γ Equation of State for Use in Coarse-Grained Molecular Simulations. Annual Review of Chemical and Biomolecular Engineering. 2014, 5 (1), 405-427.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://dx.doi.org/10.1021/acs.macromol.9b02255&quot;&gt;Pervaje, A. K.; Tilly, J. C.; Detwiler, A. T.; Spontak, R. J.; Khan, S A.; Santiso, E. E. Molecular Simulations of Thermoset Polymers Implementing Theoretical Kinetics with Top-Down Coarse-Grained Models. Macromolecules. 2020, 53, 2310−2322.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1007/978-981-10-1128-3_5&quot;&gt;Klein C.; Sallai J.; Jones T.J.; Iacovella C.R.; McCabe C.; Cummings P.T. (2016) A Hierarchical, Component Based Approach to Screening Properties of Soft Matter. In: Snurr R., Adjiman C., Kofke D. (eds) Foundations of Molecular Modeling and Simulation. Molecular Modeling and Simulation (Applications and Perspectives). Springer, Singapore&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://doi.org/10.1016/j.commatsci.2019.05.026&quot;&gt;Klein C.; Summers, A. Z.; Thompson, M. W.; Gilmer, J. B.; McCabe, C.; Cummings, P. T.; Sallai, J.; Iacovella, C. R. Formalizing atom-typing and the dissemination of force fields with foyer. Computational Materials Science. 2019, 167, 215-227.&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgments&quot;&gt;Acknowledgments&lt;/h3&gt;
+
+&lt;p&gt;Jennifer Clark was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580&lt;/p&gt;
+
+&lt;p&gt;Jennifer Clark acknowledges North Carolina State University’s High Performance Computing (HPC) Services&lt;/p&gt;</content><author><name>Jennifer A. Clark</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Pattern recognition based framework to characterize order in materials - Focus on block copolymer self assembly</title><link href="https://education.molssi.org/2020-software-fellow-posters/ankita-mukhtyar/" rel="alternate" type="text/html" title="Pattern recognition based framework to characterize order in materials - Focus on block copolymer self assembly" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/ankita-mukhtyar</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/ankita-mukhtyar/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Block copolymers self-assemble to form a variety of different phases with highly regular patterns, depending on the microscopic ordering of molecules. Paramount to understanding and controlling this “order” is to have good “order parameters”, variables that can be used to track the changes occurring in the system as it transitions from disorder to order. Some common phases that block copolymers form include the lamellar, cylinder and gyroid network. This project uses molecular dynamics to simulate the growth of these phases from an isotropic liquid. We have developed local order parameters based on particle symmetries and geometrical constraints that can identify and track the nucleation and growth of ordered domains along the transition pathway [1]. The framework has been found to be extremely useful in understanding the self-assembly of other complex phases [2], and in estimating free energy barriers using rare-event sampling techniques (work ongoing).&lt;/p&gt;
+
+&lt;h2 id=&quot;methods&quot;&gt;Methods&lt;/h2&gt;
+
+&lt;p&gt;For simplicity, the methods were developed on a nanoparticle model that has been shown to form the same phases as seen in block copolymers [3]. The aim was to capture key features of the local geometry of a phase by identifying symmetries that are unique to that phase. For the two-dimensional phases (lamellar and cylinder) this simply involved identifying the principal axis of symmetry (normal vector of the lamella plane or direction vector of the cylinder axis). The alternating gyroid network is characterized by I4132 symmetry, which can be identified using the Steinhardt bond order parameters [4] (a set of complex vectors). In essence, we assign a set of phase-signature vectors to each particle in the simulation. The dot product of neighboring vector pairs then tells us the extent of their correlation, a higher value indicating stronger correlation. We use this definition to differentiate between the “disordered” and “ordered” particles, after which a clustering algorithm is used to group all the ordered particles together.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/ankita_mukhtyar/Picture1.png&quot; alt=&quot;pic1&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;: Depiction of steps to find Lamellar signature vectors and order parameter: I = Fitting a plane to same atom types and finding normal vector; II = Finding the angle between neighboring vectors; III = Comparing the distributions of the ordered and disordered phases.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/ankita_mukhtyar/Picture2.png&quot; alt=&quot;pic2&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;: Summary of the order parameter framework and the main steps involved.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+&lt;p&gt;The order parameter framework was successful at tracking the phase behavior as it transitions from disorder to order. Figure below shows a visual representation of the lamellar phase vectors on a unit sphere (bottom row) that fully align at the poles as the particles arrange themselves into layers (top row). Thus, tracking the positions of the vectors gives us information about where we are in the phase transition.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/ankita_mukhtyar/Picture3.png&quot; alt=&quot;pic3&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;: Tracking the growth of the lamellar phase through the alignment of the signature vectors at different times (as seen in the spherical distribution plots).&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;recent-efforts&quot;&gt;Recent Efforts&lt;/h2&gt;
+&lt;p&gt;More recent efforts have focused on using this framework – coupled with various sampling methods – to map the actual nucleation pathway of a system going from disorder to order. In particular, we have been focused on finding the free energy barriers for complex block copolymer phases, like the gyroid phase that we saw earlier, for which the transition mechanism is still not well understood. Work on this part is still ongoing, and has been the main focus of the MolSSI fellowship.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/ankita_mukhtyar/Picture4.png&quot; alt=&quot;pic4&quot; /&gt;
+&lt;em&gt;&lt;strong&gt;Figure 4&lt;/strong&gt;:Recent efforts have been aimed at mapping transition pathways for complex phases using the order parameters as reaction coordinates.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Mukhtyar, A. &amp;amp; Escobedo, F., Macromolecules 2018, 51, 23, 9769-9780&lt;/li&gt;
+  &lt;li&gt;Mukhtyar, A. &amp;amp; Escobedo, F., Macromolecules 2018, 51, 23, 9781-9788&lt;/li&gt;
+  &lt;li&gt;Kumar A., &amp;amp; Molinero, V., J. Phys. Chem. Lett. 2017, 8, 20, 5053–5058&lt;/li&gt;
+  &lt;li&gt;Steinhardt, P. J., Nelson, D. R. &amp;amp; Ronchetti, M. Phys. Rev. B: Condens. Matter Mater. Phys. 1983, 28, 784&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+&lt;p&gt;I would like to thank Eliseo Marin-Rimoldi and Matthew Welborn for their help and guidance on aspects of this project.&lt;/p&gt;
+
+&lt;p&gt;“Ankita J. Mukhtyar was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580”&lt;/p&gt;</content><author><name>Ankita J. Mukhtyar</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">Optimal allocation for Free Energy Calculations</title><link href="https://education.molssi.org/2020-software-fellow-posters/hannah-brucemacdonald/" rel="alternate" type="text/html" title="Optimal allocation for Free Energy Calculations" /><published>2020-06-29T00:00:00+00:00</published><updated>2020-06-29T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/hannah-brucemacdonald</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/hannah-brucemacdonald/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;h3 id=&quot;relative-binding-free-energies&quot;&gt;Relative binding free energies&lt;/h3&gt;
+
+&lt;p&gt;A relative free energy calculation involves perturbing one molecule into another, and calculating the free energy difference of making that change. Relative binding free energies (RBFE) involve the perturbing between two molecules, both in an active site, and in bulk water to calculate the difference in affinity between the two molecules. RBFEs are an effective tool in drug design, as they allow for predictions as to if making a change to a molecule will result in a more or less promising drug candidate (1).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/thermocycle.png&quot; alt=&quot;Thermodynamic Cycle&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 1&lt;/em&gt;&lt;/strong&gt;: Thermodynamic cycle whereby one molecule is ‘alchemically’ transformed into another. The difference between the two pink arrows affords the difference between the two green arrows: namely the difference in binding affinity of the two.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/choderalab/perses&quot;&gt;Perses&lt;/a&gt; is an open-source scientific software package for performing single-topology relative free energy calculations. Single-topology calculations involve simulating with a single hybrid ligand, that is perturbed across the lambda protocol to change from representing ligand A to ligand B, and differs from dual-topology type relative free energy methods whereby two ligands are present in the simulation, where the interactions of one ligand is turned on, while the other is turned off.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/singledual.png&quot; alt=&quot;Single vs. dual topology&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 2&lt;/em&gt;&lt;/strong&gt;: Different methods in perturbing between two ligands can be used: single-topology, which is implemented in &lt;a href=&quot;https://github.com/choderalab/perses&quot;&gt;Perses&lt;/a&gt;, and dual-topology.&lt;/p&gt;
+
+&lt;h3 id=&quot;software&quot;&gt;Software&lt;/h3&gt;
+
+&lt;p&gt;Perses is a python package, written to exploit the molecular dynamics (MD) functionality of &lt;a href=&quot;http://openmm.org/&quot;&gt;OpenMM&lt;/a&gt;. The software is maintained on GitHub, and is developed using the &lt;a href=&quot;https://molssi.org/education/best-practices/&quot;&gt;MolSSI Software Best Practises&lt;/a&gt; framework. Python allows for the rapid development of novel and exploratory algorithms that are ‘developer-time’ fast, while performing simulations using the faster C and C++ software of openmm, which is ‘run-time’ fast.&lt;/p&gt;
+
+&lt;h3 id=&quot;efficiency-of-rbfes&quot;&gt;Efficiency of RBFEs&lt;/h3&gt;
+
+&lt;p&gt;Performing a RBFE calculation is computationally expensive. The expense of the calculation is mitigated if (a) the results are accurate - providing good experimental agreement and (b) the results are reliable - that they are precise. While simulations that are accurate can be achieved by longer simulation times and better physical modelling through improved atomistic forcefields, the precision of a calculation can be improved through choices in the alchemical design. For a given length of simulation (as the variance will reduce with increased simulation time), the precision, or hereforth the variance can be effected by the alchemical pathway in different ways -&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the nature of the alchemical species: for single topology methods, how the two ligands are combined to make a hybrid ligand.&lt;/li&gt;
+  &lt;li&gt;choice in alchemical protocol: the functions through which the interactions of the alchemical species are perturbed.&lt;/li&gt;
+  &lt;li&gt;the length of the alchemical protocol: wether that is the number of alchemical windows in a replica-exchange simulation or the switching time in a non-equilibrium switching simulation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Optimizing these alchemical parameters will allow for more efficient simulation, such that results can be afforded with better certainty at a shorter timescale. Alternatively, which simulations are performed from a given set can reduce the variance of the results.&lt;/p&gt;
+
+&lt;h3 id=&quot;experimental-design&quot;&gt;Experimental design&lt;/h3&gt;
+
+&lt;p&gt;Relative calculations rely on choosing pairs of ligands to compare from a given set of molecules of interest. The minimum requirement to be able to fully rank set of molecules is that the pairwise comparisons between ligands results in a weakly connected graph - such that a pathway exists between any two molecules in the set. Even for a small number of ligands, there exists a redundancy in possible graphs that satisfy the connectivity requirement.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/connectivity.png&quot; alt=&quot;Connectivity&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 4&lt;/em&gt;&lt;/strong&gt;: Selection of possible graphs for calculating relative free energies that satisfy the criteria of weak connectivity, where ligands are shown as colored circles and RBFEs are shown as the edges between them.&lt;/p&gt;
+
+&lt;p&gt;The number of RBFEs used (edges) will increase the computational expense, where the cycle-closure type graph is a compromise between the number of edges run, and having redundancy in the networks. Ideally, edges from all of the possible pairwise comparisons would be chosen in an optimal way, such as to minimize the variance.&lt;/p&gt;
+
+&lt;h2 id=&quot;methods&quot;&gt;Methods&lt;/h2&gt;
+&lt;p&gt;Relative free energy calculations have been performed using &lt;a href=&quot;https://github.com/choderalab/perses&quot;&gt;Perses&lt;/a&gt;, for a set of binders to the Jnk1 protein from the Schrodinger set (2). 100 forwards and backwards non-equilibrium (NEQ) switches of 1 ns, followed by 1 ns of equilibrium sampling at each endstate. While the small molecule forcefields differ, amber-14SB and TIP3P have been used. Input files are &lt;a href=&quot;https://github.com/openmm/openmmforcefields/tree/master/openmmforcefields/data/perses_jacs_systems&quot;&gt;available&lt;/a&gt;. All simulations were performed on folding at home.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/jnk1.png&quot; alt=&quot;jnk1&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 5&lt;/em&gt;&lt;/strong&gt;: Jnk1 protein PDB: 2GMX&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;h3 id=&quot;forcefields&quot;&gt;Forcefields&lt;/h3&gt;
+&lt;p&gt;The RBFEs of the Jnk1 set have been performed for 5 different small molecule forcefields. Two versions of the generalized amber forcefield (GAFF) - 1.81 and 2.11, two versions of the &lt;a href=&quot;https://openforcefield.org/&quot;&gt;open forcefield initiative&lt;/a&gt; - 1.0.0 and 1.2.0 and smirnoff99Frosst 1.1.0 were used.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/relativefes.png&quot; alt=&quot;relative&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 6&lt;/em&gt;&lt;/strong&gt;: RBFEs of Jnk1 dataset with different small molecule forcefields. RMSE and MUE are quoted in units of \(kcal mol^{-1}\), with confidence intervals calculated using bootstrapping.&lt;/p&gt;
+
+&lt;p&gt;The small molecule forcefield with the best statistical performance is openforcefield v. 1.0.0 for the Jnk1 target, however testing across different protein-ligand systems would be required for more thorough benchmarking.&lt;/p&gt;
+
+&lt;p&gt;RBFEs provide pairwise comparisons between  molecules, but for decision-making in live drug design projects, absolute free energies are a more useful metric. If there are resources available to make and test the best &lt;em&gt;n&lt;/em&gt; predicted molecules, a maximum likelihood estimator can be used to optimize the graph of results.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/absolutefes.png&quot; alt=&quot;absolute&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 7&lt;/em&gt;&lt;/strong&gt;: Absolute binding free energies of Jnk1 dataset with different small molecule forcefields. RMSE, MUE, R2 and \(\rho\) are quoted in units of \(kcal mol^{-1}\), with confidence intervals calculated using bootstrapping.&lt;/p&gt;
+
+&lt;p&gt;While the RMSE and MUE of the methods differ in their performance, the small molecules perform similarly with regards to correlation statistics R2 and rho. These results suggest that relative free energy calculations would provide a useful tool for testing design ideas for future Jnk1 inhibitors.&lt;/p&gt;
+
+&lt;h3 id=&quot;variance&quot;&gt;Variance&lt;/h3&gt;
+
+&lt;p&gt;The above simulations were performed with the pairwise comparisons performed in Wang et al. (2), however the variance of those simulations aren’t all equal, and it is clear from Figures 6 and 7 that the errors associated with each RBFE are not equal. The statistical fluctuation of a relative free energy can be defined as:&lt;/p&gt;
+
+\[s_{phase} = \sigma _{phase}  * n_{samples}\]
+
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/variance.png&quot; alt=&quot;variance&quot; /&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;Figure 8&lt;/em&gt;&lt;/strong&gt;: Correlation between the statistical fluctuation of the solvent and complex phases for Jnk1 relative free energy calculations for a range of small molecule forcefields.&lt;/p&gt;
+
+&lt;p&gt;The above plots illustate there is a correlation between the statistical fluctuation in the solvent and the complex phases. As the solvent phase is much less computationally intensive, this would allow us to design better relative free energy networks for future iterations, resulting in faster simulations, with smaller associated errors.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Cournia, Zoe, Bryce Allen, and Woody Sherman. “Relative binding free energy calculations in drug discovery: recent advances and practical considerations.” Journal of chemical information and modeling 57.12 (2017): 2911-2937.&lt;/li&gt;
+  &lt;li&gt;Wang, Lingle, et al. “Accurate and reliable prediction of relative ligand binding potency in prospective drug discovery by way of a modern free-energy calculation protocol and force field.” Journal of the American Chemical Society 137.7 (2015): 2695-2703.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;“Hannah Bruce Macdonald was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580”&lt;/p&gt;</content><author><name>Hannah E. Bruce Macdonald</name></author><summary type="html">Introduction</summary></entry><entry><title type="html">OpenCAP: An open source package for studying resonances in molecules.</title><link href="https://education.molssi.org/2020-software-fellow-posters/james-gayvert/" rel="alternate" type="text/html" title="OpenCAP: An open source package for studying resonances in molecules." /><published>2020-06-27T00:00:00+00:00</published><updated>2020-06-27T00:00:00+00:00</updated><id>https://education.molssi.org/2020-software-fellow-posters/james-gayvert</id><content type="html" xml:base="https://education.molssi.org/2020-software-fellow-posters/james-gayvert/">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Electronic states which are metastable with respect to electron detachment, known as resonances,
+play central roles in electron-molecule scattering processes occurring in various contexts, 
+including chemistry, physics, and biology. Despite the ubiquity of these processes in nature, 
+the computational infrastructure available to the scientific community for studying metastable
+electronic states lags far behind that available for treatment of bound electronic states. 
+To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of 
+modern quantum chemistry packages to describe resonances.&lt;/p&gt;
+
+&lt;h2 id=&quot;theory&quot;&gt;Theory&lt;/h2&gt;
+&lt;h3 id=&quot;non-hermitian-quantum-mechanics&quot;&gt;Non-Hermitian Quantum Mechanics&lt;/h3&gt;
+&lt;p&gt;Non-Hermitian quantum mechanics is a powerful tool for describing resonances that allows one
+to utilize quantum chemistry methodologies which have originally been developed
+for the study of bound electronic states. In non-Hermitian quantum mechanics
+formalisms, a resonance is associated with a single square-integrable
+state of a non-Hermitian Hamiltonian with a complex Siegert-Gamow
+energy. The real part of the energy \(E_{res}\) is the
+resonance position, and the imaginary part \(\Gamma\) is the half-width, which is inversely proportional
+to the lifetime of the state&lt;sup&gt;1&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;complex-absorbing-potential-cap&quot;&gt;Complex Absorbing Potential (CAP)&lt;/h3&gt;
+&lt;p&gt;The complex absorbing potential (CAP) is one of the few non-Hermitian formalisms which can be readily applied
+to molecules. In this approach, the electronic Hamiltonian is augmented with an artificial complex
+absorbing potential \(-i\eta W\), where \(\eta\) is the CAP strength parameter&lt;sup&gt;1&lt;/sup&gt;. 
+The CAP absorbs the outgoing tail of the resonance wavefunction, transforming it into a 
+square integrable eigenstate of the non-Hermitian Hamiltonian&lt;sup&gt;1&lt;/sup&gt;. 
+When finite basis sets are used, \(E_{res}\) and \(\Gamma\) become \(\eta\) -dependent.
+The best estimate of resonance position and width is obtained by finding an optimal value
+\(\eta_{opt}\) which satisfies the minimum logarithmic velocity criteria&lt;sup&gt;1&lt;/sup&gt;.&lt;/p&gt;
+
+\[min|\eta\frac{\mathrm{dE} }{\mathrm{d} \eta}|\]
+
+&lt;p&gt;\(\eta_{opt}\) is typically found by analyzing so called \(\eta\) -trajectories (see the last panel of Figure 1).&lt;/p&gt;
+
+&lt;p&gt;Here, we exploit a projected version of the CAP formalism&lt;sup&gt;2&lt;/sup&gt;, which treats the CAP as a 
+first order perturbation in a basis of pre-computed eigenstates of a Hermitian Hamiltonian, 
+yielding the following matrix equation:&lt;/p&gt;
+
+\[H^{CAP} = H_0-i \eta W\]
+
+&lt;p&gt;Both \(H_0\) and \(W\) are computed once for a set of eigenstates, and the matrix elements of \(W\) are obtained using the 
+one-electron reduced density matrices \(\rho^i\),  and transition density matrices \(\gamma^{ij}\).&lt;/p&gt;
+
+\[W_{ij}=
+\begin{Bmatrix}
+Tr\left[W^{AO}\gamma^{ij} \right ] ,&amp;amp; i \neq j \\ 
+Tr\left[W^{AO}\rho^{i} \right ] ,&amp;amp;  i=j
+\end{Bmatrix}\]
+
+&lt;p&gt;Eigenvalue trajectories can be analyzed at minimal additional computational 
+effort by diagonalizing the reduced dimension \(H^{CAP}\) over a range
+of \(\eta\) values.&lt;/p&gt;
+
+&lt;h2 id=&quot;workflow&quot;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://education.molssi.org/2020-software-fellow-posters/assets/images/james_gayvert/workflow.png&quot; alt=&quot;OpenCAP&quot; /&gt;&lt;br /&gt;
+&lt;em&gt;Figure 1&lt;/em&gt;: Workflow for conducting calculations with OpenCAP.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-compute-h_0-and-tdms&quot;&gt;Step 1: Compute \(H_0\) and TDMs&lt;/h3&gt;
+
+&lt;p&gt;The first step of any OpenCAP calculation is running an excited state electronic structure calculation with a supported package
+in order to generate the zeroth order Hamiltonian \(H_0\), and the set of one-electron reduced density 
+and transition density matrices between each pair of eigenstates. These matrices can be 
+read from disk (HDF5, formatted checkpoint) or passed directly in RAM when using the Python API.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-compute-cap-matrix&quot;&gt;Step 2: Compute CAP matrix&lt;/h3&gt;
+&lt;p&gt;The CAP matrix is computed entirely by OpenCAP, first in atomic orbital basis, and then projected
+into the subspace of the real Hamiltonian using the one-electron reduced density and 
+transition density matrices generated by the previous electronic structure calculation. 
+To perform the projection of \(W\) into the subspace, the ordering of the basis functions of the CAP computed by OpenCAP 
+must match the ordering of the density matrices computed by the electronic structure package.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-analyze-eta-trajectories&quot;&gt;Step 3: Analyze \(\eta\)-trajectories&lt;/h3&gt;
+&lt;p&gt;Since the \(H_0\) and \(W\) matrices only need to be computed once, and can easily be stored, eigenvalue trajectories
+can be analyzed at the users convenience using a variety of analysis tools, such as Matplotlib or gnuplot.&lt;/p&gt;
+
+&lt;h2 id=&quot;interfaces-with-quantum-chemistry-packages&quot;&gt;Interfaces with Quantum Chemistry Packages&lt;/h2&gt;
+&lt;p&gt;OpenCAP currently supports interfaces with the OpenMolcas&lt;sup&gt;3&lt;/sup&gt; and Pyscf&lt;sup&gt;4&lt;/sup&gt; packages, along with an interface
+to a locally modified version of Q-Chem&lt;sup&gt;5&lt;/sup&gt;. OpenCAP supports two modes of operation: a standalone C++ executable, 
+and a Python API.&lt;/p&gt;
+
+&lt;h3 id=&quot;executable&quot;&gt;Executable&lt;/h3&gt;
+&lt;p&gt;When using the executable version of OpenCAP, the user prepares an input file as described in our
+&lt;a href=&quot;https://gayverjr.github.io/opencap/&quot;&gt;documentation&lt;/a&gt;. Electronic structure data is read from disk, and OpenCAP prints the \(H_0\) and 
+\(W\) matrices to standard output. The output can be analyzed using the script provided 
+in our repository as a template. We have tested and obtained results using the executable version with OpenMolcas&lt;sup&gt;4&lt;/sup&gt; and a
+locally modified copy of Q-Chem.&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;opencap test.in &amp;gt; test.out
+tail -23 test.out
+Zeroth order Hamiltonian
+-109.3052074400    0.0000000000   -0.0020964200    0.0000467200    0.0035367800   -0.0000949700    0.0020805500    0.0000616700   -0.0000000000    0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0000000000 -109.3052074400   -0.0000467200   -0.0020964000    0.0000949700    0.0035367800    0.0000616700   -0.0020805500    0.0000000000    0.0000000000
+  -0.0020964200   -0.0000467200 -109.2407164400    0.0000000000    0.0270582400   -0.0001235400    0.0196302200    0.0001443500   -0.0000000000   -0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0000467200   -0.0020964000    0.0000000000 -109.2407160800    0.0001235400    0.0270583000    0.0001443500   -0.0196302500    0.0000000000    0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0035367800    0.0000949700    0.0270582400    0.0001235400 -109.2178091100    0.0000000000   -0.0482309000   -0.0001344500    0.0000000000    0.0000000000
+  -0.0000949700    0.0035367800   -0.0001235400    0.0270583000    0.0000000000 -109.2178091100   -0.0001344500    0.0482309000    0.0000000000   -0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0020805500    0.0000616700    0.0196302200    0.0001443500   -0.0482309000   -0.0001344500 -109.0721414500   -0.0000000000   -0.0000000000    0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0000616700   -0.0020805500    0.0001443500   -0.0196302500   -0.0001344500    0.0482309000   -0.0000000000 -109.0721416100   -0.0000000000   -0.0000000000
+  -0.0000000000    0.0000000000   -0.0000000000    0.0000000000    0.0000000000    0.0000000000   -0.0000000000   -0.0000000000 -109.0298915100    0.0000000000
+&lt;span class=&quot;p&quot;&gt;   0.&lt;/span&gt;0000000000    0.0000000000   -0.0000000000    0.0000000000    0.0000000000   -0.0000000000    0.0000000000   -0.0000000000    0.0000000000 -109.0298916000
+CAP matrix
+-44.8078328210  -0.0000000000  21.8690451058  -0.4873519211  10.1088261447  -0.2714592872  -4.9300500373  -0.1461457678   0.0000000000  -0.0000000001
+ -0.0000000000 -44.8078328201   0.4873519211  21.8690451052   0.2714592872  10.1088261454  -0.1461457678   4.9300500382  -0.0000000001  -0.0000000000
+&lt;span class=&quot;p&quot;&gt; 21.&lt;/span&gt;8690451058   0.4873519211 -22.4698997766  -0.0000000000 -15.5224308448   0.0708743307  10.2163509455   0.0751310495  -0.0000000000   0.0000000003
+ -0.4873519211  21.8690451052  -0.0000000000 -22.4698997752  -0.0708743307 -15.5224308447   0.0751310495 -10.2163509460   0.0000000003   0.0000000000
+&lt;span class=&quot;p&quot;&gt; 10.&lt;/span&gt;1088261447   0.2714592872 -15.5224308448  -0.0708743307 -14.0795461907   0.0000000000  11.6779607539   0.0325580627  -0.0000000000   0.0000000004
+ -0.2714592872  10.1088261454   0.0708743307 -15.5224308447   0.0000000000 -14.0795461911   0.0325580627 -11.6779607547   0.0000000004  -0.0000000000
+ -4.9300500373  -0.1461457678  10.2163509455   0.0751310495  11.6779607539   0.0325580627 -11.5451058835   0.0000000000  -0.0000000001   0.0000000010
+ -0.1461457678   4.9300500382   0.0751310495 -10.2163509460   0.0325580627 -11.6779607547   0.0000000000 -11.5451058846  -0.0000000010  -0.0000000000
+&lt;span class=&quot;p&quot;&gt;  0.&lt;/span&gt;0000000000  -0.0000000001  -0.0000000000   0.0000000003  -0.0000000000   0.0000000004  -0.0000000001  -0.0000000010 -44.8627543309  -0.0000000000
+ -0.0000000001  -0.0000000000   0.0000000003   0.0000000000   0.0000000004  -0.0000000000   0.0000000010  -0.0000000000  -0.0000000000 -44.8627543302
+Wall time:2.4992220000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;python-api&quot;&gt;Python API&lt;/h3&gt;
+&lt;p&gt;We currently have an experimental Python API which has been tested with OpenMolcas and Pyscf. 
+Using the &lt;a href=&quot;https://pybind11.readthedocs.io/en/stable/&quot;&gt;PyBind11&lt;/a&gt; library, OpenCAP data structures and methods are exposed to Python, 
+providing the user with direct control over the various parts of the calculation. After cloning the repository, 
+OpenCAP can be installed as a python module called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pycap&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import pycap
+sys_dict = {&quot;geometry&quot;:    '''N  0  0   1.039
+                             N  0  0   -1.039
+                            Gh 0  0   0.0''',
+            &quot;basis_file&quot;:&quot;basis.bas&quot;,
+            &quot;bohr_coordinates&quot;: &quot;true&quot;}
+
+cap_dict = {
+            &quot;cap_type&quot;: &quot;box&quot;,
+            &quot;cap_x&quot;:&quot;2.76&quot;,
+            &quot;cap_y&quot;:&quot;2.76&quot;,
+            &quot;cap_z&quot;:&quot;4.88&quot;,
+            &quot;Radial_precision&quot;: &quot;14&quot;,
+            &quot;angular_points&quot;: &quot;110&quot;
+}
+nstates = 10 
+package = &quot;openmolcas&quot;
+&lt;span class=&quot;gh&quot;&gt;# Defining classes&lt;/span&gt;
+s = pycap.System(sys_dict)
+pc = pycap.Projected_CAP(s,cap_dict,nstates,package)
+... 
+&lt;span class=&quot;gh&quot;&gt;# Calling methods&lt;/span&gt;
+pc.compute_ao_cap()
+pc.compute_projected_cap()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Transition density matrices can be read from disk, or passed directly in RAM.&lt;/p&gt;
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gh&quot;&gt;# Read data from disk&lt;/span&gt;
+es_dict = {&quot;method&quot; : &quot;ms-caspt2&quot;,
+           &quot;molcas_output&quot;:&quot;anion_ms.out&quot;,
+           &quot;rassi_h5&quot;:&quot;anion_ms.rassi.h5&quot;,
+}
+pc.read_data(es_dict)
+mat=pc.get_projected_cap()
+h0 = pc.get_H()
+
+&lt;span class=&quot;gh&quot;&gt;# pass TDM from state 1--&amp;gt;2 directly &lt;/span&gt;
+import h5py
+import numpy as np
+f = h5py.File('anion_ms.rassi.h5', 'r')
+arr = f[&quot;SFS_TRANSITION_DENSITIES&quot;]
+arr1 = np.reshape(arr&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;,(119,119))
+pc.add_tdm(arr1,0,1)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;current-features&quot;&gt;Current Features&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Optimized numerical integration routines for computing the CAP matrix in atomic orbital basis&lt;/li&gt;
+  &lt;li&gt;Compatible with data generated by OpenMolcas, Pyscf, and Q-Chem&lt;/li&gt;
+  &lt;li&gt;Support for commonly used Box-type and Voronoi-type CAPs with user specified parameters&lt;/li&gt;
+  &lt;li&gt;Support for standard and custom ab initio basis sets specified in Psi4 format&lt;/li&gt;
+  &lt;li&gt;Easily modifiable sample scripts for eigenvalue trajectory analysis provided in the repository&lt;/li&gt;
+  &lt;li&gt;CMake cross platform build system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;application-2pi_g-resonance-of-n_2-&quot;&gt;Application: \({}^2\Pi_g\) resonance of \(N_2^-\)&lt;/h2&gt;
+&lt;p&gt;Our results for EOM-CCSD and CAP-XMS-CASPT2 are in agreement with previous theoretical
+and experimental results for this system, clearly demonstrating the potential of the OpenCAP approach 
+for studying resonances. We note that our results for CAP-EOM-CCSD were obtained at a fraction of the 
+computational cost as those reported by Zuev et al.&lt;sup&gt;6&lt;/sup&gt;, as the original CAP-EOM-CCSD implementation 
+in Q-Chem requires a unique electronic structure calculation for each \(\eta\) value.&lt;/p&gt;
+
+\[\small
+\begin{array}{|c|c|c|c|}
+\hline
+  \text{Method} &amp;amp; \text{Package} &amp;amp; E_{res} &amp;amp; \Gamma \\ 
+\hline
+   \text{CAP-EOM-CCSD}^6 &amp;amp; \text{QChem/Complex CCMAN2} &amp;amp; 2.48 &amp;amp; 0.42 \\
+\hline
+   \textbf{CAP-EOM-CCSD} &amp;amp; \text{QChem/OpenCAP} &amp;amp; 2.48 &amp;amp; 0.43 \\ 
+\hline
+   \text{CAP-XMCQDPT2}^7 &amp;amp; \text{Firefly} &amp;amp; 2.12 &amp;amp; 0.29 \\
+\hline
+   \textbf{CAP-XMS-CASPT2} &amp;amp; \text{OpenMolcas/OpenCAP} &amp;amp; 2.12 &amp;amp; 0.31 \\
+\hline
+   \text{Experiment}^8 &amp;amp;  &amp;amp; 2.32 &amp;amp; 0.41 \\
+\hline
+\end{array}\]
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;OpenCAP is the first software of its kind which extends the functionality of 
+modern quantum chemistry packages to describe resonances.&lt;/li&gt;
+  &lt;li&gt;The software functions as standalone executable and importable Python module.&lt;/li&gt;
+  &lt;li&gt;Our results obtained using supported interfaces show promising agreements with previous theoretical 
+ and experimental results.&lt;/li&gt;
+  &lt;li&gt;Future directions of the project include development of scattering-based approaches 
+such as Feshbach Projection&lt;sup&gt;9&lt;/sup&gt; and R-matrix Theory&lt;sup&gt;10&lt;/sup&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;Riss, U. V.; Meyer, H. D. J. Phys. B At. Mol. Opt. Phys. 1993, 26 (23), 4503–4535.&lt;/li&gt;
+  &lt;li&gt;Sommerfeld, T.; Santra, R. Int. J. Quantum Chem. 2001, 82 (5), 218–226.&lt;/li&gt;
+  &lt;li&gt;Fdez. Galván, I.; Vacher, M.; Alavi, A.; Angeli, C.; Aquilante, F.; Autschbach, J.; Bao, J. J.; Bokarev, S. I.; Bogdanov, N. A.; Carlson, R. K.; et al.  J. Chem. Theory Comput. 2019, 15 (11), 5925–5964.&lt;/li&gt;
+  &lt;li&gt;Sun, Q.; Berkelbach, T. C.; Blunt, N. S.; Booth, G. H.; Guo, S.; Li, Z.; Liu, J.; McClain, J. D.; Sayfutyarova, E. R.; Sharma, S.; et al. WIREs Comput. Mol. Sci. 2018, 8 (1), e1340.&lt;/li&gt;
+  &lt;li&gt;Shao, Y.; Gan, Z.; Epifanovsky, E.; Gilbert, A. T. B.; Wormit, M.; Kussmann, J.; Lange, A. W.; Behn, A.; Deng, J.; Feng, X.; et al. Mol. Phys. 2015, 113 (2), 184–215.&lt;/li&gt;
+  &lt;li&gt;Zuev, D.; Jagau, T. C.; Bravaya, K. B.; Epifanovsky, E.; Shao, Y.; Sundstrom, E.; Head-Gordon, M.; Krylov, A. I. J. Chem. Phys. 2014, 141 (2).&lt;/li&gt;
+  &lt;li&gt;Kunitsa, A. A.; Granovsky, A. A.; Bravaya, K. B. J. Chem. Phys. 2017, 146 (18).&lt;/li&gt;
+  &lt;li&gt;M. Berman, H. Estrada, L. S. Cederbaum, and W. Domcke, Phys. Rev. A
+28, 1363 (1983).&lt;/li&gt;
+  &lt;li&gt;Feshbach, H. II. Ann. Phys. (N. Y). 1962, 19 (2), 287–313.&lt;/li&gt;
+  &lt;li&gt;Tennyson, J. Phys. Rep. 2010, 491 (2), 29–76.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;James Gayvert&lt;/code&gt; was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580.&lt;/p&gt;</content><author><name>James R Gayvert</name></author><summary type="html">Motivation Electronic states which are metastable with respect to electron detachment, known as resonances, play central roles in electron-molecule scattering processes occurring in various contexts, including chemistry, physics, and biology. Despite the ubiquity of these processes in nature, the computational infrastructure available to the scientific community for studying metastable electronic states lags far behind that available for treatment of bound electronic states. To help bridge this gap, we are developing OpenCAP, an open source software which extends the functionality of modern quantum chemistry packages to describe resonances.</summary></entry></feed>

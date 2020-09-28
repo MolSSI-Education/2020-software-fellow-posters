@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>A High-Performance Hybrid Monte Carlo / Molecular Dynamics Framework For GROMACS - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Introduction">
+
+
+  <meta name="author" content="Pascal T. Merz">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="A High-Performance Hybrid Monte Carlo / Molecular Dynamics Framework For GROMACS">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/pascal-merz/">
+
+
+  <meta property="og:description" content="Introduction">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-24T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/pascal-merz/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/pascal_merz.jpg" alt="Pascal T. Merz" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Pascal T. Merz</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Postdoctoral Researcher, Shirts Group, CU Boulder</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:pascal.merz@colorado.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/pascalmerz" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/ptmerz" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/pascal-t-merz" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="A High-Performance Hybrid Monte Carlo / Molecular Dynamics Framework For GROMACS">
+    <meta itemprop="description" content="Introduction">
+    <meta itemprop="datePublished" content="2020-06-24T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">A High-Performance Hybrid Monte Carlo / Molecular Dynamics Framework For GROMACS
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Pascal T. Merz<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> University of Colorado Boulder, Boulder, CO</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Eliseo Marin-Rimoldi, Levi Naden
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#project-timeline">Project timeline</a></li>
+  <li><a href="#2018---2019-earlier-work">2018 - 2019: Earlier work</a></li>
+  <li>
+<a href="#january-to-june-2020-foundation">January to June 2020: Foundation</a>
+    <ul>
+      <li><a href="#simplify-the-creation-of-new-algorithms">Simplify the creation of new algorithms</a></li>
+      <li><a href="#prototype-of-the-monte-carlo-framework">Prototype of the Monte Carlo framework</a></li>
+      <li><a href="#hybrid-mcmd-proof-of-concept">Hybrid MC/MD proof of concept</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#future-work">Future work</a>
+    <ul>
+      <li><a href="#july-to-december-2020-implementation">July to December 2020: Implementation</a></li>
+      <li><a href="#january-to-june-2021-application">January to June 2021: Application</a></li>
+    </ul>
+  </li>
+  <li><a href="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#references">References</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>Classical molecular simulation is becoming increasingly capable of
+investigating important questions involving self-assembly, molecular
+association, conformational heterogeneity and phase behavior in
+biophysics, engineering and material science. However, as hardware and
+software have improved, it has become increasingly challenging to
+combine novel methodological advances with the most advanced
+high-performance simulation engines. Ideally, this software needs to
+be available to a broad audience, and allow for simple maintenance. It
+also needs to be geared towards easy extensibility to facilitate
+further methodological advances.</p>
+
+<p>Molecular dynamics (MD) and Monte Carlo (MC) are the main methods for
+sampling configurations in molecular simulations. Supporting both
+approaches allows for algorithms that accelerate sampling and increase
+functionality, such as MC barostats<sup id="fnref:cit1" role="doc-noteref"><a href="#fn:cit1" class="footnote">1</a></sup>, nonequilibrium candidate
+MC<sup id="fnref:cit2" role="doc-noteref"><a href="#fn:cit2" class="footnote">2</a></sup>, Gibbs ensemble MC<sup id="fnref:cit3" role="doc-noteref"><a href="#fn:cit3" class="footnote">3</a></sup>, enhanced alchemical sampling
+techniques<sup id="fnref:cit4" role="doc-noteref"><a href="#fn:cit4" class="footnote">4</a></sup><sup>,</sup><sup id="fnref:cit5" role="doc-noteref"><a href="#fn:cit5" class="footnote">5</a></sup><sup>,</sup><sup id="fnref:cit6" role="doc-noteref"><a href="#fn:cit6" class="footnote">6</a></sup>, or
+configurational bias MC<sup id="fnref:cit7" role="doc-noteref"><a href="#fn:cit7" class="footnote">7</a></sup>.</p>
+
+<p>This project is extending the popular GROMACS molecular simulation
+package<sup id="fnref:cit8" role="doc-noteref"><a href="#fn:cit8" class="footnote">8</a></sup> to provide a high-performance framework to mix MC and
+MD methods. GROMACS owes its popularity among users (about 10,000
+active users) and developers (42 unique code contributors over the
+last 3 years) to its open source nature and high
+performance<sup id="fnref:cit9" role="doc-noteref"><a href="#fn:cit9" class="footnote">9</a></sup>. The need for an extensible framework is easily
+seen by the number of forks of GROMACS which have implemented MC or
+hybrid MC/MD methods (see
+Refs<sup id="fnref:cit10" role="doc-noteref"><a href="#fn:cit10" class="footnote">10</a></sup><sup>,</sup><sup id="fnref:cit11" role="doc-noteref"><a href="#fn:cit11" class="footnote">11</a></sup><sup>,</sup><sup id="fnref:cit12" role="doc-noteref"><a href="#fn:cit12" class="footnote">12</a></sup> for a
+non-exhaustive list of such efforts), but have not been integrated
+into the main release of GROMACS to date.</p>
+
+<h2 id="project-timeline">Project timeline</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td class="btn btn–inverse btn–x-large"><a href="#2018%E2%80%942019-earlier-work">2018 - 2019</a></td>
+      <td>
+<strong>Pre MolSSI funding: Previous work</strong><br>Modernization of the GROMACS simulator loop, aiming at &lt;ul style='\"line-height:120%\"'&gt;Modularizing components of simulation loopEncapsulating data in modules, defining remaining data dependenciesSimplifying maintenanceIncreasing extensibility&lt;/ul&gt;</td>
+    </tr>
+    <tr>
+      <td class="btn btn–success btn–x-large"><a href="#january-to-june-2020-foundation">Jan - Jun 2020</a></td>
+      <td>
+<strong>First phase of MolSSI funded project: Foundation</strong> &lt;ul style='\"line-height:120%\"'&gt;Simplified creation of new algorithmsPrototype of the MC frameworkHybrid MC/MD proof of concept&lt;/ul&gt;</td>
+    </tr>
+    <tr>
+      <td class="btn btn–info btn–x-large"><a href="#july-to-december-2020-implementation">Jul - Dec 2020</a></td>
+      <td>
+<strong>Second phase of MolSSI funded project: Implementation</strong> &lt;ul style='\"line-height:120%\"'&gt;Release GROMACS 2021Prototype of general collective variable description&lt;/ul&gt;</td>
+    </tr>
+    <tr>
+      <td class="btn btn–info btn–x-large"><a href="#january-to-june-2021-application">Jan - Jun 2021</a></td>
+      <td>
+<strong>Third phase of MolSSI funded project: Application</strong> &lt;ul style='\"line-height:120%\"'&gt;&lt;li&gt;Implement novel algorithms for GROMACS 2022 using MC/MD framework and CV description&lt;/li&gt;&lt;/ul&gt;</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="2018---2019-earlier-work">2018 - 2019: Earlier work</h2>
+
+<p>Since 2018, I have been leading the effort to evolve the GROMACS MD
+simulator (the main simulation loop) from a largely procedural design,
+with poorly defined data dependencies between parts of the simulation
+loop, towards a modular, encapsulated design. The new modular
+simulator of GROMACS follows a number of design principles, including</p>
+
+<ul>
+  <li>Definition of <em>Elements</em>: Elements are parts of the simulation loop
+carrying out a well-defined, limited functionality (e.g. force
+calculation, propagation of positions or velocities, accumulation of
+data over ranks, …). The entire simulation consists of elements
+being repeatedly called in a prescribed order. The order of the
+elements defines the simulation algorithm. See <a href="#listing1">Listing 1</a>
+for an illustrative example of important interfaces and classes.</li>
+  <li>Data encapsulation: Elements own their data. Elements only share
+data over well-defined interfaces.</li>
+  <li>Client system: Infrastructure elements such as trajectory writing,
+checkpoint facility, data communication between simulation ranks, etc
+are agnostic of the simulation algorithm or implementation details of
+other elements. They merely offer a narrow functionality that can be
+used by registered elements, their <em>clients</em>. See <a href="#prototype-of-the-monte-carlo-framework">Prototype of the
+Monte Carlo framework</a> for
+an example of the client system.</li>
+</ul>
+
+<p>This simplifies the maintenance and increases the extensibility by
+making the rearrangement of components straightforward. GROMACS 2020
+ships with an initial version of the modular simulator with a reduced
+feature set.</p>
+
+<p><a name="listing1"></a></p>
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">ISimulatorElement</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="c1">//! Called once at beginning of simulation</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">setup</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">//! Called once at end of simulation</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">teardown</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">//! Allows element to schedule task at specific time / step</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">scheduleTask</span><span class="p">(</span><span class="n">Step</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="k">const</span> <span class="n">RegisterRunFunctionPtr</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">SimulatorAlgorithm</span> <span class="k">final</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="cm">/*! \brief Get next task in queue
+     *
+     * This function will repeatedly loop over elements list
+     * until end of simulation, calling scheduleTask() to
+     * query whether element needs to run. Task list can be
+     * precomputed to increase performance. */</span>
+    <span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span> <span class="k">const</span> <span class="n">SimulatorRunFunction</span><span class="o">*</span> <span class="n">getTask</span><span class="p">();</span>
+<span class="nl">private:</span>
+    <span class="c1">//! The list of element defining the algorithm</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ISimulatorElement</span><span class="o">*&gt;</span> <span class="n">elements</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Implement general GROMACS simulator interface</span>
+<span class="k">class</span> <span class="nc">ModularSimulator</span> <span class="k">final</span> <span class="o">:</span> <span class="k">public</span> <span class="n">ISimulator</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="c1">//! Set up and run a simulation (only function of interface)</span>
+    <span class="kt">void</span> <span class="n">run</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">algorithm</span> <span class="o">=</span> <span class="n">createAlgorithm</span><span class="p">();</span>
+        <span class="k">while</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">*</span> <span class="n">task</span> <span class="o">=</span> <span class="n">algorithm</span><span class="p">.</span><span class="n">getTask</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// execute task</span>
+            <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="nl">private:</span>
+    <span class="c1">//! Create algorithm by emplacing elements in right order</span>
+    <span class="n">SimulatorAlgorithm</span> <span class="n">createAlgorithm</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><em><strong>Listing 1</strong>: Simplified declarations of the most relevant
+   modular simulator interfaces and classes.</em></p>
+
+<h2 id="january-to-june-2020-foundation">January to June 2020: Foundation</h2>
+
+<h3 id="simplify-the-creation-of-new-algorithms">Simplify the creation of new algorithms</h3>
+
+<p>While earlier efforts modularized the components of the GROMACS
+simulation loop, the definition the order of modules (which in turn
+defines the simulation algorithm) remained cumbersome. A new builder
+approach allows developers to see at one glance what components make
+up the algorithm.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/pascal-merz/algorithm.gif" alt="Algorithm 2020 vs 2021">
+<em><strong>Figure 1</strong>: Definition of an identical NVE leap frog algorithm in GROMACS 2020 vs GROMACS 2021-dev.</em></p>
+
+<p>The earlier version was cumbersome because the user was required to
+connect elements explicitly during the creation of the algorithm. This
+required elements to be built in a very specific order, which strongly
+limited extensibility. The simplification is achieved by leveraging
+the strengths of the modular simulator design. As the interactions
+between elements are reduced to well-defined interfaces, they can be
+connected automatically, allowing the user to simply add element in
+the desired order, and let the algorithm builder take care of the
+connection details.</p>
+
+<h3 id="prototype-of-the-monte-carlo-framework">Prototype of the Monte Carlo framework</h3>
+
+<p>Following the design principles of the modular simulator, a prototype
+of the Monte Carlo framework was implemented. The design follows the
+client system: The Monte Carlo element allows other elements to
+register as clients. It informs its clients about when a state is
+saved, and when an earlier state needs to be restored. It also allows
+its clients to contribute additive terms to the energy expression used
+to determine whether a candidate state is accepted or rejected.</p>
+
+<p>The MC element is not collecting the stored state, but requiring its
+clients to store their part of the state. This ensures that no
+unnecessary communication is required, and allows simulations
+including MC steps to retain a performance comparable to vanilla MD
+even in highly parallelized simulations.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/pascal-merz/mcinfrastructure.jpeg" alt="Monte Carlo framework"></p>
+
+<p><em><strong>Figure 1</strong>: Illustration of the client system that allows to
+   implement general MC algorithms. The MC element does not need to
+   know implementation details of its clients, and the clients do not
+   need to be aware of the details of the MC algorithm.</em></p>
+
+<h3 id="hybrid-mcmd-proof-of-concept">Hybrid MC/MD proof of concept</h3>
+
+<p>Combining the new algorithm creation syntax with the client-based MC
+prototype outlined above makes creating a hybrid MC/MD algorithm
+straightforward.</p>
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">MonteCarloElement</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">ForceElement</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">StatePropagatorData</span><span class="o">::</span><span class="n">Element</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// full state at time t here!</span>
+<span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">Propagator</span><span class="o">&lt;</span><span class="n">IntegrationStep</span><span class="o">::</span><span class="n">LeapFrog</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">inputrec</span><span class="o">-&gt;</span><span class="n">delta_t</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">constr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">ConstraintsElement</span><span class="o">&lt;</span><span class="n">ConstraintVariable</span><span class="o">::</span><span class="n">Positions</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">ComputeGlobalsElement</span><span class="o">&lt;</span><span class="n">ComputeGlobalsAlgorithm</span><span class="o">::</span><span class="n">LeapFrog</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+<span class="n">builder</span><span class="o">-&gt;</span><span class="n">add</span><span class="o">&lt;</span><span class="n">EnergyData</span><span class="o">::</span><span class="n">Element</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// energies at time t here!</span></code></pre></figure>
+
+<p><em><strong>Listing 2</strong>: Definition of a hybrid MC/MD leap frog algorithm in
+   GROMACS 2021-dev. The MC element added on the first line indicates
+   where in the loop MC states are saved / restored.</em></p>
+
+<p>The addition of the <code class="language-plaintext highlighter-rouge">MonteCarloElement</code> on the first line of the
+snippet turns the NVE algorithm shown above into a hybrid MC/MD
+simulation. Clearly, the above snippet hides some complexity. The
+<code class="language-plaintext highlighter-rouge">StatePropagatorData::Element</code> (holding the current microstate of the
+system) is registered to the MC element, such that it can back up a
+copy of its state for later restoring. The MC element uses an
+interface to query the <code class="language-plaintext highlighter-rouge">EnergyData</code> for current energies. The exact
+acceptance / rejection criterion used by the MC element is defined in
+the simulation input file. This complexity is, however, encapsulated
+in a way that it does not reduce extensibility or maintainability.</p>
+
+<h2 id="future-work">Future work</h2>
+
+<h3 id="july-to-december-2020-implementation">July to December 2020: Implementation</h3>
+
+<p><strong>Release GROMACS 2021:</strong> We aim at delivering GROMACS 2021 (beta mid
+  September, release end of the year) with</p>
+<ul>
+  <li>a fully-featured modular simulator (all functionality available in
+the legacy implementation also available in the modular simulator),</li>
+  <li>hybrid MC/MD capability, and</li>
+  <li>an MC barostat that can replace other pressure control algorithms in
+standard MD simulations.</li>
+</ul>
+
+<p><strong>Prototype of a general collective variable description</strong></p>
+
+<p>A GROMACS-internal representation of collective variables (CVs) will
+greatly increase the flexibility of the hybrid MC/MD framework. The
+nonequilibrium candidate Monte Carlo formalism allows users to apply
+an external force to a system over a short period of time followed by
+a Metropolis acceptance step to recover equilibrium properties. The
+ability to apply this force to complex CVs opens up new possibilities
+for novel enhanced sampling<sup id="fnref:cit13" role="doc-noteref"><a href="#fn:cit13" class="footnote">13</a></sup>.</p>
+
+<p>Simple examples of moves in CV space include forced rotations around
+dihedral angles, forces along the distance between atoms, and movement
+along harmonic modes of a system. These CVs can be much more complex,
+e.g. a combination of predefined functions of atom positions, such as
+generated by neural nets or combination of arbitrary basis functions.</p>
+
+<p>Defining forces on CVs will require a module able to translate these
+CV forces into forces on single atoms, and provide the single-atom
+forces to the system. The general framework to implement such force
+providers is already available in GROMACS.</p>
+
+<h3 id="january-to-june-2021-application">January to June 2021: Application</h3>
+
+<p>In view of GROMACS 2022, we will leverage the combination of the
+hybrid MC/MD framework and the general collective variable
+representation to implement novel algorithms.</p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<p>Pascal T. Merz was supported by a fellowship from The Molecular
+Sciences Software Institute under NSF grant OAC-1547580.  Pascal
+T. Merz wishes to thank Michael Shirts (University of Colorado
+Boulder), Eliseo Marin-Rimoldi (Molecular Sciences Software
+Institute), Paul Bauer and Mark Abraham (KTH Stockholm), M. Eric
+Irrgang (University of Virginia), and the entire GROMACS developer
+team for their support.</p>
+
+<h2 id="references">References</h2>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:cit1" role="doc-endnote">
+      <p>Johan Aqvist, Petra Wennerström, Martin Nervall, Sinisa Bjelic, and Bjørn O. Brandsdal. Molecular dynamics simulations of water and biomolecules with a Monte Carlo constant pressure algorithm. <em>Chemical Physics Letters</em>, 384(4):288–294, 2004. doi: 10.1016/j.cplett.2003.12.039. <a href="#fnref:cit1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit2" role="doc-endnote">
+      <p>Jerome P. Nilmeier, Gavin E. Crooks, David D. L. Minh, and John D. Chodera. Nonequilibrium candidate Monte Carlo is an efficient tool for equilibrium simulation. <em>PNAS</em>, 108(45):E1009–E1018, 2011. doi: 10.1073/pnas.1106094108. <a href="#fnref:cit2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit3" role="doc-endnote">
+      <p>Athanassios Z. Panagiotopoulos. Direct Determination of Fluid Phase Equilibria by Simulation in the Gibbs Ensemble: A Review. Molecular Simulation, 9(1):1–23, 1992. doi: 10.1080/08927029208048258. <a href="#fnref:cit3" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit4" role="doc-endnote">
+      <p>Jozef Hritz and Chris Oostenbrink. Hamiltonian replica exchange molecular dynamics using soft-core interactions. J. Chem. Phys., 128(14):144121, 2008. doi: 10.1063/1.2888998. <a href="#fnref:cit4" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit5" role="doc-endnote">
+      <p>Wei Jiang and Benoît Roux. Free Energy Perturbation Hamiltonian Replica-Exchange Molecular Dynamics (FEP/H-REMD) for Absolute Ligand Binding Free Energy Calculations. J. Chem. Theory Comput., 6(9):2559–2565, 2010. doi: 10.1021/ct1001768. <a href="#fnref:cit5" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit6" role="doc-endnote">
+      <p>Lingle Wang, Richard A. Friesner, and B. J. Berne. Replica Exchange with Solute Scaling: A More Efficient Version of Replica Exchange with Solute Tempering (REST2). J. Phys. Chem. B, 115(30): 9431–9438, 2011. doi: 10.1021/jp204407d. <a href="#fnref:cit6" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit7" role="doc-endnote">
+      <p>Jörn Ilja Siepmann and Daan Frenkel. Configurational bias Monte Carlo: A new sampling scheme for flexible chains. Molecular Physics, 75(1):59–70, 1992. doi: 10.1080/00268979200100061. <a href="#fnref:cit7" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit8" role="doc-endnote">
+      <p>Mark James Abraham, Teemu Murtola, Roland Schulz, Szilárd Páll, Jeremy C. Smith, Berk Hess, and Erik Lindahl. GROMACS: High performance molecular simulations through multi-level parallelism fromlaptops to supercomputers. <em>SoftwareX</em>, 1-2:19–25, 2015. doi: 10.1016/j.softx.2015.06.001. <a href="#fnref:cit8" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit9" role="doc-endnote">
+      <p>Carsten Kutzner, Szilárd Páll, Martin Fechner, Ansgar Esztermann, Bert L. de Groot, and Helmut Grubmüller. More bang for your buck: Improved use of GPU nodes for GROMACS 2018. <em>Journal of Computational Chemistry</em>, 40(27):2418–2431, 2019. doi: 10.1002/jcc.26011. <a href="#fnref:cit9" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit10" role="doc-endnote">
+      <p>Jason A. Wagoner and Vijay S. Pande. A smoothly decoupled particle interface: New methods forcoupling explicit and implicit solvent. <em>J. Chem. Phys.</em>, 134(21):214103, 2011. doi: 10.1063/1.3595262. <a href="#fnref:cit10" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit11" role="doc-endnote">
+      <p>Mario Fernández-Pendás, Bruno Escribano, Tijana Radivojevic, and Elena Akhmatskaya. Constantpressure hybrid Monte Carlo simulations in GROMACS. <em>J Mol Model</em>, 20(12):2487, 2014. doi:10.1007/s00894-014-2487-y. <a href="#fnref:cit11" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit12" role="doc-endnote">
+      <p>Sebastian Wingbermühle and Lars V. Schäfer. On Obtaining Boltzmann-Distributed Configurational Ensembles from Expanded Ensemble Simulations with Fast State Mixing. <em>J. Chem. Theory Comput.</em>, 15(5):2774–2779, 2019. doi: 10.1021/acs.jctc.9b00100. <a href="#fnref:cit12" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:cit13" role="doc-endnote">
+      <p>Donghyuk  Suh,  Brian  K.  Radak,  Christophe  Chipot,  and  Benoît  Roux. Enhanced  configurational sampling with hybrid non-equilibrium molecular dynamics–Monte Carlo propagator. <em>J. Chem. Phys.</em>, 148(1):014101, 2018.  doi: 10.1063/1.5004154. <a href="#fnref:cit13" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-24T00:00:00+00:00">June 24, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=A+High-Performance+Hybrid+Monte+Carlo+%2F+Molecular+Dynamics+Framework+For+GROMACS%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fpascal-merz%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fpascal-merz%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fpascal-merz%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/nick-stair/" class="pagination--pager" title="QForte: A quantum computer simulator and algorithms library for molecular simulation
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/bradley-dice/" class="pagination--pager" title="freud: Powerful, Efficient Trajectory Analysis in Scientific Python
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

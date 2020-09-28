@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The ELSI Infrastructure for Scalable Electronic Structure Theory - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="The O(N3) Kohn-Sham Eigenproblem">
+
+
+  <meta name="author" content="Victor Yu">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="The ELSI Infrastructure for Scalable Electronic Structure Theory">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/victor-yu/">
+
+
+  <meta property="og:description" content="The O(N3) Kohn-Sham Eigenproblem">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-21T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/victor-yu/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/victor_yu.jpg" alt="Victor Yu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Victor Yu</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Ph.D. Candidate, Duke University</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:wy29@duke.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/vwzyu" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://scholar.google.com/citations?user=GWGRM9gAAAAJ&hl=en" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Google Scholar</span></a></li>
+          
+        
+          
+            <li><a href="https://elsi-interchange.org" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Project Website</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The ELSI Infrastructure for Scalable Electronic Structure Theory">
+    <meta itemprop="description" content="The O(N3) Kohn-Sham Eigenproblem">
+    <meta itemprop="datePublished" content="2020-06-21T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">The ELSI Infrastructure for Scalable Electronic Structure Theory
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Victor Yu<sup>1</sup>,
+            
+              Jonathan Moussa<sup>2</sup>,
+            
+              Volker Blum<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Department of Mechanical Engineering and Materials Science, Duke University, Durham, NC</div>
+            
+              <div>
+<strong>2</strong> The Molecular Sciences Software Institute, Blacksburg, VA</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Jonathan Moussa
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li>
+<a href="#the-on3-kohn-sham-eigenproblem">The O(N3) Kohn-Sham Eigenproblem</a>
+    <ul>
+      <li><a href="#kohn-sham-density-functional-theory-ks-dft-1">Kohn-Sham density-functional theory (KS-DFT) [1]</a></li>
+      <li><a href="#computational-bottleneck-of-ks-dft">Computational bottleneck of KS-DFT</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#elsi-the-electronic-structure-infrastructure-project">ELSI: The ELectronic Structure Infrastructure Project</a>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#feature-highlights">Feature highlights</a></li>
+      <li><a href="#solvers-supported">Solvers supported</a></li>
+      <li><a href="#application-programming-interface-api">Application Programming Interface (API)</a></li>
+    </ul>
+  </li>
+  <li><a href="#solver-performance-benchmark">Solver Performance Benchmark</a></li>
+  <li>
+<a href="#gpu-accelerated-eigensolvers">GPU Accelerated Eigensolvers</a>
+    <ul>
+      <li><a href="#shared-memory-solver-magma">Shared-memory solver: MAGMA</a></li>
+      <li>
+<a href="#distributed-memory-solver-elpa">Distributed-memory solver: ELPA</a>
+        <ul>
+          <li><a href="#the-two-stage-tridiagonalization-algorithm">The two-stage tridiagonalization algorithm</a></li>
+          <li><a href="#development-and-optimization">Development and optimization</a></li>
+          <li><a href="#performance">Performance</a></li>
+          <li><a href="#application-in-electronic-structure-calculations">Application in electronic structure calculations</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#connection-to-electronic-structure-code-projects">Connection to Electronic Structure Code Projects</a></li>
+  <li><a href="#outlook">Outlook</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#acknowledgments">Acknowledgments</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="the-on3-kohn-sham-eigenproblem">The O(N<sup>3</sup>) Kohn-Sham Eigenproblem</h2>
+
+<h3 id="kohn-sham-density-functional-theory-ks-dft-1">Kohn-Sham density-functional theory (KS-DFT) [1]</h3>
+
+<ul>
+  <li>Workhorse for molecular and materials simulations</li>
+  <li>Large number of software implementations</li>
+  <li>Running on world’s leading HPC resources</li>
+</ul>
+
+<h3 id="computational-bottleneck-of-ks-dft">Computational bottleneck of KS-DFT</h3>
+
+<p>With local and semi-local exchange-correlation functionals, the solution of the eigenproblem \(H C = S C \Lambda\) becomes the computational bottleneck in large-scale calculations.</p>
+
+<ul>
+  <li>
+<span style="color:red">O(N<sup>3</sup>)</span> complexity of a dense eigensolver</li>
+  <li>
+<span style="color:blue">O(N)</span> in almost all other operations (generally true with localized basis functions)</li>
+</ul>
+
+<p>Test case:</p>
+<ul>
+  <li>2D graphene supercell models</li>
+  <li>KS-DFT calculations with the SIESTA [2,3] code</li>
+  <li>13 basis functions per atom</li>
+  <li>PBE semi-local exchange-correlation functional</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/siesta_cubic.png" alt="SIESTA scaling test">
+<em>Fig. 1: Timing of KS-DFT calculations of a series of graphene supercell models with the SIESTA code. Calculations were performed on the Edison supercomputer with 80 nodes (1,920 CPU cores).</em></p>
+
+<h2 id="elsi-the-electronic-structure-infrastructure-project">ELSI: The ELectronic Structure Infrastructure Project</h2>
+
+<h3 id="overview">Overview</h3>
+
+<p><a href="https://elsi-interchange.org">ELSI</a> [4,5] provides an integrated software interface to connect electronic structure codes with high-performance eigensolvers and density matrix solvers. The unified ELSI API handles the conversion between different units, conventions, matrix formats, and programming languages.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/elsi_core.png" alt="ELSI core">
+<em>Fig. 2: ELSI serves as a bridge between electronic structure codes and solver libraries.</em></p>
+
+<h3 id="feature-highlights">Feature highlights</h3>
+
+<ul>
+  <li>
+<a href="#solvers-supported">Eigensolvers and density matrix solvers</a> via a common API</li>
+  <li>Matrix formats: Dense or sparse local storage, 1D/2D block-cyclic distribution or any arbitrary distribution, parallel interconversion between different formats</li>
+  <li>
+<a href="#connection-to-electronic-structure-code-projects">Parallel solution</a> for spin-polarized and/or periodic systems</li>
+  <li><a href="#gpu-accelerated-eigensolvers">GPU acceleration eigensolvers</a></li>
+  <li>Reverse communication interface (RCI) for iterative eigensolvers</li>
+  <li>Programming interfaces: Fortran, C, C++</li>
+  <li>CMake build system supports Cray, GCC, IBM, Intel, PGI compilers</li>
+  <li>“MolSSI best practices”: Documentation, wiki, issue tracker, automated tests, …</li>
+  <li>From laptops to supercomputers (Cobra, Cori, Summit, Theta, …)</li>
+  <li>Adopted by:
+    <ul>
+      <li>
+<a href="https://www.dftbplus.org">DFTB+</a> [6,7]</li>
+      <li>DGDFT [8]</li>
+      <li>
+<a href="https://aimsclub.fhi-berlin.mpg.de">FHI-aims</a> [9]</li>
+      <li>
+<a href="https://departments.icmab.es/leem/siesta">SIESTA</a> [2,3]</li>
+    </ul>
+  </li>
+  <li>Part of the CECAM Electronic Structure Library project (<a href="https://esl.cecam.org">ESL</a>): Distribution of shared open-source libraries in the electronic structure community [10]</li>
+</ul>
+
+<p>Find the source code on the <a href="https://wordpress.elsi-interchange.org/index.php/download">Download</a> page or check out the git repository <a href="https://git.elsi-interchange.org">here</a>.</p>
+
+<h3 id="solvers-supported">Solvers supported</h3>
+
+<ul>
+  <li>Distributed-memory eigensolvers
+    <ul>
+      <li>
+<a href="https://elpa.mpcdf.mpg.de">ELPA</a>: Dense eigensolvers based on one-stage and two-stage tridiagonalization [11-13].</li>
+      <li>
+<a href="https://www.r-ccs.riken.jp/labs/lpnctrt/en/projects/eigenexa">EigenExa</a>: Dense eigensolvers based on one-stage tridiagonalization and penta-diagonalization [14].</li>
+      <li>
+<a href="http://slepc.upv.es">SLEPc</a>: Sparse, iterative eigensolver based on shift-and-invert spectral transformation and spectrum slicing [15,16].</li>
+    </ul>
+  </li>
+  <li>Distributed-memory density matrix solvers
+    <ul>
+      <li>
+<a href="https://pexsi.readthedocs.io/en/latest">PEXSI</a>: Pole expansion and selected inversion [17,18].</li>
+      <li>
+<a href="https://esl.cecam.org/LibOMM">libOMM</a>: Orbital minimization method [19].</li>
+      <li>
+<a href="https://william-dawson.github.io/NTPoly">NTPoly</a>: Density matrix purification methods based on sparse linear algebra [20].</li>
+    </ul>
+  </li>
+  <li>Shared-memory eigensolvers
+    <ul>
+      <li>
+<a href="https://www.netlib.org/lapack">LAPACK</a> [21]</li>
+      <li>
+<a href="https://icl.utk.edu/magma">MAGMA</a> [22]</li>
+    </ul>
+  </li>
+  <li>Distributed-memory BSE eigensolvers
+    <ul>
+      <li>
+<a href="https://sites.google.com/a/lbl.gov/bsepack">BSEPACK</a>: Special-purpose dense eigensolvers for solving the Bethe-Salpeter equation [23].</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="application-programming-interface-api">Application Programming Interface (API)</h3>
+
+<figure class="highlight"><pre><code class="language-fortran" data-lang="fortran"><table class="rouge-table"><tbody><tr>
+<td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+<td class="code"><pre><span class="k">call</span><span class="w"> </span><span class="n">elsi_init</span><span class="w">
+</span><span class="k">call</span><span class="w"> </span><span class="n">elsi_set_parameters</span><span class="w">
+</span><span class="k">do</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">geometry</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="n">converged</span><span class="p">)</span><span class="w">
+   </span><span class="k">do</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">SCF</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="n">converged</span><span class="p">)</span><span class="w">
+      </span><span class="k">call</span><span class="w"> </span><span class="n">elsi</span><span class="err">\_{</span><span class="n">ev</span><span class="err">|</span><span class="n">dm</span><span class="err">}</span><span class="w">
+   </span><span class="k">end</span><span class="w"> </span><span class="k">do</span><span class="w">
+   </span><span class="k">call</span><span class="w"> </span><span class="n">elsi_reinit</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="k">do</span><span class="w">
+</span><span class="k">call</span><span class="w"> </span><span class="n">elsi_finalize</span>
+</pre></td>
+</tr></tbody></table></code></pre></figure>
+
+<ul>
+  <li>Designed for rapid integration into a variety of electronic structure codes</li>
+  <li>Compatible with common workflows
+    <ul>
+      <li>Self-consistent field (SCF): line #4</li>
+      <li>Multiple SCF cycles (geometry relaxation or molecular dynamics): line #3</li>
+    </ul>
+  </li>
+  <li>Supports density matrix solvers and eigensolvers on an equal footing: line #5</li>
+  <li>All technical settings adjustable for experienced users: line #2</li>
+</ul>
+
+<h2 id="solver-performance-benchmark">Solver Performance Benchmark</h2>
+
+<p>We have performed a systematic set of solver performance benchmarks [4,5], based on which we identified the expertise regime of each solver. An automatic solver selection is proposed and implemented in ELSI.</p>
+
+<ul>
+  <li>
+<span style="color:red">ELPA</span>: O(N<sup>3</sup>) but small prefactor. Efficient for small to medium systems.</li>
+  <li>
+<span style="color:blue">PEXSI</span>: O(N) and O(N<sup>1.5</sup>) for 1D and 2D systems, respectively. Efficient for large, low-dimensional systems.</li>
+  <li>
+<span style="color:green">NTPoly</span>: O(N) for sufficiently sparse matrices. Efficient for large systems with an energy gap.</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/bench.png" alt="Solver tests">
+<em>Fig. 3: Performance of ELPA, PEXSI, and NTPoly in (a) KS-DFT calculations of quasi-1D carbon nanotube models with the SIESTA code, (b) KS-DFT calculations of 2D MoS<sub>2</sub> monolayer models with the FHI-aims code, and (c) DFTB calculations of 3D silicon supercell models with the DFTB+ code. Calculations were performed on the Cori supercomputer (Haswell partition) with 80 nodes (2,560 CPU cores).</em></p>
+
+<h2 id="gpu-accelerated-eigensolvers">GPU Accelerated Eigensolvers</h2>
+
+<h3 id="shared-memory-solver-magma">Shared-memory solver: MAGMA</h3>
+
+<p>The MAGMA project [22] aims to develop a dense linear algebra framework for heterogeneous architectures consisting of manycore and GPU systems. The GPU-accelerated, tridiagonalization-based eigensolvers in MAGMA have been added to the ELSI interface since v2.4.0.</p>
+
+<p>On a single shared-memory compute node, MAGMA delivers a significant speedup over the CPU LAPACK. However, large eigenproblems can easily exceed the memory capacity of a single node, thus they must be solved on distributed-memory parallel computers.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">GaAs supercell</th>
+      <th style="text-align: center">N<sub>atom</sub>
+</th>
+      <th style="text-align: center">N<sub>kpt</sub>
+</th>
+      <th style="text-align: center">N<sub>basis</sub>
+</th>
+      <th style="text-align: center">N<sub>core</sub>
+</th>
+      <th style="text-align: center">LAPACK time [s]</th>
+      <th style="text-align: center">MAGMA time [s]</th>
+      <th style="text-align: center">speedup</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">3 x 3</td>
+      <td style="text-align: center">54</td>
+      <td style="text-align: center">36</td>
+      <td style="text-align: center">1,836</td>
+      <td style="text-align: center">18</td>
+      <td style="text-align: center">25.0</td>
+      <td style="text-align: center">10.1</td>
+      <td style="text-align: center">2.5 x</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4 x 4</td>
+      <td style="text-align: center">128</td>
+      <td style="text-align: center">14</td>
+      <td style="text-align: center">4,352</td>
+      <td style="text-align: center">14</td>
+      <td style="text-align: center">150.6</td>
+      <td style="text-align: center">12.0</td>
+      <td style="text-align: center">12.6 x</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="distributed-memory-solver-elpa">Distributed-memory solver: ELPA</h3>
+
+<h4 id="the-two-stage-tridiagonalization-algorithm">The two-stage tridiagonalization algorithm</h4>
+
+<p>The ELPA2 eigensolver features an efficient two-stage tridiagonalization method consisting of five computational steps:</p>
+<ol>
+  <li>Full matrix to banded matrix.</li>
+  <li>Banded matrix to tridiagonal matrix</li>
+  <li>Solution of tridiagonal eigensystem</li>
+  <li>Tridiagonal eigenvectors to banded eigenvectors</li>
+  <li>Banded eigenvectors to full eigenvectors</li>
+</ol>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/2stage.jpg" alt="Two stage method">
+<em>Fig. 4: Five computational steps of the two-stage tridiagonalization algorithm used by ELPA2.</em></p>
+
+<p>The two-stage method has been shown to enable faster computation and better parallel scalability than the conventional one-stage tridiagonalization [11,12]. The matrix-vector operations (BLAS level-2) in the one-stage tridiagonalization can be mostly replaced by more efficient matrix-matrix operations (BLAS level-3) in the two-stage algorithm.</p>
+
+<h4 id="development-and-optimization">Development and optimization</h4>
+
+<p>The initial proof-of-concept GPU porting of the ELPA2 eigensolver was programmed by Peter Messmer, NVIDIA. This version is mostly based on the cuBLAS library to accelerate dense linear algebra operations.</p>
+
+<p>The robustness and efficiency of the GPU ELPA2 code, and its scalability of GPU ELPA2 on distributed-memory (multi-nodes) hybrid CPU-GPU architectures, have been enhanced by our recent development and optimization [13]:</p>
+<ul>
+  <li>Added a CUDA kernel for Householder transformations in the computation of eigenvectors</li>
+  <li>Eliminated a restriction on the block size of the distributed matrices</li>
+  <li>Optimized GPU memory usage and CPU-GPU communication</li>
+  <li>Added GPU support of generalized eigenproblems</li>
+</ul>
+
+<h4 id="performance">Performance</h4>
+
+<p>The performance of the optimized GPU ELPA2 solver was benchmarked on the Summit supercomputer. Depending on the size of the eigenproblem, the GPU speedup can exceed 20x.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/elpa2_gpu.png" alt="ELPA2 GPU">
+<em>Fig. 5: Timings of CPU-ELPA2, GPU-ELPA1, and GPU-ELPA2 for randomly generated, real symmetric and complex Hermitian matrices of size $N$ = 40,000 and 100,000. All eigenvalues and eigenvectors are computed. The gray dotted lines indicate ideal strong scaling. Tests are performed on the Summit supercomputer. Each node of Summit has two IBM POWER9 CPUs and six NVIDIA Volta GPUs.</em></p>
+
+<h4 id="application-in-electronic-structure-calculations">Application in electronic structure calculations</h4>
+
+<p>We demonstrate the efficiency of GPU-ELPA2 in actual materials simulations. KS-DFT calculations of a supercell model of Cu<sub>2</sub>BaSnS<sub>4</sub> (1,536 atoms, 41,088 basis functions) were performed with the FHI-aims code on the Summit supercomputer. Time spent on the solution of the generalized eigenproblem in one SCF step is shown below, comparing the CPU and GPU versions of ELPA2.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">N<sub>node</sub>
+</th>
+      <th style="text-align: center">CPU time [s]</th>
+      <th style="text-align: center">GPU time [s]</th>
+      <th style="text-align: center">speedup</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1438.0</td>
+      <td style="text-align: center">85.0</td>
+      <td style="text-align: center">16.9 x</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">746.1</td>
+      <td style="text-align: center">56.1</td>
+      <td style="text-align: center">13.3 x</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">400.2</td>
+      <td style="text-align: center">39.3</td>
+      <td style="text-align: center">10.2 x</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="connection-to-electronic-structure-code-projects">Connection to Electronic Structure Code Projects</h2>
+
+<p>The ELSI interface has been fully integrated into the DFTB+, FHI-aims, DGDFT, and SIESTA code projects, providing users of these codes with access to all the solvers supported in ELSI. The benefit of using the ELSI interface and the solvers it supports has been shown in the <a href="#solver-performance-benchmark">benchmark</a> section. We here demonstrate the usage of the ELSI interface in periodic calculations. The <span style="color:green">SIESTA-ELSI</span> interface can exploit the full parallelization over k-points and spin channels [3]. This means that these calculations can use two extra levels of parallelization compared to the previous diagonalization schemes in SIESTA (standard <span style="color:red">ScaLAPACK</span> and <span style="color:blue">ELPA</span> eigensolvers), substantially enhancing the parallel efficiency of the code.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/victor_yu/siesta_elsi.png" alt="SIESTA ELSI">
+<em>Fig. 6: Performance improvement from the use of the extra level of parallelization over k-points in SIESTA using the ELSI interface. Benchmark system is bulk Si with H impurities (1,040 atoms, 13,328 basis functions, 8 k-points).</em></p>
+
+<h2 id="outlook">Outlook</h2>
+
+<p>We are and will be working on</p>
+<ul>
+  <li>The integration of ELSI into more electronic structure code projects</li>
+  <li>GPU acceleration in more components of ELSI</li>
+  <li>support of more high-performance solvers targeting the next-generation supercomputing architectures</li>
+</ul>
+
+<p>The ELSI project is intended to be an open forum, fostering international, interdisciplinary collaborations that benefit the entire electronic structure theory community. Learn more through the following communication channels:</p>
+<ul>
+  <li><a href="https://elsi-interchange.org">The ELSI Interchange website</a></li>
+  <li><a href="https://git.elsi-interchange.org">Code repository</a></li>
+  <li><a href="mailto:elsi-team@duke.edu">Email the ELSI team</a></li>
+  <li><a href="https://elsi-team.slack.com">Join the ELSI Slack workspace</a></li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>Kohn and Sham, Physical Review 140 (1965), A1133-1138. <a href="https://doi.org/10.1103/PhysRev.140.A1133">link</a>
+</li>
+  <li>Soler et al., Journal of Physics: Condensed Matter 14 (2002), 2745-2779. <a href="https://doi.org/10.1088/0953-8984/14/11/302">link</a>
+</li>
+  <li>García et al., The Journal of Chemical Physics 152 (2020), 204108. <a href="https://doi.org/10.1063/5.0005077">link</a>
+</li>
+  <li>Yu et al., Computer Physics Communications 222 (2018), 267-285. <a href="http://dx.doi.org/10.1016/j.cpc.2017.09.007">link</a>
+</li>
+  <li>Yu et al., arXiv: 1912.13403 (2019). <a href="https://arxiv.org/abs/1912.13403">link</a>
+</li>
+  <li>Aradi et al., The Journal of Physical Chemistry A 111 (2017), 5678. <a href="https://doi.org/10.1021/jp070186p">link</a>
+</li>
+  <li>Hourahine et al., The Journal of Chemical Physics 152 (2020), 124101. <a href="https://doi.org/10.1063/1.5143190">link</a>
+</li>
+  <li>Hu et al., The Journal of Chemical Physics 143 (2015), 124110. <a href="https://doi.org/10.1063/1.4931732">link</a>
+</li>
+  <li>Blum et al., Computer Physics Communications 180 (2009), 2175-2196. <a href="https://doi.org/10.1016/j.cpc.2009.06.022">link</a>
+</li>
+  <li>Oliveira et al., arXiv: 2005.05756 (2020). <a href="https://arxiv.org/abs/2005.05756">link</a>
+</li>
+  <li>Auckenthaler et al., Parallel Computing 37 (2011), 783-794. <a href="http://dx.doi.org/10.1016/j.parco.2011.05.002">link</a>
+</li>
+  <li>Marek et al., Journal of Physics: Condensed Matter 26 (2014), 213201. <a href="http://dx.doi.org/10.1088/0953-8984/26/21/213201">link</a>
+</li>
+  <li>Yu et al., arXiv: 2002.10991 (2020). <a href="https://arxiv.org/abs/2002.10991">link</a>
+</li>
+  <li>Imamura et al., Progress in Nuclear Science and Technology 2 (2011), 643-650. <a href="http://www.aesj.or.jp/publication/pnst002/data/643-650.pdf">link</a>
+</li>
+  <li>Hernandez et al., ACM Transactions on Mathematical Software 31 (2005), 351-362. <a href="https://doi.org/10.1145/1089014.1089019">link</a>
+</li>
+  <li>Keceli et al., Journal of Computational Chemistry 37 (2016), 448-459. <a href="http://dx.doi.org/10.1002/jcc.24254">link</a>
+</li>
+  <li>Lin et al., Journal of Physics: Condensed Matter 25 (2013), 295501. <a href="http://dx.doi.org/10.1088/0953-8984/25/29/295501">link</a>
+</li>
+  <li>Jia and Lin, The Journal of Chemical Physics 147 (2017), 144107. <a href="http://dx.doi.org/10.1063/1.5000255">link</a>
+</li>
+  <li>Corsetti, Computer Physics Communications 185 (2014), 873-883. <a href="http://dx.doi.org/10.1016/j.cpc.2013.12.008">link</a>
+</li>
+  <li>Dawson and Nakajima, Computer Physics Communications 225 (2018), 154-165. <a href="http://doi.org/10.1016/j.cpc.2017.12.010">link</a>
+</li>
+  <li>Anderson et al., LAPACK users’ guide (1999). <a href="http://www.netlib.org/lapack">link</a>
+</li>
+  <li>Tomov et al., Parallel Computing 36 (2010), 232-240. <a href="https://doi.org/10.1016/j.parco.2009.12.005">link</a>
+</li>
+  <li>Shao et al., Linear Algebra and its Applications 488 (2016), 148-167. <a href="http://dx.doi.org/10.1016/j.laa.2015.09.036">link</a>
+</li>
+</ol>
+
+<h2 id="acknowledgments">Acknowledgments</h2>
+
+<ul>
+  <li>We thank the <a href="https://wordpress.elsi-interchange.org/index.php/contacts">developers and contributors</a> of the ELSI project.</li>
+  <li>ELSI is a Software Infrastructure for Sustained Innovation - Scientific Software Integration (SI2-SSI) software infrastructure project supported by the National Science Foundation (NSF) under award 1450280. Any opinions, findings, and conclusions or recommendations expressed here are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</li>
+  <li>Victor Yu was supported by a fellowship from <a href="https://molssi.org">The Molecular Sciences Software Institute</a> under NSF grant OAC-1547580.</li>
+  <li>This research used resources of the Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725.</li>
+  <li>This research used resources of the National Energy Research Scientific Computing Center (NERSC), a U.S. Department of Energy Office of Science User Facility operated under Contract No. DE-AC02-05CH11231.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-21T00:00:00+00:00">June 21, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=The+ELSI+Infrastructure+for+Scalable+Electronic+Structure+Theory%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvictor-yu%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvictor-yu%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvictor-yu%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/samragni-banerjee/" class="pagination--pager" title="Efficient implementation of ADC for ionization and electron attachment in molecules
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/nick-stair/" class="pagination--pager" title="QForte: A quantum computer simulator and algorithms library for molecular simulation
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

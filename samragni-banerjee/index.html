@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Efficient implementation of ADC for ionization and electron attachment in molecules - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Introduction    Accurate computations of ionization potential (IP) and electron attachment (EA) are important for predicting properties of molecules and materials, such as redox potentials, band gaps, and photoelectron spectra.   Development of reliable and efficient theoretical methods for computing IP and EA of molecules and materials is one of the current challenges in modern quantum chemistry.   To address this problem, we developed a new and efficient computer implementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package PySCF.">
+
+
+  <meta name="author" content="Samragni Banerjee">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="Efficient implementation of ADC for ionization and electron attachment in molecules">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/samragni-banerjee/">
+
+
+  <meta property="og:description" content="Introduction    Accurate computations of ionization potential (IP) and electron attachment (EA) are important for predicting properties of molecules and materials, such as redox potentials, band gaps, and photoelectron spectra.   Development of reliable and efficient theoretical methods for computing IP and EA of molecules and materials is one of the current challenges in modern quantum chemistry.   To address this problem, we developed a new and efficient computer implementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package PySCF.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-20T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/samragni-banerjee/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/samragni_banerjee.jpg" alt="Samragni Banerjee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Samragni Banerjee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Graduate Research Assistant, The Ohio State University</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:banerjee.156@osu.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/Samragni-93" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/samragni-banerjee-141058a8/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Efficient implementation of ADC for ionization and electron attachment in molecules">
+    <meta itemprop="description" content="Introduction  Accurate computations of ionization potential (IP) and electron attachment (EA)are important for predicting properties of molecules and materials, such asredox potentials, band gaps, and photoelectron spectra.  Development of reliableand efficient theoretical methods for computing IP and EA of moleculesand materials is one of the current challenges in modern quantum chemistry.  To address this problem, we developed a new and efficient computerimplementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package PySCF.">
+    <meta itemprop="datePublished" content="2020-06-20T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Efficient implementation of ADC for ionization and electron attachment in molecules
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Samragni Banerjee<sup>1</sup>,
+            
+              Alexander Yu. Sokolov<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Department of Chemistry, The Ohio State University, Columbus, OH</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Jessica A. Nash
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#theory">Theory</a></li>
+  <li><a href="#implementation">Implementation</a></li>
+  <li><a href="#efficiency-improvements-to-the-previous-ipea-adc-implementation">Efficiency improvements to the previous IP/EA-ADC implementation</a></li>
+  <li><a href="#results">Results</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+  <li><a href="#references">References</a></li>
+  <li><a href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+<ul>
+  <li>Accurate computations of ionization potential (IP) and electron attachment (EA)
+are important for predicting properties of molecules and materials, such as
+redox potentials, band gaps, and photoelectron spectra.</li>
+  <li>Development of reliable
+and efficient theoretical methods for computing IP and EA of molecules
+and materials is one of the current challenges in modern quantum chemistry.</li>
+  <li>To address this problem, we developed a new and efficient computer
+implementation of algebraic diagrammatic construction theory (ADC) for simulating IP/EA of molecules in the open-source quantum chemical software package <a href="http://pyscf.org/index.html">PySCF</a>.</li>
+</ul>
+
+<h2 id="theory">Theory</h2>
+
+<ul>
+  <li>Spectroscopic studies probe a molecular system by subjecting it to an external
+perturbation such as electromagnetic field and then studying the response of
+the system to that perturbation.</li>
+  <li>The mathematical function required for
+computing the response is called a propagator.</li>
+  <li>The IP/EA-ADC approximations are derived from a perturbative expansion of the one-electron propagator, poles and residues of which provide information about ionization and electron-attachment energies and  transition intensities.</li>
+</ul>
+
+<h2 id="implementation">Implementation</h2>
+
+<ul>
+  <li>The present ADC implementation in PySCF can be applied to both closed- and open-shell molecules starting with either restricted or unrestricted Hartree-Fock orbitals.</li>
+  <li>The key step of my IP/EA-ADC implementation is a function that defines the form of the  \(\boldsymbol{\sigma} = \textbf{MX}\) vector that is the product of the ADC effective Hamiltonian matrix (\(\textbf{M}\)) and a trial vector (\(\textbf{X}\)).</li>
+  <li>Once the \(\boldsymbol{\sigma}\) vector is defined for a particular ADC approximation, conventional iterative diagonalization techniques are used to solve for several lowest IP or EA energies and the intensities of these transitions.</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/SAMRAGNI_BANERJEE/algo.png" alt="algorithm"></p>
+
+<p><sup><em><strong>Figure 1</strong>: A schematic representation of the IP/EA-ADC implementation in PySCF.</em></sup></p>
+
+<h2 id="efficiency-improvements-to-the-previous-ipea-adc-implementation">Efficiency improvements to the previous IP/EA-ADC implementation</h2>
+
+<p>The pilot implementation of IP/EA-ADC was limited to systems with upto \(\sim\) 300 orbitals. As a part of my project supported by MolSSI, I made several improvements to increase the efficiency of my implementation in PySCF :</p>
+
+<ul>
+  <li>
+    <p>Development of a spin-restricted ADC  (RADC) code for closed-shell molecules</p>
+  </li>
+  <li>
+    <p>An in-core algorithm with optimized memory and CPU efficiency</p>
+  </li>
+  <li>
+    <p>An out-of-core algorithm that reduces the memory requirements by storing two-electron integrals on disk (using \(\textit{ h5py}\) Python module capabilities) and computing them on-the-fly. This is done using a buffering algorithm that computes subsets of the two-electron integrals which fits in the available memory.</p>
+  </li>
+  <li>
+    <p>Use of Basic Linear Algebra Subroutines (BLAS) operations for expensive tensor contractions, which speeds up the calculations of the matrix-vector products (\(\boldsymbol{\sigma}\) = \(\textbf{MX}\))</p>
+  </li>
+  <li>
+    <p>A modified ADC code interface to allow for a direct calculation of excitation energies and properties</p>
+  </li>
+  <li>
+    <p>A modified preconditioner for Davidson’s iterative algorithm for better convergence of IP/EA energies</p>
+  </li>
+</ul>
+
+<h2 id="results">Results</h2>
+
+<ul>
+  <li>
+    <p>The several improvements discussed above have led to significant computational savings both with respect to memory usage as well as computational wall times.</p>
+  </li>
+  <li>
+    <p>The new ADC implementation is more efficient than the highly optimized equation-of-motion coupled-cluster singles and doubles (EOM-CCSD) implementation in PySCF and has a similar accuracy.</p>
+  </li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/SAMRAGNI_BANERJEE/comparisons.png" alt="compare_profiles">
+<sup><em><strong>Figure 2</strong>: Comparison of
+(a) maximum memory usage between the previous and present EA-ADC(3) implementations for H<sub>2</sub>CO (basis set: aug-cc-pVTZ),
+(b) computational wall times between the previous and present EA-ADC(3) as well as EA-EOM-CCSD implementations for H<sub>2</sub>CO (basis set : aug-cc-pVTZ),
+(c) mean absolute errors (eV) in EA’s for a set of closed-shell atoms and molecules simulated using EA-EOM-CCSD and EA-ADC(3) (basis set : aug-cc-pVQZ)</em></sup></p>
+
+<ul>
+  <li>The present ADC implementation allows simulation of larger systems (600 orbitals) compared to the previous implementation which was limited to 300 orbitals.</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/SAMRAGNI_BANERJEE/GC_EA_1.png" alt="GC_EA" height="500px" width="500px"></p>
+
+<p><sup><em><strong>Figure 3</strong>: Preliminary results for vertical electron attachment energy of DNA nucleobase pair of guanine (G) and cytosine (C) computed using ADC(2) (basis set : aug-cc-pVDZ)</em></sup></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>
+    <p>Implemented ADC as a new module in PySCF for accurate IP/EA simulation of molecules.</p>
+  </li>
+  <li>
+    <p>Made several efficiency modifications leading to significant reduction in memory requirements and computational wall times.</p>
+  </li>
+  <li>
+    <p>All the improvements enabled simulations of large molecules (600 orbitals), which paves the way for materials simulation using ADC in the future.</p>
+  </li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>
+    <p><a href="https://link.aps.org/doi/10.1103/PhysRevA.26.2395">Schirmer, J. “Beyond the random-phase approximation: A new approximation scheme for the polarization propagator”, <em>Phys. Rev. A</em>,<strong>1982</strong>, <em>26</em>, 2395</a></p>
+  </li>
+  <li>
+    <p><a href="https://doi.org/10.1063/1.5131771">S. Banerjee, A. Yu. Sokolov.  “Third-order algebraic diagrammatic construction theory for electron attachment and ionization energies: Conventional and Green’s function implementation”, <em>J. Chem. Phys.</em>, <strong>2019</strong>, <em>151</em>, 224112</a></p>
+  </li>
+  <li>
+    <p><a href="https://arxiv.org/abs/2002.12531">Q. Sun, et al. “Recent developments in the PySCF program package”,<strong>2020</strong>, <em>In Review</em></a></p>
+  </li>
+</ol>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<p>“<code class="language-plaintext highlighter-rouge">Samragni Banerjee</code> was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580”</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/sample-poster/nsf.png" alt="NSF Logo">
+<img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/molssi_avatar.png" alt="MolSSI"></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-20T00:00:00+00:00">June 20, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Efficient+implementation+of+ADC+for+ionization+and+electron+attachment+in+molecules%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fsamragni-banerjee%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fsamragni-banerjee%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fsamragni-banerjee%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/lauren-koulias/" class="pagination--pager" title="Relativistic Excited State Coupled-Cluster
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/victor-yu/" class="pagination--pager" title="The ELSI Infrastructure for Scalable Electronic Structure Theory
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

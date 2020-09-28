@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>PDFT - An accessible density embedding code - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Introduction">
+
+
+  <meta name="author" content="Victor H. Chavez">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="PDFT - An accessible density embedding code">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/vh-chavez/">
+
+
+  <meta property="og:description" content="Introduction">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-30T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/vh-chavez/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/vh_chavez.png" alt="Victor H. Chavez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Victor H. Chavez</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Ph.D Candidate, Purdue University</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:gonza445@purdue.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="http://purduedft.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/vh__chavez" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/vhchavez" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/vhchavez/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="PDFT - An accessible density embedding code">
+    <meta itemprop="description" content="Introduction">
+    <meta itemprop="datePublished" content="2020-06-30T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">PDFT - An accessible density embedding code
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Victor H. Chavez<sup>1</sup>,
+            
+              Adam Wasserman<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Department of Chemistry, Purdue University, West Lafayette, IN</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Taylor Barnes
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#introduction">Introduction</a></li>
+  <li>
+<a href="#calculations-with-pdft">Calculations with PDFT</a>
+    <ul>
+      <li><a href="#basic-calculation">Basic Calculation</a></li>
+      <li><a href="#getting-information-on-the-grid">Getting information on the grid</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#advanced-methods-in-pdft">Advanced methods in PDFT</a>
+    <ul>
+      <li><a href="#density-to-potential-inversions">Density-to-Potential inversions.</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#future-of-pdft">Future of PDFT</a>
+    <ul>
+      <li><a href="#to-be-approximated-or-not-to-be-that-is-the-question">To be (approximated) or not to be: That is the question</a></li>
+      <li><a href="#fractional-charges">Fractional Charges</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#references">References</a>
+    <ul>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+
+<ul>
+  <li>Density embedding methods avoid the exponential scaling that hinders users from using accurate quantum chemistry in large and complex systems. Partition Density Functional Theory (PDFT)[1-4], makes use of functionals of non-interacting fragments, so that the energy of the entire system and any other electronic properties is given by functionals of the set of the less computationally demanding fragment densities. In PDFT we minimize \(E_f \equiv \sum_i E_i[ n_i ]\) while satisfying the density constraint \(\sum_i n_i(\mathbf{r}) = n_m(\mathbf{r})\).</li>
+</ul>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/vp.png" alt="NSF Logo">
+<em><strong>Figure 1</strong>: The unique local potential \(v_p(\mathbf{r})\) ensures that the fragment densities sum up to the total correct density \(n(\mathbf{r})\)</em></p>
+
+<ul>
+  <li>The caveat is that an extra component–that accounts for the inter-fragment interaction–is missing: The partition potential. This extra component modifies the external potential of each fragment just slightly so that the sum of all the fragment densities matches the molecular density. Finding out what the partition potential is for a given set of fragments, whether using an “exact” or approximated potential, is our code’s goal.</li>
+</ul>
+
+<h2 id="calculations-with-pdft">Calculations with PDFT</h2>
+
+<ul>
+  <li>
+    <p>PDFT is written in the interpreted language Python, and it strives to be readable, reliable and reusable. We do this is by enforcing the programming best practices that are being set by the greater community of the computational molecular sciences.</p>
+  </li>
+  <li>
+    <p>PDFT makes use of the PSIAPI[5] and thus is written similarly to Psi4Numpy[6]. The most basic calculation in PDFT is a self-consistent calculation. The SCF solves the Kohn-Sham equations by diagonalizing the DFT Fock Matrix:</p>
+  </li>
+</ul>
+
+\[F^{DFT}_{\mu \nu} = H_{\mu \nu} + 2J[D]_{\mu \nu} - \zeta K[D]_{\mu \nu} + V^{xc}_{\mu \nu}\]
+
+<h3 id="basic-calculation">Basic Calculation</h3>
+<p>Making a DFT calculation in PDFT is extremely easy, and users of Psi4Numpy will find it extremely familiar. Given an exchange-correlation approximation available in Libxc[7], one can calculate the energy of a molecule. As an example, the energy for a Hydrogen atom with the Local Density Approximation (LDA) in the Universal Gaussian Basis set (UGBS) is computed as:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">psi4</span>
+<span class="kn">import</span> <span class="nn">pdft</span>
+
+<span class="n">psi4</span><span class="p">.</span><span class="n">set_options</span><span class="p">({</span><span class="err">“</span><span class="n">reference</span><span class="err">”</span><span class="p">:</span><span class="err">”</span><span class="n">uhf</span><span class="err">”</span><span class="p">})</span>
+
+<span class="c1">#Geometry Definition
+</span><span class="n">H_geo</span> <span class="o">=</span> <span class="n">psi4</span><span class="p">.</span><span class="n">geometry</span><span class="p">(</span><span class="err">“””</span>
+<span class="mi">0</span> <span class="mi">2</span>
+<span class="n">H</span><span class="err">””</span><span class="p">)</span>
+
+<span class="c1">#Define pdft object and run scf cycle
+</span><span class="n">H</span> <span class="o">=</span> <span class="n">pdft</span><span class="p">.</span><span class="n">UMolecule</span><span class="p">(</span><span class="n">H_geometry</span><span class="p">,</span> <span class="err">“</span><span class="n">ugbs</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">svwn</span><span class="err">”</span><span class="p">)</span>
+<span class="n">h</span><span class="p">.</span><span class="n">scf</span><span class="p">()</span></code></pre></figure>
+
+<p>Notice that PDFT uses the molecule class of Psi4, but it is then used to define an instance of the class <code class="language-plaintext highlighter-rouge">UMolecule</code>. PDFT contains two main classes, <code class="language-plaintext highlighter-rouge">RMolecule</code> and <code class="language-plaintext highlighter-rouge">UMolecule</code>. Both are inherited from a parent class <code class="language-plaintext highlighter-rouge">Molecule</code>, that allows modifications to be directly reflected on each child, making additions, troubleshooting and debugging a breeze.</p>
+
+<h3 id="getting-information-on-the-grid">Getting information on the grid</h3>
+
+<p>The components of the Fock-Matrix and other results from the scf calculation are expressed in the atomic orbital (ao) basis. Several steps are required to be able to visualize any of those quantities on the grid. PDFT has a wide variety of elements available on the grid directly as attributes. Information on the grid can quickly be requested by adding some arguments to the scf method:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">h</span><span class="p">.</span><span class="n">scf</span><span class="p">(</span><span class="n">get_ingredients</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">get_orbitals</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
+
+<p>The first option <code class="language-plaintext highlighter-rouge">get_ingredients</code> stores components relevant to the development of Density Functional Approximations (DFA), such as the density and its derivatives, kinetic energy density and contributions to the Kohn-Sham potential. Whereas the latter option <code class="language-plaintext highlighter-rouge">get_orbitals</code> stores each of the molecular orbitals both on the atomic orbital basis and on the grid.</p>
+
+<p>To highlight the effortless visualization of quantities relevant to developers in the DFT community, Figure 2 and Figure 3 show two examples of the aforementioned quantities on the grid that are commonly explored in the literature[8,9].</p>
+
+<p>Consider the ubiquitous self-Interaction error: An exchange-correlation potential from a DFA will typically not be able to fully cancel out the Hartree potential for a one-electron system, generating a spurious behavior where an electron will interact with itself. Consider the calculation we performed for Hydrogen using LDA, after running the scf cycle we can visualize the potentials by simply typing:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">vha</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="n">potential</span><span class="p">[</span><span class="s">"vha"</span><span class="p">]</span>
+<span class="n">vxc</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="n">potential</span><span class="p">[</span><span class="s">"vxc"</span><span class="p">]</span>
+<span class="n">sie</span> <span class="o">=</span> <span class="n">vha</span> <span class="o">+</span> <span class="n">vxc</span>
+
+<span class="n">h</span><span class="p">.</span><span class="n">axis_plot_r</span><span class="p">([</span><span class="n">vha</span><span class="p">,</span> <span class="n">vxc</span><span class="p">,</span> <span class="n">sie</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">"V_Hartree"</span><span class="p">,</span> <span class="s">"v_xc"</span><span class="p">,</span> <span class="s">"v_Hxc"</span><span class="p">])</span></code></pre></figure>
+
+<p>The method <code class="language-plaintext highlighter-rouge">axis_plot_r</code> simply looks at information in 1D, in this case the axis that runs through the atom. In the future, this function will allow the user to select any line in space, or any plane in space. If ran within a Jupyter Notebook, the previous line will generate a plot as seen in Figure 2. Nevertheless one can export the data on the grid to be used elsewhere.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/SIE.png" alt="NSF Logo"><br>
+<em><strong>Figure 2</strong>: Self-interaction error of the LDA for the Hydrogen atoms.</em></p>
+
+<p>Besides from potentials, the electron density and its derivatives are also available. For example, lets visualize some ingredients used in the development of generalized gradient approximations. Consider a HF/UGBS calculation of the Kr atom.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1">#Basic calculation:
+</span><span class="n">Kr_geometry</span> <span class="o">=</span> <span class="n">psi4</span><span class="p">.</span><span class="n">geometry</span><span class="p">(</span><span class="s">"""
+0 1
+Kr 0.0 0.0 0.0
+units bohr
+symmetry c1
+"""</span><span class="p">)</span>
+
+<span class="n">Kr</span> <span class="o">=</span> <span class="n">pdft</span><span class="p">.</span><span class="n">UMolecule</span><span class="p">(</span><span class="n">Kr_geometry</span><span class="p">,</span> <span class="s">"ugbs"</span><span class="p">,</span> <span class="s">"hf"</span><span class="p">)</span>
+<span class="n">Kr</span><span class="p">.</span><span class="n">scf</span><span class="p">(</span><span class="n">get_matrices</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">get_ingredients</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">get_orbitals</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i_block</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Kr</span><span class="p">.</span><span class="n">nblocks</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">Kr</span><span class="p">.</span><span class="n">grid</span><span class="p">[</span><span class="s">"x"</span><span class="p">][</span><span class="n">i_block</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">grid</span><span class="p">[</span><span class="s">"y"</span><span class="p">][</span><span class="n">i_block</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">grid</span><span class="p">[</span><span class="s">"z"</span><span class="p">][</span><span class="n">i_block</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    
+<span class="n">density</span> <span class="o">=</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"density"</span><span class="p">][</span><span class="s">"da"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"density"</span><span class="p">][</span><span class="s">"db"</span><span class="p">]</span>
+    
+<span class="c1">#Density
+</span><span class="n">n</span> <span class="o">=</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">density</span>
+
+<span class="c1">#Gradient
+</span><span class="n">s</span> <span class="o">=</span>  <span class="p">(</span><span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"da_x"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"db_x"</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"da_y"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"db_y"</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"da_z"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"gradient"</span><span class="p">][</span><span class="s">"db_z"</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+<span class="k">for</span> <span class="n">i_block</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Kr</span><span class="p">.</span><span class="n">nblocks</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">[</span><span class="n">i_block</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i_block</span><span class="p">])</span>
+<span class="n">s</span> <span class="o">/=</span> <span class="n">density</span><span class="o">**</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1">#Laplacian
+</span><span class="n">q</span> <span class="o">=</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"la_x"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"lb_x"</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">+=</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"la_z"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"lb_y"</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">+=</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"la_y"</span><span class="p">]</span> <span class="o">+</span> <span class="n">Kr</span><span class="p">.</span><span class="n">ingredients</span><span class="p">[</span><span class="s">"laplacian"</span><span class="p">][</span><span class="s">"lb_z"</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">/=</span> <span class="n">density</span><span class="o">**</span><span class="p">(</span><span class="mi">5</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span></code></pre></figure>
+
+<p>After running the scf calculation, one can build the ingredients involving the density, gradient and laplacian. They can be individually seen in Figure 3.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/ingredients.png" alt="NSF Logo"><br>
+<em><strong>Figure 3</strong>: Dimensionless ingredients of GGA’s for a Kr atom.</em></p>
+
+<h2 id="advanced-methods-in-pdft">Advanced methods in PDFT</h2>
+
+<p>Having an scf cycle completely written in Python allows it to be quickly modified to suit the developers needs. For example, in embedding methods, we are required to add an external potential to each of the fragments. Assuming one has a partition potential \(v_p(r)\) expressed in the ao basis, one can simply run the following to solve self-consistently:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">h</span><span class="p">.</span><span class="n">scf</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">potential_mn</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="density-to-potential-inversions">Density-to-Potential inversions.</h3>
+
+<p>The previous feature is required for the development of inversion methods. Where a potential–such as the embedding potential–can be obtained “exactly” (for a given DFA and a basis set) by using a density-to-potential algorithm. Such an algorithm is exemplified in Figure 4.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/vh_chavez/vp_update.png" alt="NSF Logo"><br>
+<em><strong>Figure 4</strong>: Algorithm for the generation of an embedding potential given a set of fragments and a target density.</em></p>
+
+<p>The previous algorithm is implemented in the <code class="language-plaintext highlighter-rouge">Inversion</code> class within PDFT. Such a class takes as arguments fragments and target systems in the same ao basis and builds the relevant information for inversion. (e.g. density differences and non-additive quantities). One can select many different methods to compute \(\delta v_p(r)\) of step 4. It is known that these methods can be very finicky and dependant on parameters, initial guess and choice of basis set. Although basic algorithms such as density difference and ZMP[10] are already implemented, we are working on making other methods available such as Wu-Yang[11] and Ou-Carter[12]. We are striving for these methods to be reliable and require minimum input from the user. With orbitals, and other ingredients available at ease, we are confident that our code will provide a quick and easy way to implementing and benchmarking new inversion methods.</p>
+
+<h2 id="future-of-pdft">Future of PDFT</h2>
+
+<h3 id="to-be-approximated-or-not-to-be-that-is-the-question">To be (approximated) or not to be: That is the question</h3>
+<p>Although inversions required for finding the exact embedding potential, in practice one could approximate the non-additive kinetic energy functional (NAKE) \(T_s^{nad}[{ n_i }] = T_s[n_m] - \sum_i T_s[n_i]\). PDFT will have an abstract class for the NAKE functional with a consistent set of attributes that will provide a blueprint for new proposed functionals from the broader research community.</p>
+
+<h3 id="fractional-charges">Fractional Charges</h3>
+<p>By generalizing PDFT to fragments with non-integer occupations, it is possible to remove the static-correlation and delocalization errors. This is done by defining an ensemble of two systems, each with an integer number of electrons \(E_{\omega} = \omega E[N+1] + (1 - \omega)E[N]\), where the argument in each term refers to a density that integrates to N and N+1 electron. By doing so it will be possible to obtain qualitatively correct results for system in different molecular environments such as charge transfer. This capability will soon be implemented in our Molecule class.</p>
+
+<h2 id="references">References</h2>
+<ol>
+  <li>Jonathan Nafziger and Adam Wasserman. Density-based partitioning methods for ground-state molecular calculations. The Journal of Physical Chemistry A, 118(36): 7623–7639, 2014.</li>
+  <li>Peter Elliott, Kieron Burke, Morrel H. Cohen, and Adam Wasserman. Partition densityfunctional theory. Physical Review A, 82(2):024501, 2010.</li>
+  <li>Martin A. Mosquera and Adam Wasserman. Partition density functional theory and its extension to the spin-polarized case. Molecular Physics, 111(4):505–515, 2013.</li>
+  <li>Victor H. Chavez and Adam Wasserman. Towards a density functional theory of molecular fragments. what is the shape of atoms in molecules? Revista de la Academia Colombiana de Ciencias Exactas, Fisicas y Naturales, 44(170):269–279, 2020</li>
+  <li>Smith, D. G., Burns, L. A., Simmonett, A. C., Parrish, R. M., Schieber, M. C., Galvelis, R., … &amp; James, A. M. (2020). PSI4 1.4: Open-source software for high-throughput quantum chemistry. The Journal of Chemical Physics, 152(18), 184108.</li>
+  <li>Smith, D. G., Burns, L. A., Sirianni, D. A., Nascimento, D. R., Kumar, A., James, A. M., … &amp; Berquist, E. J. (2018). Psi4NumPy: An interactive quantum chemistry programming environment for reference implementations and rapid development. Journal of chemical theory and computation, 14(7), 3504-3511.</li>
+  <li>Lehtola, S., Steigemann, C., Oliveira, M. J., &amp; Marques, M. A. (2018). Recent developments in libxc—A comprehensive library of functionals for density functional theory. SoftwareX, 7, 1-5.</li>
+  <li>Gaiduk, A. P., Mizzi, D., &amp; Staroverov, V. N. (2012). Self-interaction correction scheme for approximate Kohn-Sham potentials. Physical Review A, 86(5), 052518.</li>
+  <li>Gaiduk, A. P., &amp; Staroverov, V. N. (2011). Construction of integrable model Kohn-Sham potentials by analysis of the structure of functional derivatives. Physical Review A, 83(1), 012509.</li>
+  <li>Qingsheng Zhao, Robert C. Morrison, and Robert G. Parr. From electron densities
+to Kohn-Sham kinetic energies, orbital energies, exchange-correlation potentials, and
+exchange-correlation energies. Physical Review A, 50(3):2138, 1994.</li>
+  <li>Qin Wu and Weitao Yang. A direct optimization method for calculating density functionals and exchange–correlation potentials from electron densities. The Journal of
+Chemical Physics, 118(6):2498–2509, 2003.</li>
+  <li>Ou, Q., &amp; Carter, E. A. (2018). Potential Functional Embedding Theory with an Improved Kohn–Sham Inversion Algorithm. Journal of Chemical Theory and Computation, 14(11), 5680-5689.</li>
+</ol>
+
+<h3 id="acknowledgements">Acknowledgements</h3>
+
+<p>Victor H. Chavez was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580. Victor H. Chavez thanks Yuming Shi and Yan Oueis for helpful conversations.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/sample-poster/nsf.png" alt="NSF Logo"></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-30T00:00:00+00:00">June 30, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=PDFT+-+An+accessible+density+embedding+code%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvh-chavez%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvh-chavez%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fvh-chavez%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/sebastian-lee/" class="pagination--pager" title="Simple interoperability via a general representation of molecular wavefunctions
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/tucker-burgin/" rel="permalink">ATESA: an Automated Aimless Shooting Workflow
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Tucker Burgin</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

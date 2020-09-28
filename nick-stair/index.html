@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>QForte: A quantum computer simulator and algorithms library for molecular simulation - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Background">
+
+
+  <meta name="author" content="Nicholas H. Stair">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="QForte: A quantum computer simulator and algorithms library for molecular simulation">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/nick-stair/">
+
+
+  <meta property="og:description" content="Background">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-22T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/nick-stair/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/2020-software-fellow-posters/assets/images/avatars/nick_stair.jpg" alt="Nicholas H. Stair" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nicholas H. Stair</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Chemistry Graduate Student, Developing Quantum-Computational Algorithms for Strong Correlation</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:nstair@emory.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/nstair" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="QForte: A quantum computer simulator and algorithms library for molecular simulation">
+    <meta itemprop="description" content="Background">
+    <meta itemprop="datePublished" content="2020-06-22T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">QForte: A quantum computer simulator and algorithms library for molecular simulation
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Nicholas H. Stair<sup>1</sup>,
+            
+              Francesco A. Evangelista<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Department of Chemistry and Cherry Emerson Center for Scientific Computation, Emory University, Atlanta, GA, 30322</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Jonathan Moussa
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#background">Background</a></li>
+  <li><a href="#what-is-qforte">What is QForte?</a></li>
+  <li>
+<a href="#why-is-qforte-useful">Why is QForte useful?</a>
+    <ul>
+      <li><a href="#compare-with-existing-algorithms">Compare with existing algorithms</a></li>
+      <li><a href="#development-toolbox-for-new-algorithms">Development toolbox for new algorithms</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#example-usage">Example usage</a>
+    <ul>
+      <li><a href="#build-the-bell-state-on-a-quantum-computer">Build the Bell state on a quantum computer.</a></li>
+      <li><a href="#run-quantum-phase-estimation-on-h2">Run quantum phase estimation on H2.</a></li>
+      <li><a href="#run-adapt-vqe-on-be">Run ADAPT-VQE on Be.</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#references">References</a>
+    <ul>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="background">Background</h2>
+
+<p>Classical simulation of molecules and materials via solution of the Schröodinger equation is largely prevented by exponentially scaling memory requirements.<sup>8</sup> Quantum computational simulation offers a way to circumvent the storage bottleneck. An \(n\) qubit register is capable of storing a state in a Hilbert space of dimension \(2^n\),  and operations can be applied to the entire state in constant time.<sup>2</sup> In tandem with the development of physical quantum hardware, it is imperative that open-source implementations of emerging quantum algorithms be made available to better facilitate future development as well as cross-comparison of methods. QForte is aimed at addressing such a need.</p>
+
+<h2 id="what-is-qforte">What is QForte?</h2>
+
+<p>QForte is an open-source package with two main components. First, it is an open-source
+quantum computer simulator written in C++ and exposed in Python via pybind11.
+They key elements of a simulated quantum computation are building a quantum register, applying circuits
+to the register, and measuring expectaion values.
+<img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/nick_stair/f2a.jpg" alt="QC Register"><br>
+<img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/nick_stair/f2b.jpg" alt="Apply Circ"><br>
+<img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/nick_stair/f2c.jpg" alt="Measure Op"><br>
+<em><strong>Figure 1</strong>: The three aspects of a simulated quantum computation.</em></p>
+
+<p>Second, it is a library of quantum computational algorithms aimed at simulating
+molecular systems. This combination allows the user to calculate molecular properties
+(such as the energy) using a specified quantum algorithm with just a few lines of code,
+similar to what would be required to run a calculation using a classical quantum chemistry
+package. It utilizes simple interfaces to Psi4 and OpenFermion to generate molecular integrals.
+<img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/nick_stair/f3.jpg" alt="Measure Op">
+<em><strong>Figure 2</strong>: QForte algorithms library.</em></p>
+
+<h2 id="why-is-qforte-useful">Why is QForte useful?</h2>
+
+<p>Recent advances in quantum computational hardware has sparked a massive influx of
+exciting new quantum algorithms suitable for molecular simulation. However, the vast majority
+of algorithms are published without performance comparisons to existing methods,
+primarily due to lack of software availability. Moreover, many metrics are required
+to adequately compare the utility of quantum algorithms. For example, the number of multi-qubit
+operations, the number of operator measurements, the number of variational classical parameters,
+and the error in the property of interest are all important considerations.</p>
+
+<h3 id="compare-with-existing-algorithms">Compare with existing algorithms</h3>
+
+<p>QForte offers an easy-to-use option for algorithm comparison, capable of
+reporting the above values in a unified fashion for a variety of state-of-the-art
+quantum algorithms. The list of presently available algorithms includes:
+quantum phase estimation (QPE),<sup>3</sup>
+single reference quantum Krylov (SRQK),<sup>4,5</sup>
+multireference selected quantum Krylov (MRSQK),<sup>5</sup>
+quantum imaginary time evolution (QITE),<sup>6</sup>
+the adaptive derivative assembled pseudo Trotterized variational quantum eigensolver (ADAPT-VQE),<sup>7</sup>
+and unitary coupled cluster singles and doubles VQE (UCCSD-VQE).<sup>8</sup></p>
+
+<h3 id="development-toolbox-for-new-algorithms">Development toolbox for new algorithms</h3>
+
+<p>QForte also serves as a powerful tool for the development of new algorithms using abstract
+bass classes to ensure uniformity. It contains fast C++ implementations of the Jordan-Wigner transform, circuit application, Trotterization, state overlap, and operator measurement. These tools allow for rapid
+development of VQE and QK ansatz or even entirely new classes of algorithms.</p>
+
+<h2 id="example-usage">Example usage</h2>
+
+<h3 id="build-the-bell-state-on-a-quantum-computer">Build the Bell state on a quantum computer.</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr>
+<td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td>
+<td class="code"><pre><span class="kn">import</span> <span class="nn">qforte</span> <span class="k">as</span> <span class="n">qf</span>
+
+<span class="c1"># define the number of qubits
+</span><span class="n">nqbits</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># construct a quantum computer
+</span><span class="n">computer</span> <span class="o">=</span> <span class="n">qf</span><span class="p">.</span><span class="n">QuantumComputer</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)</span>
+
+<span class="c1"># construct Hadamard and CNOT gates
+</span><span class="n">H_0</span> <span class="o">=</span> <span class="n">qf</span><span class="p">.</span><span class="n">make_gate</span><span class="p">(</span><span class="s">'H'</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cX1_0</span> <span class="o">=</span> <span class="n">qf</span><span class="p">.</span><span class="n">make_gate</span><span class="p">(</span><span class="s">'cX'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># apply the gates
+</span><span class="n">computer</span><span class="p">.</span><span class="n">apply_gate</span><span class="p">(</span><span class="n">H_0</span><span class="p">)</span>
+<span class="n">computer</span><span class="p">.</span><span class="n">apply_gate</span><span class="p">(</span><span class="n">cX1_0</span><span class="p">)</span>
+
+<span class="c1"># print the state of the quantum register
+</span><span class="k">print</span><span class="p">(</span><span class="n">computer</span><span class="p">)</span>
+</pre></td>
+</tr></tbody></table></code></pre></figure>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>QuantumComputer(
+  (0.707107 +0.000000 i) |00&gt;
+  (0.000000 +0.000000 i) |10&gt;
+  (0.000000 +0.000000 i) |01&gt;
+  (0.707107 +0.000000 i) |11&gt;
+ )
+</code></pre></div></div>
+
+<h3 id="run-quantum-phase-estimation-on-h2">Run quantum phase estimation on H2.</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr>
+<td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td>
+<td class="code"><pre><span class="c1"># import qforte
+</span><span class="kn">import</span> <span class="nn">qforte</span>
+<span class="kn">from</span> <span class="nn">qforte.qpea.qpe</span> <span class="kn">import</span> <span class="n">QPE</span>
+<span class="kn">from</span> <span class="nn">qforte.system</span> <span class="kn">import</span> <span class="n">system_factory</span>
+
+<span class="c1"># define geometries and reference list
+</span><span class="n">H2geom</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'H'</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)),</span> <span class="p">(</span><span class="s">'H'</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.50</span><span class="p">))]</span>
+<span class="n">H2ref</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># run classical SCF
+</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">system_factory</span><span class="p">(</span><span class="n">mol_geometry</span><span class="o">=</span><span class="n">H2geom</span><span class="p">)</span>
+<span class="n">adapter</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">H2mol</span> <span class="o">=</span> <span class="n">adapter</span><span class="p">.</span><span class="n">get_molecule</span><span class="p">()</span>
+
+<span class="c1"># constrct and run QPE algorithm
+</span><span class="n">alg</span> <span class="o">=</span> <span class="n">QPE</span><span class="p">(</span><span class="n">H2mol</span><span class="p">,</span> <span class="n">H2ref</span><span class="p">,</span> <span class="n">trotter_number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">alg</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">t</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">nruns</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">success_prob</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">num_precise_bits</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># get desired properties
+</span><span class="n">Egs</span> <span class="o">=</span> <span class="n">alg</span><span class="p">.</span><span class="n">get_gs_energy</span><span class="p">()</span>
+</pre></td>
+</tr></tbody></table></code></pre></figure>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using standard openfermion hamiltonian ordering!
+
+-----------------------------------------------------
+       Quantum Phase Estimation Algorithm   
+-----------------------------------------------------
+
+
+                 ==&gt; QPE options &lt;==
+-----------------------------------------------------------
+Trial reference state:                    |1100&gt;
+Trial state preparation method:           reference
+Trotter order (rho):                      1
+Trotter number (m):                       2
+Use fast version of algorithm:            True
+Measurement varience thresh:              NA
+Target success probability:               0.5
+Number of precise bits for phase:         8
+Number of time steps:                     10
+Evolution time (t):                       0.4
+Number of QPE algorithm executions:       100
+
+
+
+           ==&gt; QPE readout averages &lt;==
+------------------------------------------------
+  bit  0 :  0.0
+  bit  1 :  0.0
+  bit  2 :  0.0
+  bit  3 :  0.86
+  bit  4 :  0.0
+  bit  5 :  0.14
+  bit  6 :  0.0
+  bit  7 :  0.14
+  bit  8 :  0.01
+  bit  9 :  0.85
+
+  Final bit readout:  [0, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+
+
+                        ==&gt; QPE summary &lt;==
+---------------------------------------------------------------
+Final QPE Energy:                         -0.9970875121
+Mode QPE Energy:                          -0.9970875121
+Final QPE phase:                           0.0634765625
+Mode QPE phase:                            0.0634765625
+</code></pre></div></div>
+
+<h3 id="run-adapt-vqe-on-be">Run ADAPT-VQE on Be.</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr>
+<td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td>
+<td class="code"><pre><span class="c1"># import qforte
+</span><span class="kn">import</span> <span class="nn">qforte</span>
+<span class="kn">from</span> <span class="nn">qforte.ucc.adaptvqe</span> <span class="kn">import</span> <span class="n">ADAPTVQE</span>
+<span class="kn">from</span> <span class="nn">qforte.system</span> <span class="kn">import</span> <span class="n">system_factory</span>
+
+<span class="c1"># define geometries and reference list
+</span><span class="n">Be_geom</span> <span class="o">=</span> <span class="p">[(</span><span class="s">'Be'</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))]</span>
+<span class="n">Be_ref</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># run classical SCF
+</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">system_factory</span><span class="p">(</span><span class="n">mol_geometry</span><span class="o">=</span><span class="n">Be_geom</span><span class="p">)</span>
+<span class="n">adapter</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">Be_mol</span> <span class="o">=</span> <span class="n">adapter</span><span class="p">.</span><span class="n">get_molecule</span><span class="p">()</span>
+
+<span class="c1"># constrct and run ADAPT-VQE
+</span><span class="n">alg</span> <span class="o">=</span> <span class="n">ADAPTVQE</span><span class="p">(</span><span class="n">Be_mol</span><span class="p">,</span> <span class="n">Be_ref</span><span class="p">,</span> <span class="n">trotter_number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">alg</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">adapt_maxiter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">avqe_thresh</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">op_select_type</span><span class="o">=</span><span class="s">'gradient'</span><span class="p">,</span>
+        <span class="n">use_analytic_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># get desired properties
+</span><span class="n">Egs</span> <span class="o">=</span> <span class="n">alg</span><span class="p">.</span><span class="n">get_gs_energy</span><span class="p">()</span>
+</pre></td>
+</tr></tbody></table></code></pre></figure>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using standard openfermion hamiltonian ordering!
+
+-----------------------------------------------------
+  Adaptive Derivative-Assembled Pseudo-Trotter VQE   
+-----------------------------------------------------
+
+
+               ==&gt; ADAPT-VQE options &lt;==
+---------------------------------------------------------
+Trial reference state:                    |1111000000&gt;
+Trial state preparation method:           reference
+Trotter order (rho):                      1
+Trotter number (m):                       1
+Use fast version of algorithm:            True
+Measurement varience thresh:              NA
+Optimization algorithm:                   BFGS
+Optimization maxiter:                     200
+Optimizer grad-norm threshold (theta):    1.00e-05
+Use analytic gradient:                    True
+Operator pool type:                       SD
+ADAPT-VQE grad-norm threshold (eps):      1.00e-01
+ADAPT-VQE maxiter:                        5
+
+
+==&gt; Building comutator pool for gradient measurement.
+==&gt; Comutator pool construction complete.
+
+
+ -----&gt; ADAPT-VQE iteration  0  &lt;-----
+
+==&gt; Measring gradients from pool:
+ Norm of &lt;[H,Am]&gt; =   0.22748321
+ Max  of &lt;[H,Am]&gt; =  -0.12276644
+  Adding operator m = 21
+
+toperators included from pool:
+ [21]
+tamplitudes for tops:
+ [0.0]
+
+--&gt; Begin opt with analytic graditent:
+  Initial guess energy:  -14.351880476202027
+  minimization successful.
+  min Energy:  -14.37279090388743
+
+
+ -----&gt; ADAPT-VQE iteration  1  &lt;-----
+
+==&gt; Measring gradients from pool:
+ Norm of &lt;[H,Am]&gt; =   0.16804755
+ Max  of &lt;[H,Am]&gt; =  -0.10822623
+  Adding operator m = 24
+
+toperators included from pool:
+ [21, 24]
+tamplitudes for tops:
+ [0.33428557457187374, 0.0]
+
+--&gt; Begin opt with analytic graditent:
+  Initial guess energy:  -14.37279090388743
+  minimization successful.
+  min Energy:  -14.389439069292933
+
+
+ -----&gt; ADAPT-VQE iteration  2  &lt;-----
+
+==&gt; Measring gradients from pool:
+ Norm of &lt;[H,Am]&gt; =   0.11575674
+ Max  of &lt;[H,Am]&gt; =  -0.09869260
+  Adding operator m = 26
+
+toperators included from pool:
+ [21, 24, 26]
+tamplitudes for tops:
+ [0.2946784148978646, 0.3012771224143545, 0.0]
+
+--&gt; Begin opt with analytic graditent:
+  Initial guess energy:  -14.389439069292933
+  minimization successful.
+  min Energy:  -14.403328602115806
+
+
+ -----&gt; ADAPT-VQE iteration  3  &lt;-----
+
+==&gt; Measring gradients from pool:
+ Norm of &lt;[H,Am]&gt; =   0.05300504
+ Max  of &lt;[H,Am]&gt; =   0.02825606
+
+  ADAPT-VQE converged!
+
+
+                ==&gt; ADAPT-VQE summary &lt;==
+-----------------------------------------------------------
+Final ADAPT-VQE Energy:                      -14.403328602
+Number of operators in pool:                  27
+Final number of amplitudes in ansatz:         3
+Total number of Hamiltonian measurements:     21
+Total number of comutator measurements:       127
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>
+    <p>Laughlin, Robert B., and David Pines. “From the cover: The theory of everything.” Proceedings of the national academy of sciences of the United States of America 97.1 (2000): 28.</p>
+  </li>
+  <li>
+    <p>Cao, Yudong, et al. “Quantum chemistry in the age of quantum computing.” Chemical reviews 119.19 (2019): 10856-10915.</p>
+  </li>
+  <li>
+    <p>Abrams, Daniel S., and Seth Lloyd. “Quantum algorithm providing exponential speed increase for finding eigenvalues and eigenvectors.” Physical Review Letters 83.24 (1999): 5162.</p>
+  </li>
+  <li>
+    <p>Parrish, Robert M., and Peter L. McMahon. “Quantum filter diagonalization: Quantum eigendecomposition without full quantum phase estimation.” arXiv preprint arXiv:1909.08925 (2019).</p>
+  </li>
+  <li>
+    <p>Stair, Nicholas H., Renke Huang, and Francesco A. Evangelista. “A multireference quantum krylov algorithm for strongly correlated electrons.” Journal of Chemical Theory and Computation 16.4 (2020): 2236-2245.</p>
+  </li>
+  <li>
+    <p>Motta, Mario, et al. “Determining eigenstates and thermal states on a quantum computer using quantum imaginary time evolution.” Nature Physics 16.2 (2020): 205-210.</p>
+  </li>
+  <li>
+    <p>Grimsley, Harper R., et al. “An adaptive variational algorithm for exact molecular simulations on a quantum computer.” Nature communications 10.1 (2019): 1-9.</p>
+  </li>
+  <li>
+    <p>Peruzzo, Alberto, et al. “A variational eigenvalue solver on a photonic quantum processor.” Nature communications 5 (2014): 4213.</p>
+  </li>
+</ol>
+
+<h3 id="acknowledgements">Acknowledgements</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Nicholas H. Stair</code> was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-22T00:00:00+00:00">June 22, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=QForte%3A+A+quantum+computer+simulator+and+algorithms+library+for+molecular+simulation%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fnick-stair%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fnick-stair%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fnick-stair%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/victor-yu/" class="pagination--pager" title="The ELSI Infrastructure for Scalable Electronic Structure Theory
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/pascal-merz/" class="pagination--pager" title="A High-Performance Hybrid Monte Carlo / Molecular Dynamics Framework For GROMACS
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

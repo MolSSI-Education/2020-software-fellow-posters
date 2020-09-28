@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Optimal allocation for Free Energy Calculations - 2020 MolSSI Software Fellow Posters</title>
+<meta name="description" content="Introduction">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="2020 MolSSI Software Fellow Posters">
+<meta property="og:title" content="Optimal allocation for Free Energy Calculations">
+<meta property="og:url" content="https://education.molssi.org/2020-software-fellow-posters/hannah-brucemacdonald/">
+
+
+  <meta property="og:description" content="Introduction">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-29T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://education.molssi.org/2020-software-fellow-posters/hannah-brucemacdonald/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "The Molecular Sciences Software Institute",
+      "url": "https://education.molssi.org/2020-software-fellow-posters/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/2020-software-fellow-posters/feed.xml" type="application/atom+xml" rel="alternate" title="2020 MolSSI Software Fellow Posters Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/2020-software-fellow-posters/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<link rel="stylesheet" href="https://use.typekit.net/wll4tkr.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script> <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169902961-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169902961-1');
+</script>
+
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--poster">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/2020-software-fellow-posters/"><img src="/2020-software-fellow-posters/assets/images/avatars/molssi_avatar.png" alt=""></a>
+        
+        <a class="site-title" href="/2020-software-fellow-posters/">
+          2020 MolSSI Software Fellow Posters
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/2020-software-fellow-posters/all_posters">Full Poster List</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Optimal allocation for Free Energy Calculations">
+    <meta itemprop="description" content="Introduction">
+    <meta itemprop="datePublished" content="2020-06-29T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Optimal allocation for Free Energy Calculations
+</h1>
+          <div id="author-list" class="author__list">
+            
+              Hannah E. Bruce Macdonald<sup>1</sup>,
+            
+              Dominic A. Rufa<sup>2</sup>,
+            
+              John D. Chodera<sup>1</sup>
+            
+          </div>
+    
+          <div id="affiliation-list" class="affiliation__list">
+            
+              <div>
+<strong>1</strong> Computational and Systems Biology Program, Sloan Kettering Institute,Memorial Sloan Kettering Cancer Center, New York, NY 10065</div>
+            
+              <div>
+<strong>2</strong> Tri-Institutional PhD Program in Computational Biology and Medicine, New York, NY 10065</div>
+            
+          </div>
+       
+        </header>
+      
+
+      
+            <div id="mentor-name" class="mentor__list">
+              <strong>MolSSI Mentor(s):</strong> Sam V. Ellis
+            </div>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> Poster Contents</h4></header>
+              <ul class="toc__menu">
+  <li>
+<a href="#introduction">Introduction</a>
+    <ul>
+      <li><a href="#relative-binding-free-energies">Relative binding free energies</a></li>
+      <li><a href="#software">Software</a></li>
+      <li><a href="#efficiency-of-rbfes">Efficiency of RBFEs</a></li>
+      <li><a href="#experimental-design">Experimental design</a></li>
+    </ul>
+  </li>
+  <li><a href="#methods">Methods</a></li>
+  <li>
+<a href="#results">Results</a>
+    <ul>
+      <li><a href="#forcefields">Forcefields</a></li>
+      <li><a href="#variance">Variance</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#references">References</a>
+    <ul>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+
+<h3 id="relative-binding-free-energies">Relative binding free energies</h3>
+
+<p>A relative free energy calculation involves perturbing one molecule into another, and calculating the free energy difference of making that change. Relative binding free energies (RBFE) involve the perturbing between two molecules, both in an active site, and in bulk water to calculate the difference in affinity between the two molecules. RBFEs are an effective tool in drug design, as they allow for predictions as to if making a change to a molecule will result in a more or less promising drug candidate (1).</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/thermocycle.png" alt="Thermodynamic Cycle"><br>
+<strong><em>Figure 1</em></strong>: Thermodynamic cycle whereby one molecule is ‘alchemically’ transformed into another. The difference between the two pink arrows affords the difference between the two green arrows: namely the difference in binding affinity of the two.</p>
+
+<p><a href="https://github.com/choderalab/perses">Perses</a> is an open-source scientific software package for performing single-topology relative free energy calculations. Single-topology calculations involve simulating with a single hybrid ligand, that is perturbed across the lambda protocol to change from representing ligand A to ligand B, and differs from dual-topology type relative free energy methods whereby two ligands are present in the simulation, where the interactions of one ligand is turned on, while the other is turned off.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/singledual.png" alt="Single vs. dual topology"><br>
+<strong><em>Figure 2</em></strong>: Different methods in perturbing between two ligands can be used: single-topology, which is implemented in <a href="https://github.com/choderalab/perses">Perses</a>, and dual-topology.</p>
+
+<h3 id="software">Software</h3>
+
+<p>Perses is a python package, written to exploit the molecular dynamics (MD) functionality of <a href="http://openmm.org/">OpenMM</a>. The software is maintained on GitHub, and is developed using the <a href="https://molssi.org/education/best-practices/">MolSSI Software Best Practises</a> framework. Python allows for the rapid development of novel and exploratory algorithms that are ‘developer-time’ fast, while performing simulations using the faster C and C++ software of openmm, which is ‘run-time’ fast.</p>
+
+<h3 id="efficiency-of-rbfes">Efficiency of RBFEs</h3>
+
+<p>Performing a RBFE calculation is computationally expensive. The expense of the calculation is mitigated if (a) the results are accurate - providing good experimental agreement and (b) the results are reliable - that they are precise. While simulations that are accurate can be achieved by longer simulation times and better physical modelling through improved atomistic forcefields, the precision of a calculation can be improved through choices in the alchemical design. For a given length of simulation (as the variance will reduce with increased simulation time), the precision, or hereforth the variance can be effected by the alchemical pathway in different ways -</p>
+<ul>
+  <li>the nature of the alchemical species: for single topology methods, how the two ligands are combined to make a hybrid ligand.</li>
+  <li>choice in alchemical protocol: the functions through which the interactions of the alchemical species are perturbed.</li>
+  <li>the length of the alchemical protocol: wether that is the number of alchemical windows in a replica-exchange simulation or the switching time in a non-equilibrium switching simulation.</li>
+</ul>
+
+<p>Optimizing these alchemical parameters will allow for more efficient simulation, such that results can be afforded with better certainty at a shorter timescale. Alternatively, which simulations are performed from a given set can reduce the variance of the results.</p>
+
+<h3 id="experimental-design">Experimental design</h3>
+
+<p>Relative calculations rely on choosing pairs of ligands to compare from a given set of molecules of interest. The minimum requirement to be able to fully rank set of molecules is that the pairwise comparisons between ligands results in a weakly connected graph - such that a pathway exists between any two molecules in the set. Even for a small number of ligands, there exists a redundancy in possible graphs that satisfy the connectivity requirement.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/connectivity.png" alt="Connectivity"><br>
+<strong><em>Figure 4</em></strong>: Selection of possible graphs for calculating relative free energies that satisfy the criteria of weak connectivity, where ligands are shown as colored circles and RBFEs are shown as the edges between them.</p>
+
+<p>The number of RBFEs used (edges) will increase the computational expense, where the cycle-closure type graph is a compromise between the number of edges run, and having redundancy in the networks. Ideally, edges from all of the possible pairwise comparisons would be chosen in an optimal way, such as to minimize the variance.</p>
+
+<h2 id="methods">Methods</h2>
+<p>Relative free energy calculations have been performed using <a href="https://github.com/choderalab/perses">Perses</a>, for a set of binders to the Jnk1 protein from the Schrodinger set (2). 100 forwards and backwards non-equilibrium (NEQ) switches of 1 ns, followed by 1 ns of equilibrium sampling at each endstate. While the small molecule forcefields differ, amber-14SB and TIP3P have been used. Input files are <a href="https://github.com/openmm/openmmforcefields/tree/master/openmmforcefields/data/perses_jacs_systems">available</a>. All simulations were performed on folding at home.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/jnk1.png" alt="jnk1"><br>
+<strong><em>Figure 5</em></strong>: Jnk1 protein PDB: 2GMX</p>
+
+<h2 id="results">Results</h2>
+
+<h3 id="forcefields">Forcefields</h3>
+<p>The RBFEs of the Jnk1 set have been performed for 5 different small molecule forcefields. Two versions of the generalized amber forcefield (GAFF) - 1.81 and 2.11, two versions of the <a href="https://openforcefield.org/">open forcefield initiative</a> - 1.0.0 and 1.2.0 and smirnoff99Frosst 1.1.0 were used.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/relativefes.png" alt="relative"><br>
+<strong><em>Figure 6</em></strong>: RBFEs of Jnk1 dataset with different small molecule forcefields. RMSE and MUE are quoted in units of \(kcal mol^{-1}\), with confidence intervals calculated using bootstrapping.</p>
+
+<p>The small molecule forcefield with the best statistical performance is openforcefield v. 1.0.0 for the Jnk1 target, however testing across different protein-ligand systems would be required for more thorough benchmarking.</p>
+
+<p>RBFEs provide pairwise comparisons between  molecules, but for decision-making in live drug design projects, absolute free energies are a more useful metric. If there are resources available to make and test the best <em>n</em> predicted molecules, a maximum likelihood estimator can be used to optimize the graph of results.</p>
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/absolutefes.png" alt="absolute"><br>
+<strong><em>Figure 7</em></strong>: Absolute binding free energies of Jnk1 dataset with different small molecule forcefields. RMSE, MUE, R2 and \(\rho\) are quoted in units of \(kcal mol^{-1}\), with confidence intervals calculated using bootstrapping.</p>
+
+<p>While the RMSE and MUE of the methods differ in their performance, the small molecules perform similarly with regards to correlation statistics R2 and rho. These results suggest that relative free energy calculations would provide a useful tool for testing design ideas for future Jnk1 inhibitors.</p>
+
+<h3 id="variance">Variance</h3>
+
+<p>The above simulations were performed with the pairwise comparisons performed in Wang et al. (2), however the variance of those simulations aren’t all equal, and it is clear from Figures 6 and 7 that the errors associated with each RBFE are not equal. The statistical fluctuation of a relative free energy can be defined as:</p>
+
+\[s_{phase} = \sigma _{phase}  * n_{samples}\]
+
+<p><img src="https://education.molssi.org/2020-software-fellow-posters/assets/images/BruceMacdonald_Hannah/variance.png" alt="variance"><br>
+<strong><em>Figure 8</em></strong>: Correlation between the statistical fluctuation of the solvent and complex phases for Jnk1 relative free energy calculations for a range of small molecule forcefields.</p>
+
+<p>The above plots illustate there is a correlation between the statistical fluctuation in the solvent and the complex phases. As the solvent phase is much less computationally intensive, this would allow us to design better relative free energy networks for future iterations, resulting in faster simulations, with smaller associated errors.</p>
+
+<h2 id="references">References</h2>
+<ol>
+  <li>Cournia, Zoe, Bryce Allen, and Woody Sherman. “Relative binding free energy calculations in drug discovery: recent advances and practical considerations.” Journal of chemical information and modeling 57.12 (2017): 2911-2937.</li>
+  <li>Wang, Lingle, et al. “Accurate and reliable prediction of relative ligand binding potency in prospective drug discovery by way of a modern free-energy calculation protocol and force field.” Journal of the American Chemical Society 137.7 (2015): 2695-2703.</li>
+</ol>
+
+<h3 id="acknowledgements">Acknowledgements</h3>
+
+<p>“Hannah Bruce Macdonald was supported by a fellowship from The Molecular Sciences Software Institute under NSF grant OAC-1547580”</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-29T00:00:00+00:00">June 29, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Optimal+allocation+for+Free+Energy+Calculations%20https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fhannah-brucemacdonald%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fhannah-brucemacdonald%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Feducation.molssi.org%2F2020-software-fellow-posters%2Fhannah-brucemacdonald%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-software-fellow-posters/ankita-mukhtyar/" class="pagination--pager" title="Pattern recognition based framework to characterize order in materials - Focus on block copolymer self assembly
+">Previous</a>
+    
+    
+      <a href="/2020-software-fellow-posters/jennifer-clark/" class="pagination--pager" title="DESPASITO, Quickly Fit MD-Simulation Parameters using Equations of State
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/vh-chavez/" rel="permalink">PDFT - An accessible density embedding code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Victor H. Chavez</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/sebastian-lee/" rel="permalink">Simple interoperability via a general representation of molecular wavefunctions
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Sebastian J. R. Lee</p>
+    <p class="archive__item-excerpt" itemprop="description">Background and Motivation
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/giuseppe-barbalinardo/" rel="permalink">Efficient Anharmonic Lattice Dynamics Calculations of Thermal Transport in Crystalline and Disordered Solids using kALDo
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Giuseppe Barbalinardo</p>
+    <p class="archive__item-excerpt" itemprop="description">
+  kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calcul...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020-software-fellow-posters/zhi-wang/" rel="permalink">Tinker GPU: GPU-Accelerated MD Simulation Software for Advanced Force Fields and Enhanced Sampling
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="author">Zhi Wang</p>
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+Advanced potential energy surfaces and models are being applied to an
+ever-expanding array of problems in structural biology, drug design and
+ch...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/MolSSI_NSF" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/molssi" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://molssi.org/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+    
+
+    <li><a href="/2020-software-fellow-posters/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2020 The Molecular Sciences Software Institute. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/2020-software-fellow-posters/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
