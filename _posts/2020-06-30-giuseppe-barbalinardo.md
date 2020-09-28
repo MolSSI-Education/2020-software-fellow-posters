@@ -22,7 +22,10 @@ toc_label: "Poster Contents"
 layout: poster
 ---
 
-<!-- ![funding]({{ site.url }}{{ site.baseurl }}/assets/images/gbarbalinardo-poster/funding.png) -->
+> kALDo is a versatile and scalable open-source software to compute phonon transport in crystalline and amorphous solids. It features real space QHGK calculations and three different solvers of the linearized BTE: direct inversion, self-consistent cycle, and RTA. The algorithms are implemented using linear algebra operations on tensors, to take advantage of multithreading on GPU and CPU using Numpy, Tensorflow, and optimized tensor libraries. Using the Atomic Simulation Environment, κALDo can calculate the IFCs using several ab initio and molecular dynamics codes, thus enabling the use of first-principles DFT, empirical forcefields, and semi-empirical tight- binding. A native LAMMPS interface is also available in the USER-PHONON package. Finally, through seamless integration with the hiPhive package, the IFC calculation can take advantage of compressing-sensing machine learning algorithms. The code is released open-source for the community to use and contribute with edits and suggestions. It is designed on modern software best practices, and we hope to provide a development platform to implement new theory and methods.
+
+> The code is available on [GitHub](https://github.com/nanotheorygroup/kaldo), while kALDO website can be found [here](https://nanotheorygroup.github.io/kaldo/).
+
 
 ## Introduction
 
@@ -57,7 +60,7 @@ are the second and third order interatomic force constants (IFC). The term $$\ph
 
 The IFCs  can be evaluated by finite difference, which consists in calculating the difference between the forces acting on the system when one of the atoms is displaced by a small finite shift along a Cartesian direction. The second and third order IFCs need respectively, $$2N_{atoms}$$, and $$4N_{atoms}^2$$ forces calculations. In crystals, this amount can be reduced exploiting the spatial symmetries of the system, or adopting a compressed sensing approach. In the framework of DFT, it is also possible and often convenient to compute IFCs using perturbation theory.
 
-The dynamical matrix is the second order IFC rescaled by the masses, $$D_{i\alpha i'\alpha}=\phi^{(2)}_{i\alpha i'\alpha'}/\sqrt{m_im_{i'}}$$. It is diagonal in the phonons basis
+The dynamical matrix is the second order IFC rescaled by the masses, $$D_{i\alpha i'\alpha}=\phi^{\prime\prime}_{i\alpha i'\alpha'}/\sqrt{m_im_{i'}}$$. It is diagonal in the phonons basis
 
 $$ \sum_{i'\alpha'} D_{i\alpha i'\alpha'}\eta_{i'\alpha'\mu} =\eta_{i\alpha\mu} \omega_\mu^2 $$
 
@@ -346,7 +349,7 @@ finite_difference.calculate_second(calculator=Espresso(**input))
 finite_difference.calculate_third(calculator=Espresso(**input))
 
 # Phonons object creation
-phon = Phonons(force_constants=fc,
+phonons = Phonons(force_constants=fc,
                kpts=[19, 19, 19],
                temperature=300)
 
@@ -361,7 +364,7 @@ print(cond.conductivity(method='inverse').sum(axis=0))
 We performed the simulation using the local density approximation for the exchange and correlation functional and a Bachelet-Hamann-Schluter norm-conserving  pseudoptential. Kohn-Sham orbitals are represented on a plane-waves basis set with a cutoff of 20 Ry and (8, 8, 8) k-points mesh. The minimized lattice parameter is 5.398A. The third-order IFC is calculated using finite difference displacement on (5, 5, 5) replicas of the irreducible fcc-unit cell, including up to the 5th nearest neighbor.
 We obtained the following thermal properties
 
-![si-diamond-observables]({{ site.url }}{{ site.baseurl }}/assets/images/gbarbalinardo-poster/si-diamond-observables.png)
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/gbarbalinardo-poster/si-diamond-observables.png" width="450">
 
 The silicon diamond modes analysis is shown above. Quantum (red) and classical (blue) results are compared. a) Normalized density of states, b) Normalized phase-space per mode $$g$$, c) lifetime per mode $$\tau$$, d) mean free path $$\lambda$$, and e) cumulative conductivity $$\kappa_{cum}$$.
 
@@ -385,9 +388,9 @@ print('Thermal conductivity matrix, in (W/m/K):')
 print(cond.conductivity(method='qhgk').sum(axis=0))
  ```
 
-In a simliar treatment to the silicon crystal, a full battery of modal analysis can be calculated with both quantum and classical statistics on the amorphous systems re- turning the phonon DoS as well as the associated lifetimes, generalized diffusivities, normalized phase space and cumulative conductivity
+In a simliar treatment to the silicon crystal, a full battery of modal analysis can be calculated with both quantum and classical statistics on the amorphous systems returning the phonon DoS as well as the associated lifetimes, generalized diffusivities, normalized phase space and cumulative conductivity
 
-![amorphous]({{ site.url }}{{ site.baseurl }}/assets/images/gbarbalinardo-poster/amorphous.png)
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/gbarbalinardo-poster/amorphous.png" width="700">
 
 Classical and quantum properties for 4096 atom amorphous silicon system are shown above. a) density of states, b) lifetimes, c) diffusivities, and e) cumulative thermal conductivity. In spite of the increased quantum lifetimes, a decrease of 0.17W/m/K is seen in the quantum conductivity. The difference in conductivity is primarily a result of the overestimation of classical high frequency heat capacities.
 
