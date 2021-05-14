@@ -18,6 +18,7 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+
       - uses: jeffreytse/jekyll-deploy-action@v0.1.0
         with:
           provider: 'github'
